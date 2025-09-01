@@ -30,7 +30,7 @@ db.sqlite3
 */migrations/*.pyc
 
 # Archivos estáticos y media generados
-static/
+
 media/
 
 # Archivos de logs

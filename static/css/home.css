@@ -1,0 +1,203 @@
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #333333;
+    --accent-color: #4CAF50;
+    --font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+}
+
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-image {
+    position: absolute; /* Superpone las imágenes */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0; /* Todas las imágenes inician invisibles */
+    filter: blur(3px);
+    animation: fade-carousel 20s infinite; /* Aplica la nueva animación */
+}
+
+/* Retrasos para que las imágenes aparezcan secuencialmente */
+.carousel-image:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.carousel-image:nth-child(2) {
+    animation-delay: 5s;
+}
+
+.carousel-image:nth-child(3) {
+    animation-delay: 10s;
+}
+
+.carousel-image:nth-child(4) {
+    animation-delay: 15s;
+}
+
+/* Animación de desvanecimiento */
+@keyframes fade-carousel {
+    0% {
+        opacity: 0;
+    }
+    12.5% {
+        opacity: 1;
+        transform: scale(1.05);
+    } /* Entra y hace zoom */
+    25% {
+        opacity: 1;
+        transform: scale(1);
+    } /* Se mantiene visible y vuelve a la escala normal */
+    37.5% {
+        opacity: 0;
+        transform: scale(1);
+    } /* Sale suavemente */
+    100% {
+        opacity: 0;
+    } /* Se mantiene invisible hasta el siguiente ciclo */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.hero-content h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    margin: 0;
+    flex-grow: 1;
+    line-height: 1.2;
+    max-width: 60%;
+}
+
+.reserve-button {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+.reserve-button:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+.find-section {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.find-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.find-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Incrementa el espacio entre las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas si es necesario */
+}
+
+.find-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px; /* Ancho fijo para todas las tarjetas */
+    height: 300px; /* Alto fijo para todas las tarjetas */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.find-card img {
+    width: 80px; /* Tamaño moderado para las imágenes */
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.find-card p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+}
+.find-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .find-cards {
+        flex-direction: column; /* Apila las tarjetas verticalmente en pantallas pequeñas */
+        gap: 15px;
+    }
+
+    .find-card {
+        width: 100%; /* Ocupa todo el ancho disponible */
+    }
+}
