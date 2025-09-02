@@ -23,21 +23,49 @@
 <section class="find-section">
     <div class="find-container">
         <h2>¿Qué puedes encontrar?</h2>
-        <div class="find-cards">
-            <div class="find-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Lugares turísticos">
-                <p>Lugares turísticos</p>
+        <div class="carousel2-wrapper">
+            <button class="carousel2-button left" onclick="scrollCarousel2(-1)">&#8249;</button>
+            <div class="carousel2-container">
+                <div class="find-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Lugares turísticos">
+                    <p>Lugares turísticos</p>
+                </div>
+                <div class="find-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3076/3076016.png" alt="Comercios locales">
+                    <p>Comercios locales</p>
+                </div>
+                <div class="find-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/679/679922.png" alt="Transporte seguro">
+                    <p>Transporte rápido y seguro</p>
+                </div>
+                <div class="find-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Card Aux1">
+                    <p>souvenirs</p>
+                </div>
+                <div class="find-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Card Aux2">
+                    <p>Card Aux2</p>
+                </div>
             </div>
-            <div class="find-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/3076/3076016.png" alt="Comercios locales">
-                <p>Comercios locales</p>
-            </div>
-            <div class="find-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/679/679922.png" alt="Transporte seguro">
-                <p>Transporte rápido y seguro</p>
-            </div>
+            <button class="carousel2-button right" onclick="scrollCarousel2(1)">&#8250;</button>
         </div>
     </div>
 </section>
+
+<script>
+
+function scrollCarousel2(direction) {
+    const container = document.querySelector('.carousel2-container');
+    const cardWidth = container.querySelector('.find-card').offsetWidth; // Ancho de una tarjeta
+    const gap = parseInt(getComputedStyle(container).gap) || 0; // Espaciado entre tarjetas
+    const scrollAmount = 4 * (cardWidth + gap); // Desplazamiento total (3.5 tarjetas)
+
+    container.scrollBy({
+        left: direction * scrollAmount, // Desplazamiento dinámico
+        behavior: 'smooth',
+    });
+}
+
+</script>
 
 {% endblock %}
