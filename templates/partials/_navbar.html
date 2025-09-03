@@ -15,11 +15,12 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Iniciar sesión</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
-
+          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
         {% else %}
           <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Cerrar sesión</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
 
           {% if request.user.es_proveedor %}
             <li class="nav-item"><a class="nav-link" href="{% url 'providers:dashboard' %}">Cuenta</a></li>
