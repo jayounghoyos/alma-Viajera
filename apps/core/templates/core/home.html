@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block body_class %}home{% endblock %}
 {% block content %}
 
 <!-- Hero Section -->
@@ -9,13 +10,13 @@
     <div class="carousel">
         <!-- Reemplaza las siguientes URLs con tus propias imágenes -->
         <img class="carousel-image" src="{% static 'images/guatapeOK.jpg' %}" alt="Paisaje">
-        <img class="carousel-image" src="{% static 'images/CARTAGENA.png' %}" alt="Paisaje">
-        <img class="carousel-image" src="{% static 'images/muralla.jpg' %}" alt="Paisaje">
+        <img class="carousel-image" src="{% static 'images/san.jpg' %}" alt="Paisaje">
+        <img class="carousel-image" src="{% static 'images/muralla3.jpg' %}" alt="Paisaje">
         <img class="carousel-image" src="{% static 'images/santamartajpg.jpg' %}" alt="Paisaje">
     </div>
     <div class="hero-content">
-        <h1>Nuestra tierra, tu próxima aventura</h1>
-        <a href="#" class="reserve-button">RESERVA TU LUGAR</a>
+        <h1>Nuestra tierra,<br>tu próxima aventura</h1>
+        <a href="#" class="reserve-button">EXPLORAR</a>
     </div>
 </section>
 
@@ -27,24 +28,24 @@
             <button class="carousel2-button left" onclick="scrollCarousel2(-1)">&#8249;</button>
             <div class="carousel2-container">
                 <div class="find-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Lugares turísticos">
+                    <img src="{% static 'images/lugares.jpg' %}" alt="Lugares turísticos">
                     <p>Lugares turísticos</p>
                 </div>
                 <div class="find-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3076/3076016.png" alt="Comercios locales">
-                    <p>Comercios locales</p>
+                    <img src="{% static 'images/comida.jpg' %}" alt="comida">
+                    <p>Comida</p>
                 </div>
                 <div class="find-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/679/679922.png" alt="Transporte seguro">
-                    <p>Transporte rápido y seguro</p>
+                    <img src="{% static 'images/actividades.jpg' %}" alt="actividades">
+                    <p>Actividades</p>
                 </div>
                 <div class="find-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Card Aux1">
-                    <p>souvenirs</p>
+                    <img src="{% static 'images/tours.jpg' %}" alt="Tours">
+                    <p>Tours</p>
                 </div>
                 <div class="find-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Card Aux2">
-                    <p>Card Aux2</p>
+                    <img src="{% static 'images/bolsawua.jpg' %}" alt="Souvenir">
+                    <p>Souvenirs</p>
                 </div>
             </div>
             <button class="carousel2-button right" onclick="scrollCarousel2(1)">&#8250;</button>
@@ -52,8 +53,32 @@
     </div>
 </section>
 
-<script>
+<!-- Sección de Información Básica -->
+<section class="info-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <p>Teléfono: +123 456 789</p>
+                <p>Email: contacto@almaviajera.com</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Redes Sociales</h5>
+                <ul class="social-links">
+                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                    <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Ubicación</h5>
+                <p>123 Calle Principal, Ciudad, País</p>
+            </div>
+        </div>
+    </div>
+</section>
 
+<script>
 function scrollCarousel2(direction) {
     const container = document.querySelector('.carousel2-container');
     const cardWidth = container.querySelector('.find-card').offsetWidth; // Ancho de una tarjeta
@@ -65,7 +90,6 @@ function scrollCarousel2(direction) {
         behavior: 'smooth',
     });
 }
-
 </script>
 
 {% endblock %}

@@ -1,0 +1,47 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: calc(100vw - 1.2%);
+    box-sizing: border-box;
+    background-color: transparent !important;
+    z-index: 200;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.navbar.navbar-scrolled {
+    background-color: rgba(0, 0, 0, 0.9) !important; /* Fondo negro */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.navbar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+body.home .navbar .navbar-brand,
+body.home .navbar .nav-link {
+    color: white !important;
+}
+
+body.explorer .navbar .navbar-brand,
+body.explorer .navbar .nav-link {
+    color: black !important;
+}

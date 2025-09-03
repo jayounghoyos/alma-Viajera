@@ -5,10 +5,16 @@
     --font-family: 'Montserrat', sans-serif;
 }
 
+html, body {
+    margin: 0; /* Elimina márgenes */
+    padding: 0; /* Elimina rellenos */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+}
+
 body {
     font-family: var(--font-family);
-    margin: 0;
-    padding: 0;
 }
 
 .hero-section {
@@ -20,6 +26,11 @@ body {
     overflow: hidden;
     color: var(--primary-color);
     text-align: center;
+    margin-top:-50px;
+
+
+
+
 }
 
 .hero-section::before {
@@ -35,10 +46,13 @@ body {
 
 .carousel {
     position: absolute;
-    top: 0;
+    top: 0; /* Asegura que comience desde la parte superior */
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Ancho completo */
+    height: 100vh; /* Altura de la ventana */
+    margin: 0; /* Elimina márgenes adicionales */
+    padding: 0; /* Elimina rellenos adicionales */
+    z-index: 1; /* Asegura que esté detrás de la barra de navegación */
 }
 
 .carousel-image {
@@ -49,7 +63,6 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    filter: blur(3px);
     animation: fade-carousel 20s infinite;
 }
 
@@ -94,40 +107,48 @@ body {
     position: relative;
     z-index: 2;
     padding: 20px;
-    text-align: left;
+    text-align: center; /* Centra el texto horizontalmente */
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    max-width: 1200px;
+    flex-direction: column; /* Coloca el botón debajo del título */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    height: 100%; /* Asegura que ocupe toda la altura */
+    gap: 10px; /* Reduce el espacio entre el título y el botón */
+    margin-top: 2px;
+
 }
 
 .hero-content h1 {
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
-    margin: 0;
-    flex-grow: 1;
-    line-height: 1.2;
-    max-width: 60%;
+    margin: 0; /* Elimina márgenes adicionales */
+    line-height: 1.4; /* Aumenta el interlineado ligeramente */
 }
 
 .reserve-button {
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    background-color: transparent;
+    display: inline-block;
     padding: 15px 30px;
     font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
     text-decoration: none;
-    border-radius: 50px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente */
+    backdrop-filter: blur(8px); /* Efecto de desenfoque */
+    border: 2px solid var(--primary-color); /* Borde blanco */
+    border-radius: 50px; /* Bordes redondeados */
+    transition: all 0.3s ease; /* Transición suave */
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3); /* Sombra clara y transparente */
     white-space: nowrap;
+    text-align: center;
 }
 
 .reserve-button:hover {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    background-color: var(--primary-color); /* Fondo blanco al pasar el mouse */
+    color: var(--secondary-color); /* Texto oscuro al pasar el mouse */
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5); /* Incrementa la sombra */
 }
-
 @media (max-width: 768px) {
     .hero-content {
         flex-direction: column;
@@ -144,91 +165,146 @@ body {
     padding: 50px 20px;
     background-color: #f9f9f9;
     text-align: center;
-
-}
-
-.find-container {
-    max-width: 1400px;
-    margin: 0 auto;
 }
 
 .carousel2-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centra el carrusel horizontalmente */
-    margin: 0 auto; /* Centra el contenedor */
-    max-width: 100%; /* Asegura que no exceda el ancho de la pantalla */
+    justify-content: center;
+
 }
+
 .carousel2-container {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: hidden; /* Oculta el contenido que se desborda */
+    overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 20px; /* Espaciado entre tarjetas */
-    padding: 10px;
-    max-width: calc(4 * 220px + 3 * 20px);
-    margin: 0 auto; /* Centra el carrusel */
+    gap: 30px;
+    padding: 20px;
+    max-width: calc(3 * 300px + 2 * 30px + 100px);
+    -webkit-overflow-scrolling: touch;
 }
 
 .carousel2-container::-webkit-scrollbar {
-    display: none; /* Oculta la barra de desplazamiento en Chrome, Edge y Safari */
+    display: none;
 }
 
 .find-card {
-    flex: 0 0 auto; /* Evita que las tarjetas se reduzcan o crezcan */
-    width: 220px; /* Ancho fijo de las tarjetas */
-    height: 280px; /* Altura fija de las tarjetas */
+    flex: 0 0 300px;
     background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra horizontalmente el contenido */
-    justify-content: center;
+    overflow: hidden;
+    text-align: left;
 }
 
 .find-card img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transition: transform 0.3s ease;
+}
 
+.find-card img:hover {
+    transform: scale(1.05);
 }
 
 .find-card p {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: #333;
     margin: 0;
+    text-align: center; /* Centra el texto horizontalmente */
 }
 
 .find-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .carousel2-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    z-index: 1;
+    font-size: 2rem;
+    z-index: 10;
+    transition: background-color 0.3s ease;
 }
 
+.carousel2-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
 
 .carousel2-button.left {
-    left: 100px; /* Ajusta la posición del botón izquierdo */
+    left: 20px;
 }
 
 .carousel2-button.right {
-    right: 100px; /* Ajusta la posición del botón derecho */
+    right: 20px;
+}
+
+.find-container h2 {
+    font-weight: bold;
+}
+
+.find-card-content {
+    padding: 20px; /* Mantén o ajusta el padding según sea necesario */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px; /* Aumenta este valor para alargar verticalmente */
+    flex-grow: 1;
+}
+
+.info-section {
+    background-color: #f8f9fa; /* Fondo claro */
+    padding: 40px 0; /* Espaciado vertical */
+    color: #333; /* Color del texto */
+    font-family: 'Poppins', sans-serif;
+}
+
+.info-section h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.info-section p {
+    margin: 0 0 10px;
+    font-size: 0.95rem;
+}
+
+.info-section .social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-section .social-links li {
+    margin-bottom: 10px;
+}
+
+.info-section .social-links a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-section .social-links a:hover {
+    color: #0056b3;
 }
