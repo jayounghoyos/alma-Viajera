@@ -1,4 +1,3 @@
-# carrito/models.py
 from django.db import models
 from apps.catalog.models import Item 
 from apps.user.models import UsuarioFinal 

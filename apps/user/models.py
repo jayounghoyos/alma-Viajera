@@ -12,6 +12,7 @@ class Usuario(AbstractUser):
 
 class UsuarioFinal(Usuario):
     direccion = models.CharField(max_length=255, blank=True, null=True)
+    es_proveedor = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.username} - {self.direccion}"
@@ -19,6 +20,7 @@ class UsuarioFinal(Usuario):
 
 class UsuarioVendedor(Usuario):
     descripcion = models.TextField(blank=True, null=True)
+    es_proveedor = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.username} - Vendedor"

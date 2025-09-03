@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión — Alma Viajera{% endblock %}
+{% block content %}
+<div class="container mt-5" style="max-width: 480px;">
+  <h1 class="h3 mb-3">Iniciar sesión</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="mb-3">
+      <label class="form-label">Usuario o email</label>
+      {{ form.username }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contraseña</label>
+      {{ form.password }}
+    </div>
+    <button class="btn btn-primary w-100" type="submit">Entrar</button>
+  </form>
+  <hr class="my-4">
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary w-50" href="{% url 'users:signup_customer' %}">Crear cuenta</a>
+    <a class="btn btn-outline-dark w-50" href="{% url 'users:signup_provider' %}">Soy vendedor</a>
+  </div>
+</div>
+{% endblock %}

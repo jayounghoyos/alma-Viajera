@@ -6,7 +6,7 @@ from .models import Carrito, CarritoItem
 class CarritoItemInline(admin.TabularInline):
     model = CarritoItem
     extra = 1  # Number of empty forms to show
-    autocomplete_fields = ['item_id']  # Optional: if you have many items
+    autocomplete_fields = ['item_id'] 
     verbose_name = "Item del carrito"
     verbose_name_plural = "Items del carrito"
 
