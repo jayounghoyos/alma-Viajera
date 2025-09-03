@@ -45,3 +45,10 @@ body.explorer .navbar .navbar-brand,
 body.explorer .navbar .nav-link {
     color: black !important;
 }
+
+body.cart .navbar .navbar-brand,
+body.cart .navbar .nav-link {
+    color: black !important;
+
+}
+

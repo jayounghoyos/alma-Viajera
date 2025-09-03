@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.core.urls')),
     path("", include("apps.listings.urls")),
+    path('carrito/', include("apps.cart.urls")),
 ]
 
 if settings.DEBUG:
