@@ -1,4 +1,3 @@
-# catalog/admin.py
 from django.contrib import admin
 from .models import Categoria, Item
 
@@ -6,7 +5,7 @@ from .models import Categoria, Item
 class ItemInline(admin.TabularInline):
     model = Item
     extra = 1  # Number of empty forms to show
-    autocomplete_fields = ['categoria']  # Optional
+    autocomplete_fields = ['categoria'] 
     fields = ('nombre', 'descripcion', 'precio', 'ubicacion', 'disponibilidad', 'stock', 'imagenes')
     verbose_name = "Item"
     verbose_name_plural = "Items"
