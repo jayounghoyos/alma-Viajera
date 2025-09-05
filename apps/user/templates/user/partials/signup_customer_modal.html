@@ -1,0 +1,23 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Crear cuenta</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+  </div>
+  <div class="modal-body">
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <form method="post"
+          hx-post="{% url 'users:signup_customer' %}?partial=1"
+          hx-target="#authModal .modal-content"
+          hx-swap="outerHTML"
+          novalidate>
+      {% csrf_token %}
+      <div class="mb-3"><label class="form-label">Usuario</label>{{ form.username }}{{ form.username.errors }}</div>
+      <div class="mb-3"><label class="form-label">Nombre</label>{{ form.first_name }}{{ form.first_name.errors }}</div>
+      <div class="mb-3"><label class="form-label">Apellido</label>{{ form.last_name }}{{ form.last_name.errors }}</div>
+      <div class="mb-3"><label class="form-label">Email</label>{{ form.email }}{{ form.email.errors }}</div>
+      <div class="mb-3"><label class="form-label">Contraseña</label>{{ form.password1 }}{{ form.password1.errors }}</div>
+      <div class="mb-3"><label class="form-label">Confirmar contraseña</label>{{ form.password2 }}{{ form.password2.errors }}</div>
+      <button class="btn btn-primary w-100" type="submit">Registrarme</button>
+    </form>
+  </div>
+</div>

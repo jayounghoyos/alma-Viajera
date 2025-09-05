@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 class ProviderRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         u = self.request.user
@@ -12,5 +13,7 @@ class ProviderRequiredMixin(UserPassesTestMixin):
 class DashboardView(LoginRequiredMixin, ProviderRequiredMixin, TemplateView):
     template_name = 'providers/dashboard.html'
 
-class OnboardingView(LoginRequiredMixin, ProviderRequiredMixin, TemplateView):
-    template_name = 'providers/onboarding.html'
+
+@login_required
+def dashboard(request):
+    return render(request, "providers/dashboard.html")

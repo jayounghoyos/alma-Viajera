@@ -46,6 +46,21 @@ body.explorer .navbar .nav-link {
     color: black !important;
 }
 
+body.login .navbar .navbar-brand,
+body.login .navbar .nav-link {
+    color: black !important;
+}
+
+body.nosotros .navbar .navbar-brand,
+body.nosotros .navbar .nav-link {
+    color: black !important;
+}
+
+body.black_navbar_text .navbar .navbar-brand,
+body.black_navbar_text .navbar .nav-link {
+    color: black !important;
+}
+
 body.cart .navbar .navbar-brand,
 body.cart .navbar .nav-link {
     color: black !important;
