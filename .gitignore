@@ -23,7 +23,7 @@ ENV/
 
 # --- Django ---
 # Database local
-db.sqlite3
+#db.sqlite3
 
 # Archivos de migraciones compilados
 */migrations/__pycache__/

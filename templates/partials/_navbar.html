@@ -25,7 +25,7 @@
 
           <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">Carrito</a></li>
         {% else %}
           <li class="nav-item">
             <form method="post" action="{% url 'users:logout' %}" class="d-inline">
@@ -37,7 +37,8 @@
           </li>
           <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">Carrito</a></li>
+
 
           {% if request.user.es_proveedor %}
             <li class="nav-item"><a class="nav-link" href="{% url 'providers:dashboard' %}">Cuenta</a></li>
