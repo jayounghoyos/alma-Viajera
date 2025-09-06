@@ -27,10 +27,6 @@ body {
     color: var(--primary-color);
     text-align: center;
     margin-top:-50px;
-
-
-
-
 }
 
 .hero-section::before {
@@ -124,6 +120,7 @@ body {
     font-weight: 700;
     margin: 0; /* Elimina márgenes adicionales */
     line-height: 1.4; /* Aumenta el interlineado ligeramente */
+    font-family: 'Alatsi', sans-serif;
 }
 
 .reserve-button {

@@ -8,6 +8,7 @@
     background-color: transparent !important;
     z-index: 200;
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+    font-family: 'Alatsi', sans-serif;
 }
 
 .navbar.navbar-scrolled {
@@ -38,11 +39,15 @@
 
 body.home .navbar .navbar-brand,
 body.home .navbar .nav-link {
+    font-family: 'Alatsi', sans-serif;
+    font-size: 15px;
     color: white !important;
 }
 
 body.explorer .navbar .navbar-brand,
 body.explorer .navbar .nav-link {
+    font-family: 'Alatsi', sans-serif;
+    font-size: 15px;
     color: black !important;
 }
 

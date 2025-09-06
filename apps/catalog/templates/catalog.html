@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Catalog · Alma Viajera{% endblock %}
+{% block body_class %}explorer{% endblock %}
+{% block content %}
+  {% load static %}
+  <div class="container text-center mt-5">
+
+    <!-- Título principal -->
+    <h1 class="display-1 fw-bold">MEDELLÍN</h1>
+
+    <!-- Separador -->
+    <hr class="my-4">
+
+    <!-- Categorías -->
+    <div class="row justify-content-center mb-4 categories">
+      <a href="?category=lugar" class="col-2 border-end category-link">Lugares</a>
+      <a href="?category=comida" class="col-2 border-end category-link">Comida</a>
+      <a href="?category=tour" class="col-2 border-end category-link">Tours</a>
+      <a href="?category=actividad" class="col-2 border-end category-link">Actividades</a>
+      <a href="?category=souvenir" class="col-2 category-link">Souvenirs</a>
+    </div>
+    
+    <!-- Buscador -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control rounded-pill" placeholder="Quiero...">
+          <button class="btn btn-outline-secondary rounded-pill ms-2" type="button">
+            ✖
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones Filtros / Ordenar -->
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn btn-outline-dark d-flex align-items-center px-4">
+        <i class="bi bi-funnel me-2"></i> Filtros
+      </button>
+      <button class="btn btn-outline-dark d-flex align-items-center px-4">
+        <i class="bi bi-arrow-down-up me-2"></i> Ordenar por
+      </button>
+    </div>
+  </div>
+
+  <!-- Card debajo del buscador -->
+  <div class="container my-4">
+    <div class="row g-4"> <!-- g-4 adds space between cards -->
+
+      <!-- Cards -->
+      {% for item in items %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm h-100" style="border-radius: 12px; overflow: hidden;">
+          {% if item.imagen %}
+            <img src="{{ item.imagen.url }}" class="card-img-top" alt="{{ item.nombre }}">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title"> {{item.nombre}} </h5>
+            <p class="card-text text-muted"> {{item.descripcion}}</p>
+            
+            <div class="d-flex text-muted mb-2">
+              <small class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
+              <small><i class="bi bi-clock"></i> {{item.tiempo}} hours</small>
+            </div>
+
+            <div class="mb-2">
+              <span class="text-warning"><i class="bi bi-star-fill"></i></span>
+              <strong>4.8</strong> (89 reseñas)
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
+              <a href="#" class="btn btn-primary">Reservar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- CSS personalizado -->
+  <style>
+    .category-link {
+      color: black;            /* color normal */
+      text-decoration: none;   /* sin subrayado */
+      font-weight: 500;        /* un poco más grueso */
+    }
+    .category-link:hover {
+      color: #ff6600;          /* cambia color al pasar el mouse */
+    }
+    .categories div {
+      font-family: "Inria Sans", sans-serif;
+      font-weight: 400;  /* Regular */
+      font-style: normal;
+      font-size: 1.1rem;
+    }
+    .categories .col-2 {
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+    .categories .col-2:hover {
+      font-weight: 500;  /* Slightly bolder on hover */
+      text-decoration: underline;
+    }
+    .card-img-top {
+      height: 200px;      /* fixed height */
+      object-fit: cover;  /* crop/zoom to fill */
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-body .card-footer-section {
+      margin-top: auto; /* pushes it to the bottom */
+    }
+
+  </style>
+{% endblock %}

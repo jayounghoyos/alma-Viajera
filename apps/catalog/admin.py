@@ -6,7 +6,7 @@ class ItemInline(admin.TabularInline):
     model = Item
     extra = 1  # Number of empty forms to show
     autocomplete_fields = ['categoria'] 
-    fields = ('nombre', 'descripcion', 'precio', 'ubicacion', 'disponibilidad', 'stock', 'imagenes')
+    fields = ('nombre', 'descripcion', 'precio', 'ubicacion', 'disponibilidad', 'stock', 'imagen')
     verbose_name = "Item"
     verbose_name_plural = "Items"
 
