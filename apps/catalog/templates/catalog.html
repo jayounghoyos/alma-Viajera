@@ -87,41 +87,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
-  <!-- CSS personalizado -->
-  <style>
-    .category-link {
-      color: black;            /* color normal */
-      text-decoration: none;   /* sin subrayado */
-      font-weight: 500;        /* un poco más grueso */
-    }
-    .category-link:hover {
-      color: #ff6600;          /* cambia color al pasar el mouse */
-    }
-    .categories div {
-      font-family: "Inria Sans", sans-serif;
-      font-weight: 400;  /* Regular */
-      font-style: normal;
-      font-size: 1.1rem;
-    }
-    .categories .col-2 {
-      cursor: pointer;
-      padding: 0.5rem 0;
-    }
-    .categories .col-2:hover {
-      font-weight: 500;  /* Slightly bolder on hover */
-      text-decoration: underline;
-    }
-    .card-img-top {
-      height: 200px;      /* fixed height */
-      object-fit: cover;  /* crop/zoom to fill */
-    }
-    .card-body {
-      display: flex;
-      flex-direction: column;
-    }
-    .card-body .card-footer-section {
-      margin-top: auto; /* pushes it to the bottom */
-    }
-
-  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
 {% endblock %}

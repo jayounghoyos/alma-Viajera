@@ -37,38 +37,15 @@
     text-decoration: underline;
 }
 
+body .navbar .navbar-brand,
+body .navbar .nav-link {
+    font-family: 'Alatsi', sans-serif;
+    font-size: 15px;
+    color: black !important;
+}
+
+/* Exception: white only on home */
 body.home .navbar .navbar-brand,
 body.home .navbar .nav-link {
-    font-family: 'Alatsi', sans-serif;
-    font-size: 15px;
     color: white !important;
 }
-
-body.explorer .navbar .navbar-brand,
-body.explorer .navbar .nav-link {
-    font-family: 'Alatsi', sans-serif;
-    font-size: 15px;
-    color: black !important;
-}
-
-body.login .navbar .navbar-brand,
-body.login .navbar .nav-link {
-    color: black !important;
-}
-
-body.nosotros .navbar .navbar-brand,
-body.nosotros .navbar .nav-link {
-    color: black !important;
-}
-
-body.black_navbar_text .navbar .navbar-brand,
-body.black_navbar_text .navbar .nav-link {
-    color: black !important;
-}
-
-body.cart .navbar .navbar-brand,
-body.cart .navbar .nav-link {
-    color: black !important;
-
-}
-

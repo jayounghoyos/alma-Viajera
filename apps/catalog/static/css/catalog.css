@@ -1,0 +1,40 @@
+.category-link {
+  color: black;            
+  text-decoration: none;   
+  font-weight: 500;        
+}
+
+.category-link:hover {
+  color: #ff6600;          
+}
+
+.categories div {
+  font-family: "Inria Sans", sans-serif;
+  font-weight: 400;  
+  font-style: normal;
+  font-size: 1.1rem;
+}
+
+.categories .col-2 {
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.categories .col-2:hover {
+  font-weight: 500;  
+  text-decoration: underline;
+}
+
+.card-img-top {
+  height: 200px;      
+  object-fit: cover;  
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body .card-footer-section {
+  margin-top: auto; 
+}
