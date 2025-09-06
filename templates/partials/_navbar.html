@@ -10,15 +10,32 @@
       <ul class="navbar-nav ms-auto">
 
         {% if not request.user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Iniciar sesión</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Iniciar sesión</a></li> -->
+          <li> <a class="nav-link"
+            href="{% url 'users:login' %}"
+            hx-get="{% url 'users:login' %}?partial=1"
+            hx-target="#authModal .modal-content"
+            hx-swap="outerHTML"
+            data-bs-toggle="modal"
+            data-bs-target="#authModal">
+            Iniciar sesión
+          </a></li>
+
+          <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">Carrito</a></li>
         {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Cerrar sesión</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'listings:explorer' %}">Explorar</a></li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+              {% csrf_token %}
+
+              <!-- <a class="nav-link" href="{% url 'users:logout' %}">Cerrar sesión</a> -->
+              <button type="submit" class="nav-link btn btn-link p-10">Cerrar sesión</button>
+            </form>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' %}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">Carrito</a></li>
 
           {% if request.user.es_proveedor %}
             <li class="nav-item"><a class="nav-link" href="{% url 'providers:dashboard' %}">Cuenta</a></li>

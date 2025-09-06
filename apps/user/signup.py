@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.contrib.auth import login
-from ..forms import CustomerSignupForm, ProviderSignupForm
+from .forms import CustomerSignupForm, ProviderSignupForm
 
 class SignupCustomerView(FormView):
     template_name = 'user/signup_customer.html'

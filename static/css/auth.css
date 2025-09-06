@@ -1,0 +1,191 @@
+/* ===== Auth===== */
+:root{
+  --av-bg: #f8fafc;
+  --av-card-bg: #ffffff;
+  --av-text: #0f172a;
+  --av-muted: #64748b;
+  --av-border: #e5e7eb;
+  --av-ring: #3b82f6; /* azul suave para focus */
+  --av-primary: #2563eb;
+  --av-primary-900: #1d4ed8;
+  --av-radius-lg: 16px;
+  --av-radius-md: 12px;
+  --av-shadow-sm: 0 2px 10px rgba(2, 6, 23, 0.05);
+  --av-shadow-lg: 0 12px 30px rgba(2, 6, 23, 0.08);
+}
+
+/* Fondo suave para páginas de auth */
+body.login,
+body.black_navbar_text{
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+/* ===== Navbar en páginas claras (usas body_class black_navbar_text) ===== */
+body.black_navbar_text .navbar{
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--av-border);
+}
+body.black_navbar_text .navbar .navbar-brand{
+  color: var(--av-text) !important;
+  font-weight: 700;
+}
+body.black_navbar_text .navbar .nav-link{
+  color: #0f172a !important;
+  opacity: .9;
+}
+body.black_navbar_text .navbar .nav-link:hover{
+  opacity: 1;
+}
+
+/* ===== Tarjetas genéricas (ej. dashboard proveedor) ===== */
+.card{
+  background: var(--av-card-bg);
+  border: 1px solid var(--av-border);
+  border-radius: var(--av-radius-lg);
+  box-shadow: var(--av-shadow-sm);
+}
+.card.p-3, .card .p-3{ padding: 1rem !important; }
+.card h2, .card .h5{
+  margin-bottom: .25rem;
+  font-weight: 600;
+  color: var(--av-text);
+}
+.card p, .text-muted{
+  color: var(--av-muted) !important;
+}
+
+/* ===== Modal look & feel ===== */
+.modal-content{
+  border: 1px solid var(--av-border);
+  border-radius: var(--av-radius-lg);
+  box-shadow: var(--av-shadow-lg);
+}
+.modal-header{
+  border-bottom: 1px solid var(--av-border);
+}
+.modal-title{
+  font-weight: 600;
+  color: var(--av-text);
+}
+
+/* ===== Formularios (aplica a páginas de auth y modales) ===== */
+body.login form,
+body.black_navbar_text form,
+.modal-content form{
+  font-size: 0.95rem;
+}
+body.login label,
+body.black_navbar_text label,
+.modal-content label{
+  font-weight: 600;
+  margin-bottom: .35rem;
+  color: var(--av-text);
+}
+
+/* Inputs base (sin tocar todo el sitio) */
+body.login input,
+body.black_navbar_text input,
+.modal-content input,
+body.login select,
+body.black_navbar_text select,
+.modal-content select,
+body.login textarea,
+body.black_navbar_text textarea,
+.modal-content textarea{
+  display: block;
+  width: 100%;
+  border: 1px solid var(--av-border);
+  border-radius: var(--av-radius-md);
+  padding: .7rem .9rem;
+  background: #fff;
+  color: var(--av-text);
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+body.login input:focus,
+body.black_navbar_text input:focus,
+.modal-content input:focus,
+body.login select:focus,
+body.black_navbar_text select:focus,
+.modal-content select:focus,
+body.login textarea:focus,
+body.black_navbar_text textarea:focus,
+.modal-content textarea:focus{
+  border-color: var(--av-ring);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
+}
+
+body.login input:active,
+body.black_navbar_text input:active,
+.modal-content input:active{
+  transform: translateY(0);
+}
+
+/* Errores del form */
+.alert-danger{
+  border-radius: var(--av-radius-md);
+}
+
+/* ===== Botones ===== */
+.btn{
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+}
+
+.btn:active{
+  transform: translateY(1px);
+}
+
+.btn-primary{
+  background: var(--av-primary);
+  border-color: var(--av-primary);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, .25);
+}
+.btn-primary:hover{
+  background: var(--av-primary-900);
+  border-color: var(--av-primary-900);
+  filter: saturate(1.05);
+}
+
+.btn-outline-secondary{
+  border-color: var(--av-border);
+  color: var(--av-text);
+  background: #fff;
+}
+.btn-outline-secondary:hover{
+  background: #f3f4f6;
+}
+
+.btn-outline-dark{
+  border-color: #0f172a;
+  color: #0f172a;
+  background: #fff;
+}
+.btn-outline-dark:hover{
+  background: #0f172a;
+  color: #fff;
+}
+
+/* Botón “link” del logout */
+.navbar .btn.btn-link{
+  color: inherit;
+  text-decoration: none;
+}
+.navbar .btn.btn-link:hover{
+  text-decoration: underline;
+}
+
+/* ===== Helpers de contenedor auth ===== */
+.auth-container{
+  max-width: 520px;
+  margin-top: 4.5rem;
+  background: var(--av-card-bg);
+  border: 1px solid var(--av-border);
+  border-radius: var(--av-radius-lg);
+  box-shadow: var(--av-shadow-sm);
+  padding: 2rem;
+}

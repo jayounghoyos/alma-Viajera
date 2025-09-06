@@ -16,14 +16,30 @@
   <!-- Tus estilos -->
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
   <link rel="icon" href="{% static 'images/favicon.svg' %}">
 
   {% block extra_head %}{% endblock %}
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
-  {% include 'partials/_navbar.html' %}
 
+<body class="{% block body_class %}{% endblock %}">
+  
+  {% include 'partials/_navbar.html' %}
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+  <!-- Modal de autenticación -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-5 text-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Cargando…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Contenido -->
   <main class="pt-5">
     {% block content %}{% endblock %}
@@ -51,6 +67,40 @@
     document.addEventListener('scroll', onScroll, { passive: true });
     onScroll(); // establece el estado inicial al cargar
   })();
+  </script>
+  
+   <!-- Abrir modal según ?open=... -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const open = params.get('open');
+    const target = document.querySelector('#authModal .modal-content');
+
+    let url = null;
+    if (open === 'login') {
+      url = "{% url 'users:login' %}?partial=1";
+    } else if (open === 'signup_customer') {
+      url = "{% url 'users:signup_customer' %}?partial=1";
+    } else if (open === 'signup_provider') {
+      url = "{% url 'users:signup_provider' %}?partial=1";
+    }
+
+    if (url && target) {
+      fetch(url, { headers: { 'HX-Request': 'true' }})
+        .then(r => r.text())
+        .then(html => {
+          target.outerHTML = html;
+          const modalEl = document.getElementById('authModal');
+          const modal = new bootstrap.Modal(modalEl);
+          modal.show();
+          // Limpia el query param
+          params.delete('open');
+          const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+          window.history.replaceState({}, '', newUrl);
+        })
+        .catch(() => {});
+    }
+  });
   </script>
 
   {% block extra_js %}{% endblock %}
