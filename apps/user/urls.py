@@ -1,6 +1,6 @@
 from django.urls import path
 from django.urls import path
-from .views import SimpleLoginView, SimpleLogoutView, SignupCustomerView, SignupProviderView  # ← de views.py
+from .views import SimpleLoginView, SimpleLogoutView, SignupCustomerView, SignupProviderView  # de views.py
 
 
 
