@@ -24,7 +24,7 @@
     <div class="row justify-content-center mb-4">
       <div class="col-md-6">
         <div class="input-group">
-          <input type="text" class="form-control rounded-pill" placeholder="Quiero...">
+          <input type="text" name="search" class="form-control rounded-pill" placeholder="Quiero...">
           <button class="btn btn-outline-secondary rounded-pill ms-2" type="button">
             ✖
           </button>
@@ -49,41 +49,41 @@
 
       <!-- Cards -->
       {% for item in items %}
-      <div class="col-md-6 col-lg-3">
-        <div class="card shadow-sm h-100" style="border-radius: 12px; overflow: hidden;">
-          {% if item.imagen %}
-            <img src="{{ item.imagen.url }}" class="card-img-top" alt="{{ item.nombre }}">
-          {% else %}
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default image">
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">
-              {% if categoria == "lugar" %}
-              <a href="{% url 'catalog:explorar' item.nombre 'lugar' %}">
-                {{ item.nombre }}
-              </a>
-              {% else %}
-              <h5 class="card-title"> {{item.nombre}} </h5>
-              {% endif %}
-            </h5>
-            <p class="card-text text-muted"> {{item.descripcion}}</p>
-            
-            <div class="d-flex text-muted mb-2">
-              <small  class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
-              <small><i class="bi bi-clock"></i> {{item.tiempo}} hours</small>
-            </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card shadow-sm h-100" style="border-radius: 12px; overflow: hidden;">
+            {% if item.imagen %}
+              <img src="{{ item.imagen.url }}" class="card-img-top" alt="{{ item.nombre }}">
+            {% else %}
+              <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default image">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">
+                {% if categoria == "lugar" %}
+                <a href="{% url 'catalog:explorar' item.nombre 'lugar' %}">
+                  {{ item.nombre }}
+                </a>
+                {% else %}
+                <h5 class="card-title"> {{item.nombre}} </h5>
+                {% endif %}
+              </h5>
+              <p class="card-text text-muted"> {{item.descripcion}}</p>
+              
+              <div class="d-flex text-muted mb-2">
+                <small  class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
+                <small><i class="bi bi-clock"></i> {{item.tiempo}} hours</small>
+              </div>
 
-            <div class="mb-2">
-              <span class="text-warning"><i class="bi bi-star-fill"></i></span>
-              <strong>4.8</strong> (89 reseñas)
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
-              <a href="#" class="btn btn-primary">Reservar</a>
+              <div class="mb-2">
+                <span class="text-warning"><i class="bi bi-star-fill"></i></span>
+                <strong>4.8</strong> (89 reseñas)
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
+                <a href="#" class="btn btn-primary">Reservar</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   </div>
