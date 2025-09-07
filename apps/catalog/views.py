@@ -9,15 +9,13 @@ from .models import Item
 
 class CatalogView(View):
     template_name = 'catalog.html'
-
-    def get(self, request):
-        category = request.GET.get("category")  # e.g. "comida"
-        if category:
-            items = Item.objects.filter(categoria__nombre=category)
-        else:
-            items = Item.objects.filter(categoria__nombre="lugar")
-        viewData = {
+    ordenar_por_precio = True
+    ordenar_estrella = True
+    def get(self, request, place, categoria, *args, **kwargs):
+        items = Item.objects.filter(categoria__nombre=categoria, ubicacion=place)
+        
+        return render(request, "catalog.html", {
+            "place": place,
+            "categoria": categoria,
             "items": items,
-            "selected_category": category
-        }
-        return render(request, self.template_name, viewData)
+        })

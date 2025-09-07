@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 app_name = "catalog"
 
 urlpatterns = [
-    path("catalog/", CatalogView.as_view(), name="explorar"),
+    path("explorar/<str:place>/<str:categoria>", CatalogView.as_view(), name="explorar"),
 ]
 
 if settings.DEBUG:

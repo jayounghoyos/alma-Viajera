@@ -6,18 +6,18 @@
   <div class="container text-center mt-5">
 
     <!-- Título principal -->
-    <h1 class="display-1 fw-bold">MEDELLÍN</h1>
+    <h1 class="display-1 fw-bold">{{ place|upper }}</h1>
 
     <!-- Separador -->
     <hr class="my-4">
 
     <!-- Categorías -->
     <div class="row justify-content-center mb-4 categories">
-      <a href="?category=lugar" class="col-2 border-end category-link">Lugares</a>
-      <a href="?category=comida" class="col-2 border-end category-link">Comida</a>
-      <a href="?category=tour" class="col-2 border-end category-link">Tours</a>
-      <a href="?category=actividad" class="col-2 border-end category-link">Actividades</a>
-      <a href="?category=souvenir" class="col-2 category-link">Souvenirs</a>
+      <a href="{% url 'catalog:explorar' place 'lugar' %}" class="col-2 border-end category-link">Lugares</a>
+      <a href="{% url 'catalog:explorar' place 'comida' %}" class="col-2 border-end category-link">Comida</a>
+      <a href="{% url 'catalog:explorar' place 'tour' %}" class="col-2 border-end category-link">Tours</a>
+      <a href="{% url 'catalog:explorar' place 'actividad' %}" class="col-2 border-end category-link">Actividades</a>
+      <a href="{% url 'catalog:explorar' place 'souvenir' %}" class="col-2 category-link">Souvenirs</a>
     </div>
     
     <!-- Buscador -->
@@ -57,11 +57,19 @@
             <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default image">
           {% endif %}
           <div class="card-body">
-            <h5 class="card-title"> {{item.nombre}} </h5>
+            <h5 class="card-title">
+              {% if categoria == "lugar" %}
+              <a href="{% url 'catalog:explorar' item.nombre 'lugar' %}">
+                {{ item.nombre }}
+              </a>
+              {% else %}
+              <h5 class="card-title"> {{item.nombre}} </h5>
+              {% endif %}
+            </h5>
             <p class="card-text text-muted"> {{item.descripcion}}</p>
             
             <div class="d-flex text-muted mb-2">
-              <small class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
+              <small  class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
               <small><i class="bi bi-clock"></i> {{item.tiempo}} hours</small>
             </div>
 
@@ -79,8 +87,6 @@
       {% endfor %}
     </div>
   </div>
-
-
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
