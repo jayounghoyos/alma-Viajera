@@ -23,14 +23,17 @@
     <!-- Buscador -->
     <div class="row justify-content-center mb-4">
       <div class="col-md-6">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control rounded-pill" placeholder="Quiero...">
-          <button class="btn btn-outline-secondary rounded-pill ms-2" type="button">
-            ✖
-          </button>
-        </div>
+        <form method="get" action="{% url 'catalog:explorar' place categoria %}">
+          <div class="input-group">
+            <input type="text" name="search" class="form-control rounded-pill" placeholder="Quiero...">
+            <button class="btn btn-outline-secondary rounded-pill ms-2" type="submit">
+              ✖
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+
 
     <!-- Botones Filtros / Ordenar -->
     <div class="d-flex justify-content-center gap-3">
