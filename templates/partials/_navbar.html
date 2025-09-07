@@ -33,7 +33,7 @@
               <button type="submit" class="nav-link btn btn-link p-10">Cerrar sesión</button>
             </form>
           </li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' %}">Explorar</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' 'Colombia' 'lugar'%}">Explorar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">Carrito</a></li>
 
