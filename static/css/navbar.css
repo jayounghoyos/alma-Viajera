@@ -49,3 +49,8 @@ body.home .navbar .navbar-brand,
 body.home .navbar .nav-link {
     color: white !important;
 }
+
+body.formulario .navbar .navbar-brand,
+body.formulario .navbar .nav-link {
+    color: black !important; /* Letra negra */
+}

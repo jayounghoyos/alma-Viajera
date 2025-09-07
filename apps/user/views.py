@@ -1,4 +1,3 @@
-# apps/user/views.py
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -10,7 +9,6 @@ from .forms import LoginForm, CustomerSignupForm, ProviderSignupForm
 
 
 class SimpleLoginView(LoginView):
-    # Ya no usamos template de página completa
     form_class = LoginForm
     redirect_authenticated_user = True
 

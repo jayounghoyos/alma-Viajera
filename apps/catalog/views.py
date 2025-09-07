@@ -13,7 +13,6 @@ class CatalogView(View):
     ordenar_estrella = True
     def get(self, request, place, categoria, *args, **kwargs):
         items = Item.objects.filter(categoria__nombre=categoria, ubicacion=place)
-        
         return render(request, "catalog.html", {
             "place": place,
             "categoria": categoria,
