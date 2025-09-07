@@ -6,4 +6,5 @@ app_name = "providers"
 
 urlpatterns = [
     path("account/", views.dashboard, name="dashboard"),
+    path('crear-servicio/', views.crear_servicio, name='crear_servicio'),
 ]
