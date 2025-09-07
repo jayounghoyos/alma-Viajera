@@ -31,8 +31,6 @@ ENV/
 
 # Archivos estáticos y media generados
 
-media/
-
 # Archivos de logs
 *.log
 
