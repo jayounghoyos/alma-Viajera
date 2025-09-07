@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Catalog · Alma Viajera{% endblock %}
+{% block extra_head %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
 {% block body_class %}explorer{% endblock %}
 {% block content %}
   {% load static %}
@@ -40,9 +44,17 @@
       <button class="btn btn-outline-dark d-flex align-items-center px-4">
         <i class="bi bi-funnel me-2"></i> Filtros
       </button>
-      <button class="btn btn-outline-dark d-flex align-items-center px-4">
-        <i class="bi bi-arrow-down-up me-2"></i> Ordenar por
-      </button>
+      <div class="popover-hover">
+        <button class="btn btn-outline-dark d-flex align-items-center px-4">
+          <i class="bi bi-arrow-down-up me-2"></i> Ordenar por
+        </button>
+        <div class="popover-box">
+          <a href="?order=precio_asc">Precio: menor a mayor</a>
+          <a href="?order=precio_desc">Precio: mayor a menor</a>
+          <a href="?order=tiempo_asc">Tiempo: menor a mayor</a>
+          <a href="?order=tiempo_desc">Tiempo: menor a mayor</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -83,7 +95,7 @@
                 <strong>4.8</strong> (89 reseñas)
               </div>
 
-              {% if categoria != lugar %}
+              {% if categoria != "lugar" %}
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
                   <a href="#" class="btn btn-primary">Reservar</a>
@@ -101,6 +113,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hover = document.querySelector(".popover-hover");
+      const box = hover.querySelector(".popover-box");
+      let timeout;
+
+      hover.addEventListener("mouseenter", () => {
+        clearTimeout(timeout);
+        box.style.display = "block";
+      });
+
+      hover.addEventListener("mouseleave", () => {
+        timeout = setTimeout(() => {
+          box.style.display = "none";
+        }, 500); // 1000 ms = 1 second
+      });
+    });
+  </script>
 {% endblock %}
