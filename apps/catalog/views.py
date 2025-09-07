@@ -23,7 +23,6 @@ class CatalogView(View):
                 categoria__nombre=categoria, ubicacion=place
             )
 
-        print(categoria)
         # apply ordering
         if ordenar == "precio_asc":
             items = items.order_by("precio")
@@ -33,6 +32,8 @@ class CatalogView(View):
             items = items.order_by("tiempo")  # example, replace with your field
         elif ordenar == "tiempo_desc":  # placeholder if later you add ratings
             items = items.order_by("-tiempo")  # example, replace with your field
+
+        print(items)
 
         return render(request, "catalog.html", {
             "place": place,
