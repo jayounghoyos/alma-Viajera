@@ -5,62 +5,69 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
-{% block extra_css %}{% endblock %}
 
 <div class="form-container">
-    <h2>Registra tu Producto</h2>
-    <form action="#" method="POST" enctype="multipart/form-data">
+  <h2>Registra tu Producto</h2>
 
-        <div class="form-group">
-            <label for="categoria">Categoría</label>
-            <select id="categoria" name="categoria" required>
-                <option value="" disabled selected>Selecciona una categoría</option>
-                <option value="lugar">Lugar</option>
-                <option value="tour">Tour</option>
-                <option value="comida">Comida</option>
-                <option value="souvenir">Souvenir</option>
-                <option value="actividad">Actividad</option>
-            </select>
-        </div>
+  <form action="{% url 'providers:crear_servicio' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
 
-        <div class="form-group">
-            <label for="nombre">Nombre del Producto</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ej: Café especial de la región" required>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.categoria.id_for_label }}">Categoría</label>
+      {{ form.categoria }}
+      {{ form.categoria.errors }}
+    </div>
 
-        <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe tu producto en detalle..." required></textarea>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.nombre.id_for_label }}">Nombre del Producto</label>
+      {{ form.nombre }}
+      {{ form.nombre.errors }}
+    </div>
 
-        <div class="form-group">
-            <label for="precio">Precio</label>
-            <div class="input-with-icon">
-                <span>$</span>
-                <input type="number" id="precio" name="precio" placeholder="0.00" step="0.01" required>
-            </div>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+      {{ form.descripcion }}
+      {{ form.descripcion.errors }}
+    </div>
 
-        <div class="form-group">
-            <label for="ubicacion">Ubicación</label>
-            <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Sabaneta, Antioquia" required>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.precio.id_for_label }}">Precio</label>
+      <div class="input-with-icon"><span>$</span>{{ form.precio }}</div>
+      {{ form.precio.errors }}
+    </div>
 
-        <div class="form-group">
-            <label for="imagen">Imagen del Producto</label>
-            <input type="file" id="imagen" name="imagen" accept="image/*" required>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.ubicacion.id_for_label }}">Ubicación</label>
+      {{ form.ubicacion }}
+      {{ form.ubicacion.errors }}
+    </div>
 
-        <div class="form-group">
-            <label for="disponibilidad">Disponibilidad</label>
-            <select id="disponibilidad" name="disponibilidad" required>
-                <option value="disponible">Disponible</option>
-                <option value="no-disponible">No Disponible</option>
-                <option value="agotado">Agotado</option>
-            </select>
-        </div>
+    <div class="form-group">
+      <label for="{{ form.imagen.id_for_label }}">Imagen del Producto</label>
+      {{ form.imagen }}
+      {{ form.imagen.errors }}
+    </div>
 
-        <button type="submit" class="btn-register-product">Registrar Producto</button>
-    </form>
+    <div class="form-group">
+      <label for="{{ form.tiempo.id_for_label }}">Duración (horas)</label>
+      {{ form.tiempo }}
+      {{ form.tiempo.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.disponibilidad.id_for_label }}">Disponibilidad</label>
+      {{ form.disponibilidad }}
+      {{ form.disponibilidad.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.stock.id_for_label }}">Stock (souvenirs)</label>
+      {{ form.stock }}
+      {{ form.stock.errors }}
+    </div>
+
+    <button type="submit" class="btn-register-product">Registrar Producto</button>
+  </form>
 </div>
 {% endblock %}
