@@ -4,7 +4,7 @@ from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 from .models import Item
 
 class CatalogView(View):
@@ -42,3 +42,9 @@ class CatalogView(View):
             "categoria": categoria,
             "items": items,
         })
+
+
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'catalog/item_detail.html'  # Ruta directa sin la carpeta adicional
+    context_object_name = 'item'

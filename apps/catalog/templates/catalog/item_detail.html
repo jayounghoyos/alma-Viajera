@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ item.nombre }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/item_detail.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<div class="product-container">
+    <div class="product-image">
+        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
+    </div>
+    <div class="product-details-container">
+        <div class="product-details">
+            <h1 class="product-title">{{ item.nombre }}</h1>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="product-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i> <!-- Ícono de ubicación -->
+                    <span>{{ item.ubicacion }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i> <!-- Ícono de reloj -->
+                    <span>{{ item.tiempo }} horas</span>
+                </div>
+            </div>
+            <p class="product-description">
+                {{ item.descripcion }}
+            </p>
+            <div class="product-price">
+                <span class="price-value">${{ item.precio }}</span>
+                <span class="price-currency">COP</span>
+            </div>
+            <div class="product-availability">
+                {% if item.disponibilidad %}
+                    <i class="fas fa-check-circle"></i>
+                    <span>Disponible</span>
+                {% else %}
+                    <i class="fas fa-times-circle"></i>
+                    <span>No Disponible</span>
+                {% endif %}
+            </div>
+            <form action="{% url 'cart:agregar_al_carrito' item.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="add-to-cart-button">Añadir al Carrito</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 #from apps.user.models import UsuarioVendedor
+from django.views.generic import DetailView
 
 # Create your models here.
 class Categoria(models.Model):
@@ -31,6 +32,7 @@ class Item(models.Model):
     tiempo = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     disponibilidad = models.BooleanField(default=True)  # tours/actividades
     stock = models.PositiveIntegerField(blank=True, null=True)  # souvenirs
+
     vendedor = models.ForeignKey(
         settings.AUTH_USER_MODEL,          # modelo de usuario
         on_delete=models.CASCADE,
@@ -38,3 +40,10 @@ class Item(models.Model):
     )
     def __str__(self):
         return f"{self.nombre} ({self.categoria})"
+
+
+class ItemDetailView(DetailView):
+    """Vista genérica para mostrar los detalles de un producto."""
+    model = Item
+    template_name = 'catalog/item_detail.html'
+    context_object_name = 'item'

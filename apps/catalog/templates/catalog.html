@@ -98,7 +98,7 @@
               {% if categoria != "lugar" %}
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
-                  <a href="#" class="btn btn-primary">Reservar</a>
+                  <a href="{% url 'catalog:item_detail' item.id %}" class="btn btn-primary">Ver</a>
                 </div>
               {% endif %}
             </div>

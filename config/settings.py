@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.review',
     'apps.providers',
     'apps.user',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

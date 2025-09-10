@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block body_class %}cart{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<main class="container">
+
+    {% if login_required %}
+    <!-- Mostrar mensaje de inicio de sesión requerido -->
+    <div class="login-required">
+        <h1>Debes iniciar sesión</h1>
+        <p>Para continuar, por favor  <a class="nav-link"
+            href="{% url 'users:login' %}"
+            hx-get="{% url 'users:login' %}?partial=1"
+            hx-target="#authModal .modal-content"
+            hx-swap="outerHTML"
+            data-bs-toggle="modal"
+            data-bs-target="#authModal">
+            Iniciar sesión
+          </a>.</p>
+    </div>
+    {% else %}
+    <!-- Mostrar contenido del carrito -->
+    <h1>Tu Carrito de Compras</h1>
+
+    {% if carrito and carrito.items.all %}
+    <div class="cart-back">
+        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="cart-layout">
+        <div class="cart-items">
+            {% for item in carrito.items.all %}
+            <div class="cart-item" id="cart-item-{{ item.item.id }}">
+                <img src="{{ item.item.imagen.url }}" alt="{{ item.item.nombre }}" class="product-image">
+                <div class="item-details">
+                    <span class="item-name">{{ item.item.nombre }}</span>
+                    <div class="item-controls">
+                        <button class="quantity-btn" data-action="decrease" data-item-id="{{ item.item.id }}">-</button>
+                        <span class="quantity" id="quantity-{{ item.item.id }}">{{ item.cantidad }}</span>
+                        <button class="quantity-btn" data-action="increase" data-item-id="{{ item.item.id }}">+</button>
+                    </div>
+                    <!-- Precio unitario (fijo) -->
+                    <span class="item-price">Precio unitario: ${{ item.item.precio|floatformat:2 }}</span>
+                    <!-- Subtotal dinámico -->
+                    <span class="item-subtotal" id="subtotal-{{ item.item.id }}">
+                        Subtotal: ${{ item.cantidad|floatformat:0|add:item.item.precio|floatformat:2 }}
+                    </span>
+                </div>
+                <button class="remove-btn" data-item-id="{{ item.item.id }}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+            <h2>Resumen de Compra</h2>
+            <div class="summary-line">
+                <span>Subtotal:</span>
+                <span id="subtotal">${{ carrito.total|floatformat:2 }}</span>
+            </div>
+            <div class="summary-line">
+                <span>Envío:</span>
+                <span>Gratis</span>
+            </div>
+            <div class="summary-line total">
+                <span>Total:</span>
+                <span id="total">${{ carrito.total|floatformat:2 }}</span>
+            </div>
+            <button class="checkout-btn">Realizar reserva</button>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <p>Tu carrito está vacío, sigue explorando</p>
+        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+    </div>
+    {% endif %}
+    {% endif %}
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Incrementar cantidad
+        document.querySelectorAll('.quantity-btn[data-action="increase"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.getAttribute('data-item-id');
+                fetch(`/carrito/incrementar/${itemId}/`, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCookie('csrftoken') },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error && data.login_url) {
+                        showLoginRequiredModal(data.login_url);
+                    } else if (data.cantidad !== undefined) {
+                        // Actualizar cantidad del producto
+                        document.getElementById(`quantity-${itemId}`).innerText = data.cantidad;
+                        // Actualizar subtotal del producto
+                        document.getElementById(`subtotal-${itemId}`).innerText = `Subtotal: $${data.subtotal_item.toFixed(2)}`;
+                        // Actualizar resumen de compra
+                        document.getElementById('subtotal').innerText = `$${data.total.toFixed(2)}`;
+                        document.getElementById('total').innerText = `$${data.total.toFixed(2)}`;
+                    }
+                });
+            });
+        });
+
+        // Decrementar cantidad
+        document.querySelectorAll('.quantity-btn[data-action="decrease"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.getAttribute('data-item-id');
+                fetch(`/carrito/decrementar/${itemId}/`, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCookie('csrftoken') },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error && data.login_url) {
+                        showLoginRequiredModal(data.login_url);
+                    } else if (data.cantidad !== undefined) {
+                        if (data.cantidad > 0) {
+                            document.getElementById(`quantity-${itemId}`).innerText = data.cantidad;
+                            document.getElementById(`subtotal-${itemId}`).innerText = `Subtotal: $${data.subtotal_item.toFixed(2)}`;
+                        } else {
+                            document.getElementById(`cart-item-${itemId}`).remove();
+                        }
+                        // Actualizar resumen de compra
+                        document.getElementById('subtotal').innerText = `$${data.total.toFixed(2)}`;
+                        document.getElementById('total').innerText = `$${data.total.toFixed(2)}`;
+
+                        // Si el carrito queda vacío
+                        if (data.total === 0) {
+                            const cartLayout = document.querySelector('.cart-layout');
+                            if (cartLayout) {
+                                cartLayout.innerHTML = `
+                                    <div class="empty-cart">
+                                        <p>Tu carrito está vacío, sigue explorando</p>
+                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+                                    </div>
+                                `;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+        // Eliminar producto
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.getAttribute('data-item-id');
+                fetch(`/carrito/eliminar/${itemId}/`, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCookie('csrftoken') },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error && data.login_url) {
+                        showLoginRequiredModal(data.login_url);
+                    } else if (data.total !== undefined) {
+                        document.getElementById(`cart-item-${itemId}`).remove();
+                        // Actualizar resumen de compra
+                        document.getElementById('subtotal').innerText = `$${data.total.toFixed(2)}`;
+                        document.getElementById('total').innerText = `$${data.total.toFixed(2)}`;
+
+                        // Si el carrito queda vacío
+                        if (data.total === 0) {
+                            const cartLayout = document.querySelector('.cart-layout');
+                            if (cartLayout) {
+                                cartLayout.innerHTML = `
+                                    <div class="empty-cart">
+                                        <p>Tu carrito está vacío, sigue explorando</p>
+                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+                                    </div>
+                                `;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+        // Mostrar modal de inicio de sesión
+        function showLoginRequiredModal(loginUrl) {
+            const modal = document.querySelector('.login-required');
+            modal.style.display = 'block';
+            modal.querySelector('.login-button').href = loginUrl;
+        }
+
+        // Obtener CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+{% endblock %}

@@ -231,3 +231,97 @@ body {
 .checkout-btn:hover {
     background-color: #0056b3;
 }
+
+.empty-cart {
+    text-align: center;
+    padding: 50px;
+    color: #555; /* Cambiado para un tono más suave */
+    background-color: #f9f9f9; /* Fondo claro para destacar la sección */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+.empty-cart p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333; /* Texto más oscuro para mejor contraste */
+    font-weight: 500; /* Peso medio para destacar */
+}
+
+.explore-button {
+    display: inline-block;
+    background-color: #007bff; /* Azul primario */
+    color: #ffffff;
+    padding: 12px 25px; /* Botón más grande */
+    border-radius: 6px; /* Bordes redondeados */
+    text-decoration: none;
+    font-size: 1.1rem; /* Texto ligeramente más grande */
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+}
+
+.explore-button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.explore-button:active {
+    background-color: #004494; /* Azul aún más oscuro al hacer clic */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Sombra más pequeña al hacer clic */
+    transform: translateY(0); /* Elimina la elevación */
+}
+
+.cart-back {
+    margin-bottom: 10px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    transition: color 0.2s ease;
+}
+
+.back-button:hover {
+    color: #555;
+}
+
+.back-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.login-required {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+    margin-top: 2rem;
+}
+
+.login-required p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.login-required .explore-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.login-required .explore-button:hover {
+    background: #0056b3;
+}
+

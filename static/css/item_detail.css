@@ -1,0 +1,119 @@
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #2563eb;
+    --background-color: #ffffff; /* Fondo blanco */
+    --text-color: #1f2937;
+    --light-text-color: #6b7280;
+    --border-color: #e5e7eb;
+    --star-color: #f59e0b;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: row; /* Coloca la imagen a la izquierda */
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+}
+
+.product-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.product-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-details-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-details {
+    max-width: 900px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.product-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.add-to-cart-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.add-to-cart-button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.add-to-cart-button:active {
+    transform: translateY(0);
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--light-text-color); /* Texto gris */
+    font-size: 1rem;
+}
+
+.info-item i {
+    color: var(--primary-color); /* Color del ícono */
+}
+
+.product-description {
+    color: var(--text-color); /* Texto negro */
+    font-size: 1rem;
+    line-height: 1.6;
+}
