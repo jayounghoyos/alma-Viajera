@@ -76,7 +76,12 @@
                 <span>Total:</span>
                 <span id="total">${{ carrito.total|floatformat:2 }}</span>
             </div>
-            <button class="checkout-btn">Realizar reserva</button>
+            <form action="{% url 'core:qr_reservation' %}" method="get" style="display: inline;">
+                <button type="submit" class="checkout-btn">
+                    Realizar reserva
+                </button>
+            </form>
+            {% comment %} <button class="checkout-btn">Realizar reserva</button> {% endcomment %}
         </div>
     </div>
     {% else %}
