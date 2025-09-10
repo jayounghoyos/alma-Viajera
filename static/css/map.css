@@ -1,0 +1,251 @@
+/* Estilos para la página del mapa */
+.map-page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.map-header {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 1000;
+}
+
+.map-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-family: 'Alatsi', sans-serif;
+}
+
+.map-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+.map-container {
+  position: relative;
+  height: calc(100vh - 200px);
+  min-height: 600px;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.countries-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.countries-panel h3 {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.countries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.country-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.country-item:hover {
+  background: #e9ecef;
+  border-color: #007bff;
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.country-flag {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.country-flag i {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.country-info {
+  flex: 1;
+}
+
+.country-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.country-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.country-arrow {
+  color: #007bff;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.country-item:hover .country-arrow {
+  transform: translateX(5px);
+}
+
+/* Estilos para el popup del mapa */
+.map-popup {
+  text-align: center;
+  min-width: 200px;
+}
+
+.map-popup h4 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.map-popup p {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.explore-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .map-header {
+    padding: 1rem 0;
+  }
+  
+  .map-title {
+    font-size: 2rem;
+  }
+  
+  .map-subtitle {
+    font-size: 1rem;
+  }
+  
+  .countries-panel {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: none;
+    max-height: 50vh;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .map-container {
+    height: calc(100vh - 150px);
+  }
+  
+  .country-item {
+    padding: 0.8rem;
+  }
+  
+  .country-flag {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .country-info h4 {
+    font-size: 0.9rem;
+  }
+  
+  .country-info p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.country-item {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.country-item:nth-child(1) { animation-delay: 0.1s; }
+.country-item:nth-child(2) { animation-delay: 0.2s; }
+.country-item:nth-child(3) { animation-delay: 0.3s; }
+.country-item:nth-child(4) { animation-delay: 0.4s; }
+.country-item:nth-child(5) { animation-delay: 0.5s; }
+.country-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Scrollbar personalizado para el panel de países */
+.countries-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.countries-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.countries-panel::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.countries-panel::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

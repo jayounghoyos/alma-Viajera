@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mapa · Alma Viajera{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/map.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block body_class %}map-page{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <!-- Header del mapa -->
+  <div class="map-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="map-title">Selecciona tu destino</h1>
+          <p class="map-subtitle">Explora los mejores lugares, tours y experiencias de cada país</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <a href="{% url 'core:home' %}" class="btn btn-outline-light">
+            <i class="bi bi-arrow-left"></i> Volver al inicio
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor del mapa -->
+  <div class="map-container">
+    <div id="map"></div>
+    
+    <!-- Panel de países -->
+    <div class="countries-panel">
+      <h3>Países disponibles</h3>
+      <div class="countries-list">
+        {% for pais in paises %}
+        <div class="country-item" data-country="{{ pais.codigo }}" data-lat="{{ pais.lat }}" data-lng="{{ pais.lng }}">
+          <div class="country-flag">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <div class="country-info">
+            <h4>{{ pais.nombre }}</h4>
+            <p>Explorar destinos</p>
+          </div>
+          <div class="country-arrow">
+            <i class="bi bi-arrow-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar el mapa
+  const map = L.map('map').setView([0, 0], 2);
+  
+  // Agregar capa de tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+  
+  // Array para almacenar los marcadores
+  const markers = [];
+  
+  // Agregar marcadores para cada país
+  {% for pais in paises %}
+  const marker{{ forloop.counter }} = L.marker([{{ pais.lat }}, {{ pais.lng }}])
+    .addTo(map)
+    .bindPopup(`
+      <div class="map-popup">
+        <h4>{{ pais.nombre }}</h4>
+        <p>Haz clic para explorar este país</p>
+        <button class="btn btn-primary btn-sm explore-btn" data-country="{{ pais.codigo }}">
+          Explorar {{ pais.nombre }}
+        </button>
+      </div>
+    `);
+  
+  markers.push(marker{{ forloop.counter }});
+  {% endfor %}
+  
+  // Ajustar la vista para mostrar todos los marcadores
+  if (markers.length > 0) {
+    const group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+  
+  // Función para redirigir al explorador
+  function exploreCountry(countryCode) {
+    window.location.href = `{% url 'catalog:explorar' 'PLACEHOLDER' 'lugar' %}`.replace('PLACEHOLDER', countryCode);
+  }
+  
+  // Event listeners para los elementos del país
+  document.querySelectorAll('.country-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const countryCode = this.dataset.country;
+      exploreCountry(countryCode);
+    });
+    
+    // Efecto hover
+    item.addEventListener('mouseenter', function() {
+      const lat = parseFloat(this.dataset.lat);
+      const lng = parseFloat(this.dataset.lng);
+      map.setView([lat, lng], 6);
+    });
+  });
+  
+  // Event listeners para los botones de explorar en los popups
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('explore-btn')) {
+      const countryCode = e.target.dataset.country;
+      exploreCountry(countryCode);
+    }
+  });
+  
+  // Efecto de hover en los elementos del país
+  document.querySelectorAll('.country-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateX(10px)';
+      this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+    });
+    
+    item.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateX(0)';
+      this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+    });
+  });
+});
+</script>
+{% endblock %}

@@ -10,7 +10,12 @@
   <div class="container text-center mt-5">
 
     <!-- Título principal -->
-    <h1 class="display-1 fw-bold">{{ place|upper }}</h1>
+    <div class="d-flex align-items-center justify-content-center mb-3">
+      <a href="{% url 'catalog:mapa' %}" class="btn btn-outline-primary me-3">
+        <i class="bi bi-map"></i> Cambiar país
+      </a>
+      <h1 class="display-1 fw-bold mb-0">{{ place|upper }}</h1>
+    </div>
 
     <!-- Separador -->
     <hr class="my-4">
@@ -29,9 +34,9 @@
       <div class="col-md-6">
         <form method="get" action="{% url 'catalog:explorar' place categoria %}">
           <div class="input-group">
-            <input type="text" name="search" class="form-control rounded-pill" placeholder="Quiero...">
+            <input type="text" name="search" class="form-control rounded-pill" placeholder="Buscar en {{ place }}..." value="{{ request.GET.search|default:'' }}">
             <button class="btn btn-outline-secondary rounded-pill ms-2" type="submit">
-              ✖
+              <i class="bi bi-search"></i>
             </button>
           </div>
         </form>
@@ -49,10 +54,10 @@
           <i class="bi bi-arrow-down-up me-2"></i> Ordenar por
         </button>
         <div class="popover-box">
-          <a href="?ordenar=precio_asc">Precio: menor a mayor</a>
-          <a href="?ordenar=precio_desc">Precio: mayor a menor</a>
-          <a href="?ordenar=tiempo_asc">Tiempo: menor a mayor</a>
-          <a href="?ordenar=tiempo_desc">Tiempo: mayor a menor</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_asc">Precio: menor a mayor</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_desc">Precio: mayor a menor</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_asc">Tiempo: menor a mayor</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_desc">Tiempo: mayor a menor</a>
         </div>
       </div>
     </div>
@@ -74,7 +79,7 @@
             <div class="card-body">
               <h5 class="card-title">
                 {% if categoria == "lugar" %}
-                  <a href="{% url 'catalog:explorar' item.nombre 'lugar' %}">
+                  <a href="{% url 'catalog:explorar' place 'lugar' %}">
                     {{ item.nombre }}
                   </a>
                 {% else %}
