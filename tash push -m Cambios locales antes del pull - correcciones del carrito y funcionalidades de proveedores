@@ -1,6 +1,0 @@
-apps/cart/models.py
-apps/cart/views.py
-apps/providers/templates/providers/dashboard.html
-apps/providers/urls.py
-apps/providers/views.py
-db.sqlite3
