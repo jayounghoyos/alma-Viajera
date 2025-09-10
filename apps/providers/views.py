@@ -1,3 +1,4 @@
+# Juan Andrés Young Hoyos
 from django.contrib import messages
 from django.views.generic import TemplateView, View, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -8,7 +9,7 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 
 from .forms import ItemCreateForm
-from apps.catalog.models import Item
+from apps.catalog.models import Item, Categoria
 
 
 class ProviderRequiredMixin(UserPassesTestMixin):
@@ -52,6 +53,11 @@ class CrearServicioView(ProviderRequiredMixin, View):
             # IMPORTANT: The logged-in user is always the owner (vendedor)
             item.vendedor = request.user
 
+            # Handle categoria - get or create the category object from POST data
+            categoria_nombre = request.POST.get('categoria')
+            categoria_obj, created = Categoria.objects.get_or_create(nombre=categoria_nombre)
+            item.categoria = categoria_obj
+
             # Basic consistency: if not available and no stock provided, default to 0
             if item.disponibilidad is False and getattr(item, "stock", None) is None:
                 item.stock = 0
@@ -82,6 +88,11 @@ def crear_servicio(request):
 
             # The logged-in user is always the owner (vendedor)
             item.vendedor = request.user
+
+            # Handle categoria - get or create the category object from POST data
+            categoria_nombre = request.POST.get('categoria')
+            categoria_obj, created = Categoria.objects.get_or_create(nombre=categoria_nombre)
+            item.categoria = categoria_obj
 
             # Basic consistency: if not available and no stock provided, default to 0
             if item.disponibilidad is False and getattr(item, "stock", None) is None:

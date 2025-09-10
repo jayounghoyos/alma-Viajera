@@ -14,8 +14,15 @@
     {{ form.non_field_errors }}
 
     <div class="form-group">
-      <label for="{{ form.categoria.id_for_label }}">Categoría</label>
-      {{ form.categoria }}
+      <label for="categoria">Categoría</label>
+      <select id="categoria" name="categoria" required>
+        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="lugar">lugar</option>
+        <option value="tour">Tour</option>
+        <option value="comida">Comida</option>
+        <option value="souvenir">Souvenir</option>
+        <option value="actividad">Actividad</option>
+      </select>
       {{ form.categoria.errors }}
     </div>
 
