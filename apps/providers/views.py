@@ -1,11 +1,14 @@
 from django.contrib import messages
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 from .forms import ItemCreateForm
+from apps.catalog.models import Item
 
 
 class ProviderRequiredMixin(UserPassesTestMixin):
@@ -91,3 +94,76 @@ def crear_servicio(request):
         form = ItemCreateForm()
 
     return render(request, "providers/formulario.html", {"form": form})
+
+
+class VerServiciosView(LoginRequiredMixin, ProviderRequiredMixin, ListView):
+    """Vista para mostrar todos los servicios del vendedor autenticado."""
+    model = Item
+    template_name = "providers/ver_servicios.html"
+    context_object_name = "servicios"
+    paginate_by = 10
+
+    def get_queryset(self):
+        """Filtrar solo los servicios del vendedor autenticado."""
+        return Item.objects.filter(vendedor=self.request.user).order_by('-id')
+
+
+class EditarServicioView(LoginRequiredMixin, ProviderRequiredMixin, UpdateView):
+    """Vista para editar un servicio existente."""
+    model = Item
+    form_class = ItemCreateForm
+    template_name = "providers/editar_servicio.html"
+    success_url = reverse_lazy('providers:ver_servicios')
+
+    def get_queryset(self):
+        """Solo permitir editar servicios del vendedor autenticado."""
+        return Item.objects.filter(vendedor=self.request.user)
+
+    def get_object(self):
+        """Obtener el objeto y verificar que pertenece al usuario."""
+        obj = get_object_or_404(Item, pk=self.kwargs['pk'], vendedor=self.request.user)
+        return obj
+
+    def form_valid(self, form):
+        """Mensaje de éxito al editar."""
+        messages.success(self.request, "¡Servicio actualizado correctamente!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        """Mensaje de error si el formulario es inválido."""
+        messages.error(self.request, "Por favor, corrige los errores en el formulario.")
+        return super().form_invalid(form)
+
+
+class EliminarServicioView(LoginRequiredMixin, ProviderRequiredMixin, DeleteView):
+    """Vista para eliminar un servicio."""
+    model = Item
+    success_url = reverse_lazy('providers:ver_servicios')
+
+    def get_queryset(self):
+        """Solo permitir eliminar servicios del vendedor autenticado."""
+        return Item.objects.filter(vendedor=self.request.user)
+
+    def get_object(self):
+        """Obtener el objeto y verificar que pertenece al usuario."""
+        obj = get_object_or_404(Item, pk=self.kwargs['pk'], vendedor=self.request.user)
+        return obj
+
+    def delete(self, request, *args, **kwargs):
+        """Mensaje de éxito al eliminar."""
+        messages.success(request, "¡Servicio eliminado correctamente!")
+        return super().delete(request, *args, **kwargs)
+
+
+@login_required
+def eliminar_servicio_ajax(request, pk):
+    """Vista AJAX para eliminar un servicio."""
+    if not getattr(request.user, "es_proveedor", False):
+        return JsonResponse({'error': 'No tienes permisos para realizar esta acción.'}, status=403)
+
+    try:
+        servicio = get_object_or_404(Item, pk=pk, vendedor=request.user)
+        servicio.delete()
+        return JsonResponse({'success': True, 'message': 'Servicio eliminado correctamente.'})
+    except Exception as e:
+        return JsonResponse({'error': 'Error al eliminar el servicio.'}, status=500)

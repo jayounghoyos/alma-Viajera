@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Editar Servicio — Alma Viajera{% endblock %}
+{% block body_class %}formulario{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+
+<div class="form-container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Editar Servicio</h2>
+    <a href="{% url 'providers:ver_servicios' %}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Volver a Mis Servicios
+    </a>
+  </div>
+
+  <form action="{% url 'providers:editar_servicio' object.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="form-group">
+      <label for="{{ form.categoria.id_for_label }}">Categoría</label>
+      {{ form.categoria }}
+      {{ form.categoria.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.nombre.id_for_label }}">Nombre del Producto</label>
+      {{ form.nombre }}
+      {{ form.nombre.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+      {{ form.descripcion }}
+      {{ form.descripcion.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.precio.id_for_label }}">Precio</label>
+      <div class="input-with-icon"><span>$</span>{{ form.precio }}</div>
+      {{ form.precio.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.ubicacion.id_for_label }}">Ubicación</label>
+      {{ form.ubicacion }}
+      {{ form.ubicacion.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.imagen.id_for_label }}">Imagen del Producto</label>
+      {% if object.imagen %}
+        <div class="mb-2">
+          <p class="text-muted small">Imagen actual:</p>
+          <img src="{{ object.imagen.url }}" alt="Imagen actual" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+        </div>
+      {% endif %}
+      {{ form.imagen }}
+      <small class="form-text text-muted">Deja vacío para mantener la imagen actual</small>
+      {{ form.imagen.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.tiempo.id_for_label }}">Duración (horas)</label>
+      {{ form.tiempo }}
+      {{ form.tiempo.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.disponibilidad.id_for_label }}">Disponibilidad</label>
+      {{ form.disponibilidad }}
+      {{ form.disponibilidad.errors }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.stock.id_for_label }}">Stock (souvenirs)</label>
+      {{ form.stock }}
+      {{ form.stock.errors }}
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn-register-product flex-fill">Actualizar Servicio</button>
+      <a href="{% url 'providers:ver_servicios' %}" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

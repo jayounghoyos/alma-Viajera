@@ -1,14 +1,13 @@
 from django.db import models
 from apps.catalog.models import Item
-from apps.user.models import Usuario  # Cambiar de UsuarioFinal a Usuario
+from apps.user.models import Usuario  # Usar Usuario en lugar de UsuarioFinal
 
 class Carrito(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return f"Carrito de {self.usuario.username}"  # Cambiado a 'self.usuario_id.username'
-
+        return f"Carrito de {self.usuario.username}"
     def calcular_total(self):
         total = sum(
             item.cantidad * item.item.precio for item in self.items.all()
