@@ -1,7 +1,10 @@
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView
+from django.contrib import messages
 from .models import Item
+from .forms import CalificacionForm
+
 
 class CatalogView(View):
     template_name = 'catalog.html'
@@ -12,7 +15,7 @@ class CatalogView(View):
 
         # Lista de países válidos
         paises_validos = ['Colombia', 'Mexico', 'Argentina', 'Peru', 'Chile', 'Brasil']
-        
+
         # Si el lugar no está en la lista de países válidos, redirigir a Colombia por defecto
         if place not in paises_validos:
             place = 'Colombia'
@@ -47,14 +50,45 @@ class CatalogView(View):
 
 class ItemDetailView(DetailView):
     model = Item
-    template_name = 'catalog/item_detail.html'  # Ruta directa sin la carpeta adicional
+    template_name = 'catalog/item_detail.html'
     context_object_name = 'item'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        item = self.get_object()
+
+        context['calificacion_form'] = CalificacionForm()
+        context['promedio_calificacion'] = item.promedio_calificacion()
+        context['calificaciones'] = item.calificaciones.all()
+        context['rango_estrellas'] = range(1, 6)
+
+        # Agregamos estrellas en el contexto
+
+        context['estrellas'] = item.estrellas()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        item = self.get_object()
+        form = CalificacionForm(request.POST)
+        if form.is_valid():
+            calificacion = form.save(commit=False)
+            calificacion.item = item
+            calificacion.usuario = request.user
+            try:
+                calificacion.save()
+                messages.success(request, "¡Gracias por tu calificación!")
+            except:
+                messages.error(request, "Ya has calificado este producto.")
+        else:
+            messages.error(request, "Hubo un error al enviar tu calificación.")
+        return redirect('catalog:item_detail', pk=item.pk)
 
 
 class MapView(TemplateView):
     """Vista para mostrar el mapa de selección de países."""
     template_name = 'catalog/map.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Lista de países disponibles (puedes expandir esto)

@@ -1,0 +1,122 @@
+/* Estilo general para la sección de calificación y comentarios */
+.product-rating-form, .product-reviews {
+    margin: 30px 0; /* Margen superior e inferior, sin margen lateral para que ocupe todo el ancho */
+    padding: 2rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Título de la sección */
+.product-reviews h3, .product-rating-form h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    text-align: left; /* Alineamos el título a la izquierda */
+}
+
+/* Estilo para las estrellas de calificación */
+.rating-stars {
+    display: flex;
+    justify-content: flex-start; /* Alineamos las estrellas a la izquierda */
+    align-items: center;
+    margin: 1.5rem 0;
+    flex-direction: row; /* Orden natural: izquierda a derecha */
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 2.5rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Hover: iluminar la estrella actual y las anteriores */
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+    color: #ffc107;
+}
+
+/* Estrella seleccionada y todas las anteriores */
+.rating-stars input[type="radio"]:checked + label,
+.rating-stars input[type="radio"]:checked + label ~ label {
+    color: #ffc107;
+}
+
+.rating-stars label:hover {
+    transform: scale(1.2); /* Efecto de escala al pasar el cursor */
+}
+
+/* Botón de calificación */
+.product-rating-form button {
+    display: block;
+    width: 100%;
+    max-width: 250px; /* Mantener un ancho máximo para el botón si no quieres que sea demasiado largo */
+    margin: 1.5rem 0 0; /* Alineamos el botón a la izquierda */
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-rating-form button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Estilo para los comentarios */
+.product-reviews .review {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.product-reviews .review:last-child {
+    border-bottom: none;
+}
+
+.product-reviews .review p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.product-reviews .review p strong {
+    color: #333;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.product-reviews .review small {
+    display: block;
+    color: #95a5a6;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Estilo para el contenedor de la calificación */
+.product-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.product-rating .rating-stars {
+    margin: 0;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}

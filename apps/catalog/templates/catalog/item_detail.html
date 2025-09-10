@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}{{ item.nombre }}{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/item_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/calificacion.css' %}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <div class="product-container">
@@ -15,30 +17,46 @@
     <div class="product-details-container">
         <div class="product-details">
             <h1 class="product-title">{{ item.nombre }}</h1>
+
+            <!-- Mostrar promedio de calificación con estrellas -->
             <div class="product-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                <div class="stars-display">
+                    <!-- Estrellas llenas -->
+                    {% for i in estrellas.llenas|to_range %}
+                        <i class="fas fa-star"></i>
+                    {% endfor %}
+                    <!-- Estrella media -->
+                    {% if estrellas.media %}
+                        <i class="fas fa-star-half-alt"></i>
+                    {% endif %}
+                    <!-- Estrellas vacías -->
+                    {% for i in estrellas.vacias|to_range %}
+                        <i class="far fa-star"></i>
+                    {% endfor %}
+                </div>
+                <span>{{ promedio_calificacion }} / 5</span>
             </div>
+
             <div class="product-info">
                 <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i> <!-- Ícono de ubicación -->
+                    <i class="fas fa-map-marker-alt"></i>
                     <span>{{ item.ubicacion }}</span>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-clock"></i> <!-- Ícono de reloj -->
+                    <i class="fas fa-clock"></i>
                     <span>{{ item.tiempo }} horas</span>
                 </div>
             </div>
+
             <p class="product-description">
                 {{ item.descripcion }}
             </p>
+
             <div class="product-price">
                 <span class="price-value">${{ item.precio }}</span>
                 <span class="price-currency">COP</span>
             </div>
+
             <div class="product-availability">
                 {% if item.disponibilidad %}
                     <i class="fas fa-check-circle"></i>
@@ -48,11 +66,46 @@
                     <span>No Disponible</span>
                 {% endif %}
             </div>
+
             <form action="{% url 'cart:agregar_al_carrito' item.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="add-to-cart-button">Añadir al Carrito</button>
             </form>
         </div>
     </div>
+</div>
+
+<!-- Formulario para calificar -->
+
+<div class="product-rating-form">
+    {% if user.is_authenticated %}
+        <h3>Califica este producto</h3>
+        <form method="post">
+            {% csrf_token %}
+           <div class="rating-stars">
+                {% for i in "12345" %}
+                    <input type="radio" id="star{{ i }}" name="puntuacion" value="{{ i }}">
+                    <label for="star{{ i }}">&#9733;</label>
+                {% endfor %}
+           </div>
+                        <button type="submit">Calificar</button>
+        </form>
+    {% else %}
+        <p>Inicia sesión para calificar este producto.</p>
+    {% endif %}
+</div>
+
+<!-- Mostrar calificaciones -->
+<div class="product-reviews">
+    <h3>Reseñas:</h3>
+    {% for calificacion in calificaciones %}
+        <div class="review">
+            <p><strong>{{ calificacion.usuario }}</strong> - {{ calificacion.puntuacion }} ★</p>
+            <p>{{ calificacion.comentario }}</p>
+            <p><small>{{ calificacion.fecha|date:"d M Y H:i" }}</small></p>
+        </div>
+    {% empty %}
+        <p>No hay calificaciones aún.</p>
+    {% endfor %}
 </div>
 {% endblock %}
