@@ -1,5 +1,5 @@
 from django import forms
-from apps.catalog.models import Item, Categoria
+from apps.catalog.models import Item
 
 class ItemCreateForm(forms.ModelForm):
     disponibilidad = forms.ChoiceField(
@@ -10,17 +10,13 @@ class ItemCreateForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = [
-            "categoria", "nombre", "descripcion", "precio",
+            "nombre", "descripcion", "precio",
             "ubicacion", "imagen", "tiempo", "disponibilidad", "stock",
         ]
         widgets = {
             "descripcion": forms.Textarea(attrs={"rows": 4}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["categoria"].queryset = Categoria.objects.all().order_by("nombre")
-        self.fields["categoria"].empty_label = "Selecciona una categoría"
 
     def clean_disponibilidad(self):
         val = self.cleaned_data["disponibilidad"]
