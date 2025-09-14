@@ -1,0 +1,11 @@
+[MASTER]
+load-plugins=pylint_django
+
+[MESSAGES CONTROL]
+disable=no-member
+
+[FORMAT]
+max-line-length=88
+
+[TYPECHECK]
+ignored-modules=django.db.models
