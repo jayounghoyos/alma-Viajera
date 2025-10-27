@@ -1,3 +1,5 @@
+import base64
+import json
 from django.shortcuts import render, get_object_or_404, redirect
 from apps.catalog.models import Item
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,6 +9,7 @@ from .models import Carrito, CarritoItem
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
 
 
 def carrito_view(request):
@@ -21,7 +24,29 @@ def carrito_view(request):
 
     # Usuario autenticado: obtener o crear carrito
     carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    request.session['qr_payload'] = _build_cart_qr_payload(carrito)
     return render(request, 'cart.html', {'carrito': carrito, 'login_required': False})
+
+
+def _build_cart_qr_payload(carrito):
+    items = carrito.items.select_related('item').all()
+    if not items:
+        return "cart-empty"
+    data = {
+        "user": carrito.usuario_id,
+        "generated_at": now().isoformat(),
+        "total": str(carrito.total),
+        "items": [
+            {
+                "id": cart_item.item_id,
+                "name": cart_item.item.nombre,
+                "qty": cart_item.cantidad,
+            }
+            for cart_item in items
+        ],
+    }
+    raw = json.dumps(data, separators=(',', ':'), ensure_ascii=True)
+    return base64.urlsafe_b64encode(raw.encode()).decode()
 
 
 def requiere_inicio_sesion(request):
@@ -44,6 +69,7 @@ def agregar_al_carrito(request, item_id):
         carrito_item.save()
 
     carrito.calcular_total()
+    request.session['qr_payload'] = _build_cart_qr_payload(carrito)
     return redirect('cart:detalle')
 
 
@@ -68,6 +94,7 @@ def incrementar_cantidad(request, item_id):
     carrito_item.cantidad += 1
     carrito_item.save()
     carrito.calcular_total()
+    request.session['qr_payload'] = _build_cart_qr_payload(carrito)
 
     subtotal_item = float(carrito_item.cantidad * carrito_item.item.precio)
     total = float(carrito.total)
@@ -107,6 +134,7 @@ def decrementar_cantidad(request, item_id):
         subtotal_item = 0.0
 
     total = float(carrito.total)
+    request.session['qr_payload'] = _build_cart_qr_payload(carrito)
     cantidad = carrito_item.cantidad if carrito_item.id else 0
 
     return JsonResponse({
@@ -133,5 +161,6 @@ def eliminar_del_carrito(request, item_id):
     carrito_item.delete()
     carrito.calcular_total()
     total = float(carrito.total)
+    request.session['qr_payload'] = _build_cart_qr_payload(carrito)
 
     return JsonResponse({'total': total})

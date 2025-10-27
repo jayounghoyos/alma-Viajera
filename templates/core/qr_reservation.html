@@ -21,8 +21,7 @@
                 <!-- QR Code Image -->
                 <div class="qr-image-container mb-4">
                     <div class="qr-image-wrapper">
-                        <!-- Reemplaza 'qr_code.png' con el nombre de tu imagen QR -->
-                        <img src="{% static 'images/qr_code.png' %}" 
+                        <img src="{{ qr_url }}" 
                              alt="Código QR de Reserva" 
                              class="img-fluid qr-image"
                              style="max-width: 300px; border: 2px solid #e9ecef; border-radius: 15px; padding: 20px; background: white;">
@@ -40,14 +39,39 @@
                                         Detalles de la Reserva
                                     </h5>
                                 </div>
-                                <div class="col-md-6">
+                               <div class="col-md-6">
                                     <small class="text-muted">Código de Reserva</small>
-                                    <p class="fw-bold mb-0">#RES-2025-001</p>
+                                    <p class="fw-bold mb-0">{{ qr_payload }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {% if cart_summary %}
+                <div class="qr-cart-summary mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title text-start mb-3">
+                                <i class="bi bi-bag-check"></i>
+                                Resumen del carrito
+                            </h6>
+                            <ul class="list-unstyled text-start mb-0">
+                                {% for item in cart_summary.items %}
+                                <li class="d-flex justify-content-between align-items-center mb-1">
+                                    <span>{{ item.name }}</span>
+                                    <span class="badge bg-primary">{{ item.qty }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-muted small">Total</span>
+                                <strong>{{ cart_summary.total }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
 
                 <!-- Instructions -->
                 <div class="qr-instructions mb-4">
@@ -116,6 +140,16 @@
     border-radius: 15px;
     border: none;
     background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+}
+
+.qr-cart-summary .card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-radius: 15px;
+}
+
+.qr-cart-summary .badge {
+    font-size: 0.85rem;
 }
 
 .qr-actions .btn {
