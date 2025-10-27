@@ -38,21 +38,29 @@
     <!-- Panel de países -->
     <div class="countries-panel">
       <h3>Países disponibles</h3>
-      <div class="countries-list">
-        {% for pais in paises %}
-        <div class="country-item" data-country="{{ pais.codigo }}" data-lat="{{ pais.lat }}" data-lng="{{ pais.lng }}">
-          <div class="country-flag">
-            <i class="bi bi-geo-alt-fill"></i>
+      <div class="countries-carousel">
+        <button class="carousel-btn prev" type="button" aria-label="País anterior">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="countries-list" id="countriesList">
+          {% for pais in paises %}
+          <div class="country-item" data-country="{{ pais.codigo }}" data-lat="{{ pais.lat }}" data-lng="{{ pais.lng }}">
+            <div class="country-flag">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="country-info">
+              <h4>{{ pais.nombre }}</h4>
+              <p>Explorar destinos</p>
+            </div>
+            <div class="country-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
           </div>
-          <div class="country-info">
-            <h4>{{ pais.nombre }}</h4>
-            <p>Explorar destinos</p>
-          </div>
-          <div class="country-arrow">
-            <i class="bi bi-arrow-right"></i>
-          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
+        <button class="carousel-btn next" type="button" aria-label="Siguiente país">
+          <i class="bi bi-chevron-right"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -94,6 +102,37 @@ document.addEventListener('DOMContentLoaded', function() {
     map.fitBounds(group.getBounds().pad(0.1));
   }
   
+  // Carrusel de países
+  const countriesList = document.getElementById('countriesList');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  const scrollStep = 260;
+
+  function updateCarouselButtons() {
+    if (!countriesList) return;
+    const maxScrollLeft = countriesList.scrollWidth - countriesList.clientWidth;
+    if (prevBtn) {
+      prevBtn.disabled = countriesList.scrollLeft <= 0;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = countriesList.scrollLeft >= (maxScrollLeft - 4);
+    }
+  }
+
+  if (countriesList && prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => {
+      countriesList.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      countriesList.scrollBy({ left: scrollStep, behavior: 'smooth' });
+    });
+
+    countriesList.addEventListener('scroll', updateCarouselButtons, { passive: true });
+    window.addEventListener('resize', updateCarouselButtons);
+    updateCarouselButtons();
+  }
+  
   // Función para redirigir al explorador
   function exploreCountry(countryCode) {
     window.location.href = `{% url 'catalog:explorar' 'PLACEHOLDER' 'lugar' %}`.replace('PLACEHOLDER', countryCode);
@@ -120,19 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const countryCode = e.target.dataset.country;
       exploreCountry(countryCode);
     }
-  });
-  
-  // Efecto de hover en los elementos del país
-  document.querySelectorAll('.country-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateX(10px)';
-      this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-    });
-    
-    item.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateX(0)';
-      this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-    });
   });
 });
 </script>
