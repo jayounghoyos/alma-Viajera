@@ -1,30 +1,35 @@
 {% extends "base.html" %}
-{% block title %}Nosotros — Alma Viajera{% endblock %}
+{% load static i18n %}
+{% block title %}{% trans "Nosotros" %} — Alma Viajera{% endblock %}
 {% block body_class %}nosotros{% endblock %}
+
 {% block extra_head %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/about.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">    
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">    
 {% endblock %}
+
 {% block content %}
     <div class="container mt-4">
-        <h1>¿Quienes somos?</h1>
+        <h1>{% trans "¿Quiénes somos?" %}</h1>
         <p>
-            Alma viajera es un e-commerce donde hacemos reservas de servicios turísticos, ayudando no solo a los grandes y clásicos servicios turísticos sino también a los pequeños empredimientos y servicios que de otra manera podrían pasar desapercibidos y que ¡incluso! representan al lugar que estas visitando.
+            {% trans "Alma viajera es un e-commerce donde hacemos reservas de servicios turísticos, ayudando no solo a los grandes y clásicos servicios turísticos sino también a los pequeños emprendimientos y servicios que de otra manera podrían pasar desapercibidos y que ¡incluso! representan al lugar que estás visitando." %}
         </p>
-        <h1>
-            Problemática a tratar.
-        </h1>
+
+        <h1>{% trans "Problemática a tratar" %}</h1>
         <p>
-            Desconexión entre los viajeros que buscan experiencias turísticas auténticas y los emprendedores locales que ofrecen servicios, debido a la falta de una plataforma unificada con información confiable y acceso directo a la oferta turística, lo que dificulta la planificación del viaje y limita el desarrollo del turismo local.
+            {% trans "Desconexión entre los viajeros que buscan experiencias turísticas auténticas y los emprendedores locales que ofrecen servicios, debido a la falta de una plataforma unificada con información confiable y acceso directo a la oferta turística, lo que dificulta la planificación del viaje y limita el desarrollo del turismo local." %}
         </p>
-        <h1>
-            Objetivo
-        </h1>
+
+        <h1>{% trans "Objetivo" %}</h1>
         <p>
-            El objetivo es impulsar el turismo local y facilitar a los viajeros una experiencia completa en un solo lugar, combinando información turística confiable
+            {% trans "El objetivo es impulsar el turismo local y facilitar a los viajeros una experiencia completa en un solo lugar, combinando información turística confiable." %}
         </p>
+
+        <a href="{% url 'core:home' %}" class="btn btn-primary mt-3">
+            {% trans "Volver al inicio" %}
+        </a>
     </div>
 {% endblock %}

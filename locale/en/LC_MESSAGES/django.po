@@ -1,0 +1,474 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-28 08:17-0500\n"
+"PO-Revision-Date: 2025-10-27 10:34-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: English <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\apps\cart\templates\cart.html:5
+msgid "Carrito de Compras"
+msgstr "Shopping Cart"
+
+#: .\apps\cart\templates\cart.html:18
+#, fuzzy
+#| msgid "Iniciar sesión"
+msgid "Debes iniciar sesión"
+msgstr "You must log in"
+
+#: .\apps\cart\templates\cart.html:20
+msgid "Para continuar, por favor"
+msgstr "To continue, please"
+
+#: .\apps\cart\templates\cart.html:28
+#: .\apps\user\templates\user\partials\login_modal.html:6
+#: .\templates\partials\_navbar.html:23
+msgid "Iniciar sesión"
+msgstr "Log in"
+
+#: .\apps\cart\templates\cart.html:34
+msgid "Tu Carrito de Compras"
+msgstr "Your Shopping Cart"
+
+#: .\apps\cart\templates\cart.html:57
+msgid "Precio unitario:"
+msgstr "Unit price:"
+
+#: .\apps\cart\templates\cart.html:61 .\apps\cart\templates\cart.html:74
+msgid "Subtotal:"
+msgstr "Subtotal:"
+
+#: .\apps\cart\templates\cart.html:72
+msgid "Resumen de Compra"
+msgstr "Purchase Summary"
+
+#: .\apps\cart\templates\cart.html:78
+msgid "Envío:"
+msgstr "Shipping:"
+
+#: .\apps\cart\templates\cart.html:79
+msgid "Gratis"
+msgstr "Free"
+
+#: .\apps\cart\templates\cart.html:82
+msgid "Total:"
+msgstr "Total:"
+
+#: .\apps\cart\templates\cart.html:87
+msgid "Realizar reserva"
+msgstr "Make reservation"
+
+#: .\apps\cart\templates\cart.html:94
+msgid "Tu carrito está vacío, sigue explorando"
+msgstr "Your cart is empty, keep exploring"
+
+#: .\apps\cart\templates\cart.html:96
+#: .\apps\catalog\templates\catalog\map.html:94
+#: .\templates\partials\_navbar.html:27 .\templates\partials\_navbar.html:59
+msgid "Explorar"
+msgstr "Explore"
+
+#: .\apps\catalog\templates\catalog.html:3
+msgid "Catálogo"
+msgstr "Catalog"
+
+#: .\apps\catalog\templates\catalog.html:17
+msgid "Cambiar país"
+msgstr "Change country"
+
+#: .\apps\catalog\templates\catalog.html:27
+msgid "Lugares"
+msgstr "Places"
+
+#: .\apps\catalog\templates\catalog.html:28
+#: .\apps\core\templates\core\home.html:36
+msgid "Comida"
+msgstr "Food"
+
+#: .\apps\catalog\templates\catalog.html:29
+msgid "Tours"
+msgstr "Tours"
+
+#: .\apps\catalog\templates\catalog.html:30
+#: .\apps\core\templates\core\home.html:40
+msgid "Actividades"
+msgstr "Activities"
+
+#: .\apps\catalog\templates\catalog.html:31
+msgid "Souvenirs"
+msgstr "Souvenirs"
+
+#: .\apps\catalog\templates\catalog.html:40
+#, python-format
+msgid "Buscar en %(place)s..."
+msgstr "Search in %(place)s..."
+
+#: .\apps\catalog\templates\catalog.html:53
+msgid "Filtros"
+msgstr "Filters"
+
+#: .\apps\catalog\templates\catalog.html:57
+msgid "Ordenar por"
+msgstr "Sort by"
+
+#: .\apps\catalog\templates\catalog.html:60
+msgid "Precio: menor a mayor"
+msgstr "Price: low to high"
+
+#: .\apps\catalog\templates\catalog.html:61
+msgid "Precio: mayor a menor"
+msgstr "Price: high to low"
+
+#: .\apps\catalog\templates\catalog.html:62
+msgid "Tiempo: menor a mayor"
+msgstr "Time: short to long"
+
+#: .\apps\catalog\templates\catalog.html:63
+msgid "Tiempo: mayor a menor"
+msgstr "Time: long to short"
+
+#: .\apps\catalog\templates\catalog.html:78
+msgid "Imagen por defecto"
+msgstr "Default image"
+
+#: .\apps\catalog\templates\catalog.html:95
+#: .\apps\catalog\templates\catalog\item_detail.html:45
+msgid "horas"
+msgstr "hours"
+
+#: .\apps\catalog\templates\catalog.html:101
+msgid "reseñas"
+msgstr "reviews"
+
+#: .\apps\catalog\templates\catalog.html:107
+msgid "Ver"
+msgstr "View"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:55
+msgid "COP"
+msgstr "COP"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:61
+msgid "Disponible"
+msgstr "Available"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:64
+msgid "No Disponible"
+msgstr "No Available"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:70
+msgid "Añadir al Carrito"
+msgstr "Add to Cart"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:79
+msgid "Califica este producto"
+msgstr "Rate this product"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:88
+msgid "Calificar"
+msgstr "Submit rating"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:91
+msgid "Inicia sesión para calificar este producto."
+msgstr "Sign in to rate this product."
+
+#: .\apps\catalog\templates\catalog\item_detail.html:97
+msgid "Reseñas:"
+msgstr "Reviews"
+
+#: .\apps\catalog\templates\catalog\item_detail.html:105
+msgid "No hay calificaciones aún."
+msgstr "There is no reviews yet"
+
+#: .\apps\catalog\templates\catalog\map.html:6
+msgid "Mapa · Alma Viajera"
+msgstr "Map · Soul Traveler"
+
+#: .\apps\catalog\templates\catalog\map.html:23
+msgid "Selecciona tu destino"
+msgstr "Select your destination"
+
+#: .\apps\catalog\templates\catalog\map.html:25
+msgid "Explora los mejores lugares, tours y experiencias de cada país"
+msgstr "Explore the best places, tours, and experiences in each country"
+
+#: .\apps\catalog\templates\catalog\map.html:30
+#: .\apps\core\templates\core\about.html:32
+msgid "Volver al inicio"
+msgstr "Back to home"
+
+#: .\apps\catalog\templates\catalog\map.html:43
+msgid "Países disponibles"
+msgstr "Available countries"
+
+#: .\apps\catalog\templates\catalog\map.html:45
+msgid "País anterior"
+msgstr "Previous country"
+
+#: .\apps\catalog\templates\catalog\map.html:56
+msgid "Explorar destinos"
+msgstr "Explore destinations"
+
+#: .\apps\catalog\templates\catalog\map.html:64
+msgid "Siguiente país"
+msgstr "Next country"
+
+#: .\apps\catalog\templates\catalog\map.html:92
+msgid "Haz clic para explorar este país"
+msgstr "Click to explore this country"
+
+#: .\apps\core\templates\core\about.html:3 .\templates\partials\_navbar.html:28
+#: .\templates\partials\_navbar.html:60
+msgid "Nosotros"
+msgstr "About us"
+
+#: .\apps\core\templates\core\about.html:16
+msgid "¿Quiénes somos?"
+msgstr "Who are we?"
+
+#: .\apps\core\templates\core\about.html:18
+msgid ""
+"Alma viajera es un e-commerce donde hacemos reservas de servicios "
+"turísticos, ayudando no solo a los grandes y clásicos servicios turísticos "
+"sino también a los pequeños emprendimientos y servicios que de otra manera "
+"podrían pasar desapercibidos y que ¡incluso! representan al lugar que estás "
+"visitando."
+msgstr ""
+"Alma Viajera is an e-commerce platform where we make reservations for "
+"tourism services, helping not only the large and classic tourism providers "
+"but also small businesses and services that might otherwise go unnoticed and "
+"that even represent the place you are visiting."
+
+#: .\apps\core\templates\core\about.html:21
+msgid "Problemática a tratar"
+msgstr "Problem to address"
+
+#: .\apps\core\templates\core\about.html:23
+msgid ""
+"Desconexión entre los viajeros que buscan experiencias turísticas auténticas "
+"y los emprendedores locales que ofrecen servicios, debido a la falta de una "
+"plataforma unificada con información confiable y acceso directo a la oferta "
+"turística, lo que dificulta la planificación del viaje y limita el "
+"desarrollo del turismo local."
+msgstr ""
+"Disconnection between travelers seeking authentic tourism experiences and "
+"local entrepreneurs offering services, due to the lack of a unified platform "
+"with reliable information and direct access to the tourism offerings, which "
+"makes trip planning difficult and limits the development of local tourism."
+
+#: .\apps\core\templates\core\about.html:26
+msgid "Objetivo"
+msgstr "Objective"
+
+#: .\apps\core\templates\core\about.html:28
+msgid ""
+"El objetivo es impulsar el turismo local y facilitar a los viajeros una "
+"experiencia completa en un solo lugar, combinando información turística "
+"confiable."
+msgstr ""
+"The objective is to promote local tourism and provide travelers with a "
+"complete experience in a single place, combining reliable tourism "
+"information."
+
+#: .\apps\core\templates\core\home.html:18
+msgid "Nuestra tierra"
+msgstr "Our land"
+
+#: .\apps\core\templates\core\home.html:18
+msgid "tu próxima aventura"
+msgstr "your next adventure"
+
+#: .\apps\core\templates\core\home.html:19
+msgid "EXPLORAR"
+msgstr "EXPLORE"
+
+#: .\apps\core\templates\core\home.html:26
+msgid "¿Qué puedes encontrar?"
+msgstr "What can you find?"
+
+#: .\apps\core\templates\core\home.html:32
+msgid "Lugares turísticos"
+msgstr "Tourist places"
+
+#: .\apps\core\templates\core\home.html:61
+msgid "Contacto"
+msgstr "Contact"
+
+#: .\apps\core\templates\core\home.html:62
+msgid "Télefono"
+msgstr "Phone"
+
+#: .\apps\core\templates\core\home.html:63
+msgid "Emai"
+msgstr "Email"
+
+#: .\apps\core\templates\core\home.html:66
+msgid "Redes Sociales"
+msgstr "Social Media"
+
+#: .\apps\core\templates\core\home.html:74
+msgid "Ubicación"
+msgstr "Location"
+
+#: .\apps\order\models.py:11
+msgid "Pendiente"
+msgstr "Pending"
+
+#: .\apps\order\models.py:12
+msgid "Confirmada"
+msgstr "Confirmed"
+
+#: .\apps\order\models.py:13
+msgid "Cancelada"
+msgstr "Canceled"
+
+#: .\apps\user\templates\user\partials\login_modal.html:7
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:7
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:7
+msgid "Cerrar"
+msgstr "Close"
+
+#: .\apps\user\templates\user\partials\login_modal.html:22
+msgid "Usuario o email"
+msgstr "Username or email"
+
+#: .\apps\user\templates\user\partials\login_modal.html:26
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:43
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:43
+msgid "Contraseña"
+msgstr "Password"
+
+#: .\apps\user\templates\user\partials\login_modal.html:29
+msgid "Entrar"
+msgstr "Sign in"
+
+#: .\apps\user\templates\user\partials\login_modal.html:39
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:6
+msgid "Crear cuenta"
+msgstr "Create account"
+
+#: .\apps\user\templates\user\partials\login_modal.html:46
+msgid "Soy vendedor"
+msgstr "I’m a seller"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:23
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:23
+msgid "Usuario"
+msgstr "Username"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:28
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:28
+msgid "Nombre"
+msgstr "First name"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:33
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:33
+msgid "Apellido"
+msgstr "Last name"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:38
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:38
+msgid "Email"
+msgstr "Email"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:48
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:48
+msgid "Confirmar contraseña"
+msgstr "Confirm password"
+
+#: .\apps\user\templates\user\partials\signup_customer_modal.html:52
+msgid "Registrarme"
+msgstr "Register"
+
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:6
+msgid "Crear cuenta vendedor"
+msgstr "Create seller account"
+
+#: .\apps\user\templates\user\partials\signup_provider_modal.html:52
+msgid "Crear cuenta de vendedor"
+msgstr "Create seller account"
+
+#: .\config\settings.py:118
+msgid "English"
+msgstr "English"
+
+#: .\config\settings.py:119
+msgid "Spanish"
+msgstr "Spanish"
+
+#: .\templates\core\qr_reservation.html:5
+msgid "Código QR de Reserva — Alma Viajera"
+msgstr "Reservation QR Code — Alma Viajera"
+
+#: .\templates\core\qr_reservation.html:18
+#: .\templates\core\qr_reservation.html:28
+msgid "Código QR de Reserva"
+msgstr "Reservation QR Code"
+
+#: .\templates\core\qr_reservation.html:20
+msgid "Presenta este código QR en el establecimiento para confirmar tu reserva"
+msgstr "Show this QR code at the establishment to confirm your reservation"
+
+#: .\templates\core\qr_reservation.html:42
+msgid "Detalles de la Reserva"
+msgstr "Reservation Details"
+
+#: .\templates\core\qr_reservation.html:46
+msgid "Código de Reserva"
+msgstr "Reservation Code"
+
+#: .\templates\core\qr_reservation.html:60
+msgid "Resumen del carrito"
+msgstr "Cart Summary"
+
+#: .\templates\core\qr_reservation.html:71
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\core\qr_reservation.html:84
+msgid "Instrucciones"
+msgstr "Instructions"
+
+#: .\templates\core\qr_reservation.html:87
+msgid "Muestra este código QR al personal del establecimiento"
+msgstr "Show this QR code to the establishment staff"
+
+#: .\templates\core\qr_reservation.html:88
+msgid "El código es válido por 24 horas desde su generación"
+msgstr "The code is valid for 24 hours from its generation"
+
+#: .\templates\core\qr_reservation.html:89
+msgid "Guarda una captura de pantalla como respaldo"
+msgstr "Save a screenshot as a backup"
+
+#: .\templates\core\qr_reservation.html:98
+msgid "Volver al Inicio"
+msgstr "Back to Home"
+
+#: .\templates\core\qr_reservation.html:102
+msgid "Imprimir QR"
+msgstr "Print QR"
+
+
+#: .\templates\partials\_navbar.html:26 .\templates\partials\_navbar.html:58
+msgid "Mapa"
+msgstr "Map"
+
+#: .\templates\partials\_navbar.html:29 .\templates\partials\_navbar.html:61
+msgid "Carrito"
+msgstr "Cart"
+
+#: .\templates\partials\_navbar.html:55
+msgid "Cerrar sesión"
+msgstr "Log out"

@@ -1,9 +1,11 @@
+{% load i18n %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
 <div class="modal-content">
   <div class="modal-header">
-    <h5 class="modal-title">Iniciar sesión</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <h5 class="modal-title">{% trans "Iniciar sesión" %}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Cerrar' %}"></button>
   </div>
+
   <div class="modal-body">
     {% if form.non_field_errors %}
       <div class="alert alert-danger">{{ form.non_field_errors }}</div>
@@ -15,19 +17,33 @@
           hx-swap="outerHTML"
           novalidate>
       {% csrf_token %}
-      <div class="mb-3"><label class="form-label">Usuario o email</label>{{ form.username }}</div>
-      <div class="mb-3"><label class="form-label">Contraseña</label>{{ form.password }}</div>
-      <button class="btn btn-primary w-100" type="submit">Entrar</button>
+      <div class="mb-3">
+        <label class="form-label">{% trans "Usuario o email" %}</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{% trans "Contraseña" %}</label>
+        {{ form.password }}
+      </div>
+      <button class="btn btn-primary w-100" type="submit">{% trans "Entrar" %}</button>
     </form>
 
     <hr class="my-4">
+
     <div class="d-flex gap-2">
       <a class="btn btn-outline-secondary w-50"
          hx-get="{% url 'users:signup_customer' %}?partial=1"
-         hx-target="#authModal .modal-content" hx-swap="outerHTML">Crear cuenta</a>
+         hx-target="#authModal .modal-content"
+         hx-swap="outerHTML">
+         {% trans "Crear cuenta" %}
+      </a>
+
       <a class="btn btn-outline-dark w-50"
          hx-get="{% url 'users:signup_provider' %}?partial=1"
-         hx-target="#authModal .modal-content" hx-swap="outerHTML">Soy vendedor</a>
+         hx-target="#authModal .modal-content"
+         hx-swap="outerHTML">
+         {% trans "Soy vendedor" %}
+      </a>
     </div>
   </div>
 </div>

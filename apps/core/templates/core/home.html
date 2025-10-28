@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block body_class %}home{% endblock %}
 {% block content %}
@@ -14,36 +15,36 @@
         <img class="carousel-image" src="{% static 'images/santamartajpg.jpg' %}" alt="Paisaje">
     </div>
     <div class="hero-content">
-        <h1>Nuestra tierra,<br>tu próxima aventura</h1>
-        <a href="{% url 'catalog:explorar' 'Colombia' 'lugar' %}" class="reserve-button">EXPLORAR</a>
+        <h1>{% trans "Nuestra tierra" %},<br>{% trans "tu próxima aventura" %}</h1>
+        <a href="{% url 'catalog:explorar' 'Colombia' 'lugar' %}" class="reserve-button">{% trans "EXPLORAR" %}</a>
     </div>
 </section>
 
 <!-- Sección: ¿Qué puedes encontrar? -->
 <section class="find-section">
     <div class="find-container">
-        <h2>¿Qué puedes encontrar?</h2>
+        <h2>{% trans "¿Qué puedes encontrar?" %}</h2>
         <div class="carousel2-wrapper">
             <button class="carousel2-button left" onclick="scrollCarousel2(-1)">&#8249;</button>
             <div class="carousel2-container">
                 <div class="find-card">
-                    <img src="{% static 'images/lugares.jpg' %}" alt="Lugares turísticos">
-                    <p>Lugares turísticos</p>
+                    <img src="{% static 'images/lugares.jpg' %}" alt=Lugares turisticos>
+                    <p>{% trans "Lugares turísticos" %}</p>
                 </div>
                 <div class="find-card">
-                    <img src="{% static 'images/comida.jpg' %}" alt="comida">
-                    <p>Comida</p>
+                    <img src="{% static 'images/comida.jpg' %}" alt= Comida>
+                    <p>{% trans "Comida" %}</p>
                 </div>
                 <div class="find-card">
-                    <img src="{% static 'images/actividades.jpg' %}" alt="actividades">
-                    <p>Actividades</p>
+                    <img src="{% static 'images/actividades.jpg' %}" alt=Actividades>
+                    <p>{% trans "Actividades" %}</p>
                 </div>
                 <div class="find-card">
-                    <img src="{% static 'images/tours.jpg' %}" alt="Tours">
+                    <img src="{% static 'images/tours.jpg' %}" alt=Tours>
                     <p>Tours</p>
                 </div>
                 <div class="find-card">
-                    <img src="{% static 'images/bolsawua.jpg' %}" alt="Souvenir">
+                    <img src="{% static 'images/bolsawua.jpg' %}" alt=Souvenirs>
                     <p>Souvenirs</p>
                 </div>
             </div>
@@ -57,12 +58,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h5>Contacto</h5>
-                <p>Teléfono: +123 456 789</p>
-                <p>Email: contacto@almaviajera.com</p>
+                <h5>{% trans "Contacto" %}</h5>
+                <p>{% trans "Télefono" %}: +123 456 789</p>
+                <p>{% trans "Emai" %}: contacto@almaviajera.com</p>
             </div>
             <div class="col-md-4">
-                <h5>Redes Sociales</h5>
+                <h5>{% trans "Redes Sociales" %}</h5>
                 <ul class="social-links">
                     <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
@@ -70,7 +71,7 @@
                 </ul>
             </div>
             <div class="col-md-4">
-                <h5>Ubicación</h5>
+                <h5>{% trans "Ubicación" %}</h5>
                 <p>123 Calle Principal, Ciudad, País</p>
             </div>
         </div>

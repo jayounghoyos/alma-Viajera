@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Mapa · Alma Viajera{% endblock %}
+{% block title %}{% trans "Mapa · Alma Viajera" %}{% endblock %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'css/map.css' %}">
@@ -19,12 +19,14 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-8">
-          <h1 class="map-title">Selecciona tu destino</h1>
-          <p class="map-subtitle">Explora los mejores lugares, tours y experiencias de cada país</p>
+          <h1 class="map-title">{% trans "Selecciona tu destino" %}</h1>
+          <p class="map-subtitle">
+            {% trans "Explora los mejores lugares, tours y experiencias de cada país" %}
+          </p>
         </div>
         <div class="col-md-4 text-end">
           <a href="{% url 'core:home' %}" class="btn btn-outline-light">
-            <i class="bi bi-arrow-left"></i> Volver al inicio
+            <i class="bi bi-arrow-left"></i> {% trans "Volver al inicio" %}
           </a>
         </div>
       </div>
@@ -37,9 +39,9 @@
     
     <!-- Panel de países -->
     <div class="countries-panel">
-      <h3>Países disponibles</h3>
+      <h3>{% trans "Países disponibles" %}</h3>
       <div class="countries-carousel">
-        <button class="carousel-btn prev" type="button" aria-label="País anterior">
+        <button class="carousel-btn prev" type="button" aria-label="{% trans 'País anterior' %}">
           <i class="bi bi-chevron-left"></i>
         </button>
         <div class="countries-list" id="countriesList">
@@ -50,7 +52,7 @@
             </div>
             <div class="country-info">
               <h4>{{ pais.nombre }}</h4>
-              <p>Explorar destinos</p>
+              <p>{% trans "Explorar destinos" %}</p>
             </div>
             <div class="country-arrow">
               <i class="bi bi-arrow-right"></i>
@@ -58,7 +60,7 @@
           </div>
           {% endfor %}
         </div>
-        <button class="carousel-btn next" type="button" aria-label="Siguiente país">
+        <button class="carousel-btn next" type="button" aria-label="{% trans 'Siguiente país' %}">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
@@ -86,9 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
     .bindPopup(`
       <div class="map-popup">
         <h4>{{ pais.nombre }}</h4>
-        <p>Haz clic para explorar este país</p>
+        <p>{% trans "Haz clic para explorar este país" %}</p>
         <button class="btn btn-primary btn-sm explore-btn" data-country="{{ pais.codigo }}">
-          Explorar {{ pais.nombre }}
+          {% trans "Explorar" %} {{ pais.nombre }}
         </button>
       </div>
     `);

@@ -1,18 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Catalog · Alma Viajera{% endblock %}
+{% load i18n static %}
+{% block title %}{% trans "Catálogo" %} · Alma Viajera{% endblock %}
+
 {% block extra_head %}
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
 {% endblock %}
+
 {% block body_class %}explorer{% endblock %}
+
 {% block content %}
-  {% load static %}
   <div class="container text-center mt-5">
 
     <!-- Título principal -->
     <div class="d-flex align-items-center justify-content-center mb-3">
       <a href="{% url 'catalog:mapa' %}" class="btn btn-outline-primary me-3">
-        <i class="bi bi-map"></i> Cambiar país
+        <i class="bi bi-map"></i> {% trans "Cambiar país" %}
       </a>
       <h1 class="display-1 fw-bold mb-0">{{ place|upper }}</h1>
     </div>
@@ -22,11 +24,11 @@
 
     <!-- Categorías -->
     <div class="row justify-content-center mb-4 categories">
-      <a href="{% url 'catalog:explorar' place 'lugar' %}" class="col-2 border-end category-link">Lugares</a>
-      <a href="{% url 'catalog:explorar' place 'comida' %}" class="col-2 border-end category-link">Comida</a>
-      <a href="{% url 'catalog:explorar' place 'tour' %}" class="col-2 border-end category-link">Tours</a>
-      <a href="{% url 'catalog:explorar' place 'actividad' %}" class="col-2 border-end category-link">Actividades</a>
-      <a href="{% url 'catalog:explorar' place 'souvenir' %}" class="col-2 category-link">Souvenirs</a>
+      <a href="{% url 'catalog:explorar' place 'lugar' %}" class="col-2 border-end category-link">{% trans "Lugares" %}</a>
+      <a href="{% url 'catalog:explorar' place 'comida' %}" class="col-2 border-end category-link">{% trans "Comida" %}</a>
+      <a href="{% url 'catalog:explorar' place 'tour' %}" class="col-2 border-end category-link">{% trans "Tours" %}</a>
+      <a href="{% url 'catalog:explorar' place 'actividad' %}" class="col-2 border-end category-link">{% trans "Actividades" %}</a>
+      <a href="{% url 'catalog:explorar' place 'souvenir' %}" class="col-2 category-link">{% trans "Souvenirs" %}</a>
     </div>
     
     <!-- Buscador -->
@@ -34,7 +36,9 @@
       <div class="col-md-6">
         <form method="get" action="{% url 'catalog:explorar' place categoria %}">
           <div class="input-group">
-            <input type="text" name="search" class="form-control rounded-pill" placeholder="Buscar en {{ place }}..." value="{{ request.GET.search|default:'' }}">
+            <input type="text" name="search" class="form-control rounded-pill"
+                   placeholder="{% blocktrans %}Buscar en {{ place }}...{% endblocktrans %}"
+                   value="{{ request.GET.search|default:'' }}">
             <button class="btn btn-outline-secondary rounded-pill ms-2" type="submit">
               <i class="bi bi-search"></i>
             </button>
@@ -43,38 +47,35 @@
       </div>
     </div>
 
-
     <!-- Botones Filtros / Ordenar -->
     <div class="d-flex justify-content-center gap-3">
       <button class="btn btn-outline-dark d-flex align-items-center px-4">
-        <i class="bi bi-funnel me-2"></i> Filtros
+        <i class="bi bi-funnel me-2"></i> {% trans "Filtros" %}
       </button>
       <div class="popover-hover">
         <button class="btn btn-outline-dark d-flex align-items-center px-4">
-          <i class="bi bi-arrow-down-up me-2"></i> Ordenar por
+          <i class="bi bi-arrow-down-up me-2"></i> {% trans "Ordenar por" %}
         </button>
         <div class="popover-box">
-          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_asc">Precio: menor a mayor</a>
-          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_desc">Precio: mayor a menor</a>
-          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_asc">Tiempo: menor a mayor</a>
-          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_desc">Tiempo: mayor a menor</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_asc">{% trans "Precio: menor a mayor" %}</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=precio_desc">{% trans "Precio: mayor a menor" %}</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_asc">{% trans "Tiempo: menor a mayor" %}</a>
+          <a href="{% url 'catalog:explorar' place categoria %}?ordenar=tiempo_desc">{% trans "Tiempo: mayor a menor" %}</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Card debajo del buscador -->
+  <!-- Cards -->
   <div class="container my-4">
-    <div class="row g-4"> <!-- g-4 adds space between cards -->
-
-      <!-- Cards -->
+    <div class="row g-4">
       {% for item in items %}
         <div class="col-md-6 col-lg-3">
           <div class="card shadow-sm h-100" style="border-radius: 12px; overflow: hidden;">
             {% if item.imagen %}
               <img src="{{ item.imagen.url }}" class="card-img-top" alt="{{ item.nombre }}">
             {% else %}
-              <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default image">
+              <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="{% trans 'Imagen por defecto' %}">
             {% endif %}
             <div class="card-body">
               <h5 class="card-title">
@@ -83,27 +84,27 @@
                     {{ item.nombre }}
                   </a>
                 {% else %}
-                  <h5 class="card-title"> {{item.nombre}} </h5>
+                  <h5 class="card-title">{{ item.nombre }}</h5>
                 {% endif %}
               </h5>
-              <p class="card-text text-muted"> {{item.descripcion}}</p>
+              <p class="card-text text-muted">{{ item.descripcion }}</p>
               
               <div class="d-flex text-muted mb-2">
-                <small  class="me-3"><i class="bi bi-geo-alt"></i> {{item.ubicacion}}</small>
+                <small class="me-3"><i class="bi bi-geo-alt"></i> {{ item.ubicacion }}</small>
                 {% if categoria not in "lugar,comida,souvenir" %}
-                  <small><i class="bi bi-clock"></i> {{item.tiempo}} hours</small>
+                  <small><i class="bi bi-clock"></i> {{ item.tiempo }} {% trans "horas" %}</small>
                 {% endif %}
               </div>
 
               <div class="mb-2">
                 <span class="text-warning"><i class="bi bi-star-fill"></i></span>
-                <strong>4.8</strong> (89 reseñas)
+                <strong>4.8</strong> (89 {% trans "reseñas" %})
               </div>
 
               {% if categoria != "lugar" %}
                 <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0"> {{item.precio}} <small class="text-muted">USD</small></h5>
-                  <a href="{% url 'catalog:item_detail' item.id %}" class="btn btn-primary">Ver</a>
+                  <h5 class="mb-0">{{ item.precio }} <small class="text-muted">USD</small></h5>
+                  <a href="{% url 'catalog:item_detail' item.id %}" class="btn btn-primary">{% trans "Ver" %}</a>
                 </div>
               {% endif %}
             </div>
@@ -132,7 +133,7 @@
       hover.addEventListener("mouseleave", () => {
         timeout = setTimeout(() => {
           box.style.display = "none";
-        }, 500); // 1000 ms = 1 second
+        }, 500);
       });
     });
   </script>

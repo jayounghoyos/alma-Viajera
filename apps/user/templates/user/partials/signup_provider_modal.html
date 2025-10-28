@@ -1,24 +1,54 @@
+{% load i18n %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
 <div class="modal-content">
   <div class="modal-header">
-    <h5 class="modal-title">Crear cuenta vendedor</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <h5 class="modal-title">{% trans "Crear cuenta vendedor" %}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Cerrar' %}"></button>
   </div>
+
   <div class="modal-body">
-    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
     <form method="post"
           hx-post="{% url 'users:signup_provider' %}?partial=1"
           hx-target="#authModal .modal-content"
           hx-swap="outerHTML"
           novalidate>
       {% csrf_token %}
-      <div class="mb-3"><label class="form-label">Usuario</label>{{ form.username }}{{ form.username.errors }}</div>
-      <div class="mb-3"><label class="form-label">Nombre</label>{{ form.first_name }}{{ form.first_name.errors }}</div>
-      <div class="mb-3"><label class="form-label">Apellido</label>{{ form.last_name }}{{ form.last_name.errors }}</div>
-      <div class="mb-3"><label class="form-label">Email</label>{{ form.email }}{{ form.email.errors }}</div>
-      <div class="mb-3"><label class="form-label">Contraseña</label>{{ form.password1 }}{{ form.password1.errors }}</div>
-      <div class="mb-3"><label class="form-label">Confirmar contraseña</label>{{ form.password2 }}{{ form.password2.errors }}</div>
-      <button class="btn btn-dark w-100" type="submit">Crear cuenta de vendedor</button>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Usuario" %}</label>
+        {{ form.username }}{{ form.username.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Nombre" %}</label>
+        {{ form.first_name }}{{ form.first_name.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Apellido" %}</label>
+        {{ form.last_name }}{{ form.last_name.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Email" %}</label>
+        {{ form.email }}{{ form.email.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Contraseña" %}</label>
+        {{ form.password1 }}{{ form.password1.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{% trans "Confirmar contraseña" %}</label>
+        {{ form.password2 }}{{ form.password2.errors }}
+      </div>
+
+      <button class="btn btn-dark w-100" type="submit">{% trans "Crear cuenta de vendedor" %}</button>
     </form>
   </div>
 </div>

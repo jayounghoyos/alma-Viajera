@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Código QR de Reserva — Alma Viajera{% endblock %}
+{% block title %}{% trans "Código QR de Reserva — Alma Viajera" %}{% endblock %}
 {% block body_class %}qr-reservation{% endblock %}
 
 {% block content %}
@@ -14,15 +15,17 @@
                     <h1 class="display-4 text-primary">
                         <i class="bi bi-qr-code"></i>
                     </h1>
-                    <h2 class="h3 mb-3">Código QR de Reserva</h2>
-                    <p class="text-muted">Presenta este código QR en el establecimiento para confirmar tu reserva</p>
+                    <h2 class="h3 mb-3">{% trans "Código QR de Reserva" %}</h2>
+                    <p class="text-muted">
+                        {% trans "Presenta este código QR en el establecimiento para confirmar tu reserva" %}
+                    </p>
                 </div>
 
                 <!-- QR Code Image -->
                 <div class="qr-image-container mb-4">
                     <div class="qr-image-wrapper">
                         <img src="{{ qr_url }}" 
-                             alt="Código QR de Reserva" 
+                             alt="{% trans 'Código QR de Reserva' %}" 
                              class="img-fluid qr-image"
                              style="max-width: 300px; border: 2px solid #e9ecef; border-radius: 15px; padding: 20px; background: white;">
                     </div>
@@ -36,11 +39,11 @@
                                 <div class="col-md-6">
                                     <h5 class="card-title mb-0">
                                         <i class="bi bi-calendar-check"></i>
-                                        Detalles de la Reserva
+                                        {% trans "Detalles de la Reserva" %}
                                     </h5>
                                 </div>
                                <div class="col-md-6">
-                                    <small class="text-muted">Código de Reserva</small>
+                                    <small class="text-muted">{% trans "Código de Reserva" %}</small>
                                     <p class="fw-bold mb-0">{{ qr_payload }}</p>
                                 </div>
                             </div>
@@ -54,7 +57,7 @@
                         <div class="card-body">
                             <h6 class="card-title text-start mb-3">
                                 <i class="bi bi-bag-check"></i>
-                                Resumen del carrito
+                                {% trans "Resumen del carrito" %}
                             </h6>
                             <ul class="list-unstyled text-start mb-0">
                                 {% for item in cart_summary.items %}
@@ -65,7 +68,7 @@
                                 {% endfor %}
                             </ul>
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-muted small">Total</span>
+                                <span class="text-muted small">{% trans "Total" %}</span>
                                 <strong>{{ cart_summary.total }}</strong>
                             </div>
                         </div>
@@ -78,12 +81,12 @@
                     <div class="alert alert-info">
                         <h6 class="alert-heading">
                             <i class="bi bi-info-circle"></i>
-                            Instrucciones
+                            {% trans "Instrucciones" %}
                         </h6>
                         <ul class="mb-0 text-start">
-                            <li>Muestra este código QR al personal del establecimiento</li>
-                            <li>El código es válido por 24 horas desde su generación</li>
-                            <li>Guarda una captura de pantalla como respaldo</li>
+                            <li>{% trans "Muestra este código QR al personal del establecimiento" %}</li>
+                            <li>{% trans "El código es válido por 24 horas desde su generación" %}</li>
+                            <li>{% trans "Guarda una captura de pantalla como respaldo" %}</li>
                         </ul>
                     </div>
                 </div>
@@ -92,11 +95,11 @@
                 <div class="qr-actions">
                     <a href="{% url 'core:home' %}" class="btn btn-outline-primary me-2">
                         <i class="bi bi-house"></i>
-                        Volver al Inicio
+                        {% trans "Volver al Inicio" %}
                     </a>
                     <button onclick="window.print()" class="btn btn-primary">
                         <i class="bi bi-printer"></i>
-                        Imprimir QR
+                        {% trans "Imprimir QR" %}
                     </button>
                 </div>
             </div>

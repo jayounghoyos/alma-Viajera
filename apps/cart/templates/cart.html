@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Carrito de Compras{% endblock %}
+{% block title %}{% trans "Carrito de Compras" %}{% endblock %}
 
 {% block body_class %}cart{% endblock %}
 
@@ -14,20 +15,23 @@
     {% if login_required %}
     <!-- Mostrar mensaje de inicio de sesión requerido -->
     <div class="login-required">
-        <h1>Debes iniciar sesión</h1>
-        <p>Para continuar, por favor  <a class="nav-link"
-            href="{% url 'users:login' %}"
-            hx-get="{% url 'users:login' %}?partial=1"
-            hx-target="#authModal .modal-content"
-            hx-swap="outerHTML"
-            data-bs-toggle="modal"
-            data-bs-target="#authModal">
-            Iniciar sesión
-          </a>.</p>
+        <h1>{% trans "Debes iniciar sesión" %}</h1>
+        <p>
+            {% blocktrans %}Para continuar, por favor{% endblocktrans %}
+            <a class="nav-link"
+                href="{% url 'users:login' %}"
+                hx-get="{% url 'users:login' %}?partial=1"
+                hx-target="#authModal .modal-content"
+                hx-swap="outerHTML"
+                data-bs-toggle="modal"
+                data-bs-target="#authModal">
+                {% trans "Iniciar sesión" %}
+            </a>.
+        </p>
     </div>
     {% else %}
     <!-- Mostrar contenido del carrito -->
-    <h1>Tu Carrito de Compras</h1>
+    <h1>{% trans "Tu Carrito de Compras" %}</h1>
 
     {% if carrito and carrito.items.all %}
     <div class="cart-back">
@@ -49,10 +53,12 @@
                         <button class="quantity-btn" data-action="increase" data-item-id="{{ item.item.id }}">+</button>
                     </div>
                     <!-- Precio unitario (fijo) -->
-                    <span class="item-price">Precio unitario: ${{ item.item.precio|floatformat:2 }}</span>
+                    <span class="item-price">
+                        {% blocktrans %}Precio unitario:{% endblocktrans %} ${{ item.item.precio|floatformat:2 }}
+                    </span>
                     <!-- Subtotal dinámico -->
                     <span class="item-subtotal" id="subtotal-{{ item.item.id }}">
-                        Subtotal: ${{ item.cantidad|floatformat:0|add:item.item.precio|floatformat:2 }}
+                        {% blocktrans %}Subtotal:{% endblocktrans %} ${{ item.cantidad|floatformat:0|add:item.item.precio|floatformat:2 }}
                     </span>
                 </div>
                 <button class="remove-btn" data-item-id="{{ item.item.id }}">
@@ -63,31 +69,32 @@
         </div>
 
         <div class="cart-summary">
-            <h2>Resumen de Compra</h2>
+            <h2>{% trans "Resumen de Compra" %}</h2>
             <div class="summary-line">
-                <span>Subtotal:</span>
+                <span>{% trans "Subtotal:" %}</span>
                 <span id="subtotal">${{ carrito.total|floatformat:2 }}</span>
             </div>
             <div class="summary-line">
-                <span>Envío:</span>
-                <span>Gratis</span>
+                <span>{% trans "Envío:" %}</span>
+                <span>{% trans "Gratis" %}</span>
             </div>
             <div class="summary-line total">
-                <span>Total:</span>
+                <span>{% trans "Total:" %}</span>
                 <span id="total">${{ carrito.total|floatformat:2 }}</span>
             </div>
             <form action="{% url 'core:qr_reservation' %}" method="get" style="display: inline;">
                 <button type="submit" class="checkout-btn">
-                    Realizar reserva
+                    {% trans "Realizar reserva" %}
                 </button>
             </form>
-            {% comment %} <button class="checkout-btn">Realizar reserva</button> {% endcomment %}
         </div>
     </div>
     {% else %}
     <div class="empty-cart">
-        <p>Tu carrito está vacío, sigue explorando</p>
-        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+        <p>{% trans "Tu carrito está vacío, sigue explorando" %}</p>
+        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">
+            {% trans "Explorar" %}
+        </a>
     </div>
     {% endif %}
     {% endif %}
