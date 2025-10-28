@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, DetailView
 from django.contrib import messages
 from .models import Item
 from .forms import CalificacionForm
-
+from django.http import JsonResponse, Http404
 
 class CatalogView(View):
     template_name = 'catalog.html'
@@ -47,7 +47,6 @@ class CatalogView(View):
             "items": items,
         })
 
-
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'catalog/item_detail.html'
@@ -84,7 +83,6 @@ class ItemDetailView(DetailView):
             messages.error(request, "Hubo un error al enviar tu calificación.")
         return redirect('catalog:item_detail', pk=item.pk)
 
-
 class MapView(TemplateView):
     """Vista para mostrar el mapa de selección de países."""
     template_name = 'catalog/map.html'
@@ -101,3 +99,27 @@ class MapView(TemplateView):
             {'codigo': 'Brasil', 'nombre': 'Brasil', 'lat': -14.2350, 'lng': -51.9253},
         ]
         return context
+
+def item_detail_api(request, id):
+    try:
+        item = Item.objects.select_related('categoria', 'vendedor').get(id=id)
+    except Item.DoesNotExist:
+        raise Http404("Item not found")
+
+    data = {
+        "id": item.id,
+        "nombre": item.nombre,
+        "descripcion": item.descripcion,
+        "precio": str(item.precio),
+        "categoria": item.categoria.nombre,
+        "ubicacion": item.ubicacion,
+        "imagen": item.imagen.url if item.imagen else None,
+        "tiempo": float(item.tiempo) if item.tiempo else None,
+        "disponibilidad": item.disponibilidad,
+        "stock": item.stock,
+        "promedio_calificacion": item.promedio_calificacion(),
+        "estrellas": item.estrellas(),
+        "vendedor": item.vendedor.username,
+    }
+
+    return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
