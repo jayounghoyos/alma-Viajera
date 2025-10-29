@@ -1,24 +1,24 @@
-
 {% extends "base.html" %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
-{% block title %}Mi cuenta — Proveedor{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Mi cuenta — Proveedor" %}{% endblock %}
 {% block body_class %}black_navbar_text{% endblock %}
 {% block content %}
 <div class="container mt-5">
-  <h1 class="h3 mb-4">Mi cuenta (Proveedor)</h1>
+  <h1 class="h3 mb-4">{% trans "Mi cuenta (Proveedor)" %}</h1>
   <div class="row g-3">
     <div class="col-12 col-md-6">
       <div class="card p-3">
-        <h2 class="h5">Crear nuevo servicio</h2>
-        <p class="text-muted mb-3">Publica un tour o actividad.</p>
-        <a class="btn btn-primary" href="{% url 'providers:crear_servicio' %}">Crear servicio</a>
+        <h2 class="h5">{% trans "Crear nuevo servicio" %}</h2>
+        <p class="text-muted mb-3">{% trans "Publica un tour o actividad." %}</p>
+        <a class="btn btn-primary" href="{% url 'providers:crear_servicio' %}">{% trans "Crear servicio" %}</a>
       </div>
     </div>
     <div class="col-12 col-md-6">
       <div class="card p-3">
-        <h2 class="h5">Mis servicios</h2>
-        <p class="text-muted mb-3">Gestiona lo que ya publicaste.</p>
-        <a class="btn btn-outline-secondary" href="{% url 'providers:ver_servicios' %}">Ver servicios</a>
+        <h2 class="h5">{% trans "Mis servicios" %}</h2>
+        <p class="text-muted mb-3">{% trans "Gestiona lo que ya publicaste." %}</p>
+        <a class="btn btn-outline-secondary" href="{% url 'providers:ver_servicios' %}">{% trans "Ver servicios" %}</a>
       </div>
     </div>
   </div>

@@ -1,80 +1,80 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Registrar Producto — Alma Viajera{% endblock %}
+{% load static i18n %}
+{% block title %}{% trans "Registrar Producto — Alma Viajera" %}{% endblock %}
 {% block body_class %}formulario{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
 
 <div class="form-container">
-  <h2>Registra tu Producto</h2>
+  <h2>{% trans "Registra tu Producto" %}</h2>
 
   <form action="{% url 'providers:crear_servicio' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.non_field_errors }}
 
     <div class="form-group">
-      <label for="categoria">Categoría</label>
+      <label for="categoria">{% trans "Categoría" %}</label>
       <select id="categoria" name="categoria" required>
-        <option value="" disabled selected>Selecciona una categoría</option>
-        <option value="lugar">Lugar</option>
-        <option value="tour">Tour</option>
-        <option value="comida">Comida</option>
-        <option value="souvenir">Souvenir</option>
-        <option value="actividad">Actividad</option>
+        <option value="" disabled selected>{% trans "Selecciona una categoría" %}</option>
+        <option value="lugar">{% trans "Lugar" %}</option>
+        <option value="tour">{% trans "Tour" %}</option>
+        <option value="comida">{% trans "Comida" %}</option>
+        <option value="souvenir">{% trans "Souvenir" %}</option>
+        <option value="actividad">{% trans "Actividad" %}</option>
       </select>
       {{ form.categoria.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.nombre.id_for_label }}">Nombre del Producto</label>
+      <label for="{{ form.nombre.id_for_label }}">{% trans "Nombre del Producto" %}</label>
       {{ form.nombre }}
       {{ form.nombre.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+      <label for="{{ form.descripcion.id_for_label }}">{% trans "Descripción" %}</label>
       {{ form.descripcion }}
       {{ form.descripcion.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.precio.id_for_label }}">Precio</label>
+      <label for="{{ form.precio.id_for_label }}">{% trans "Precio" %}</label>
       <div class="input-with-icon"><span>$</span>{{ form.precio }}</div>
       {{ form.precio.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.ubicacion.id_for_label }}">Ubicación</label>
+      <label for="{{ form.ubicacion.id_for_label }}">{% trans "Ubicación" %}</label>
       {{ form.ubicacion }}
       {{ form.ubicacion.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.imagen.id_for_label }}">Imagen del Producto</label>
+      <label for="{{ form.imagen.id_for_label }}">{% trans "Imagen del Producto" %}</label>
       {{ form.imagen }}
       {{ form.imagen.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.tiempo.id_for_label }}">Duración (horas)</label>
+      <label for="{{ form.tiempo.id_for_label }}">{% trans "Duración (horas)" %}</label>
       {{ form.tiempo }}
       {{ form.tiempo.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.disponibilidad.id_for_label }}">Disponibilidad</label>
+      <label for="{{ form.disponibilidad.id_for_label }}">{% trans "Disponibilidad" %}</label>
       {{ form.disponibilidad }}
       {{ form.disponibilidad.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.stock.id_for_label }}">Stock (souvenirs)</label>
+      <label for="{{ form.stock.id_for_label }}">{% trans "Stock (souvenirs)" %}</label>
       {{ form.stock }}
       {{ form.stock.errors }}
     </div>
 
-    <button type="submit" class="btn-register-product">Registrar Producto</button>
+    <button type="submit" class="btn-register-product">{% trans "Registrar Producto" %}</button>
   </form>
 </div>
 {% endblock %}

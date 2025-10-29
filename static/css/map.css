@@ -143,10 +143,17 @@
   color: #0d6efd;
   font-size: 1.2rem;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .country-item:hover .country-arrow {
   transform: translateX(5px);
+}
+
+.country-item:focus-visible,
+.country-arrow:focus-visible {
+  outline: 2px solid #0d6efd;
+  outline-offset: 3px;
 }
 
 .carousel-btn {
@@ -309,6 +316,56 @@
 
   .country-item {
     flex: 0 0 210px;
+  }
+}
+
+@media (min-width: 992px) {
+  .countries-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .countries-carousel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    flex: 1 1 auto;
+  }
+
+  .carousel-btn {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    align-self: center;
+  }
+
+  .countries-list {
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    max-height: calc(80vh - 140px);
+    padding: 0.25rem 0;
+  }
+
+  .countries-list::-webkit-scrollbar {
+    width: 6px;
+    height: auto;
+  }
+
+  .country-item {
+    flex: 0 0 auto;
+    scroll-snap-align: unset;
+  }
+
+  .carousel-btn.prev i {
+    transform: rotate(90deg);
+  }
+
+  .carousel-btn.next i {
+    transform: rotate(-90deg);
   }
 }
 

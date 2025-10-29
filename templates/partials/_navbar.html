@@ -26,20 +26,19 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' 'Colombia' 'lugar'%}">{% trans "Explorar" %}</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">{% trans "Nosotros" %}</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">{% trans "Carrito" %}</a></li>
-          <li class="nav-item dropdown">
-            <form action="{% url 'set_language' %}" method="post" class="d-inline">
+          <li class="nav-item language-switcher d-flex align-items-center">
+            <form action="{% url 'set_language' %}" method="post" class="language-switcher-form">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{ request.path }}">
-              <select name="language" onchange="this.form.submit()"
-                      class="bg-transparent border-0 text-white fw-semibold"
-                      style="outline: none; cursor: pointer;">
+              <label class="visually-hidden" for="navbar-language-select">{% trans "Seleccionar idioma" %}</label>
+              <select id="navbar-language-select" name="language" onchange="this.form.submit()"
+                      class="language-select" aria-label="{% trans 'Idioma' %}">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
                 {% for language in languages %}
                   <option value="{{ language.code }}"
-                          {% if language.code == LANGUAGE_CODE %}selected{% endif %}
-                          style="color: black;">
+                          {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
                     {{ language.name_local }}
                   </option>
                 {% endfor %}
@@ -58,20 +57,19 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'catalog:explorar' 'Colombia' 'lugar'%}">{% trans "Explorar" %}</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">{% trans "Nosotros" %}</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'cart:detalle' %}">{% trans "Carrito" %}</a></li>
-          <li class="nav-item dropdown">
-            <form action="{% url 'set_language' %}" method="post" class="d-inline">
+          <li class="nav-item language-switcher d-flex align-items-center">
+            <form action="{% url 'set_language' %}" method="post" class="language-switcher-form">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{ request.path }}">
-              <select name="language" onchange="this.form.submit()"
-                      class="bg-transparent border-0 text-white fw-semibold"
-                      style="outline: none; cursor: pointer;">
+              <label class="visually-hidden" for="navbar-language-select-auth">{% trans "Seleccionar idioma" %}</label>
+              <select id="navbar-language-select-auth" name="language" onchange="this.form.submit()"
+                      class="language-select" aria-label="{% trans 'Idioma' %}">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
                 {% for language in languages %}
                   <option value="{{ language.code }}"
-                          {% if language.code == LANGUAGE_CODE %}selected{% endif %}
-                          style="color: black;">
+                          {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
                     {{ language.name_local }}
                   </option>
                 {% endfor %}

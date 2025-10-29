@@ -18,7 +18,7 @@
         <h1>{% trans "Debes iniciar sesión" %}</h1>
         <p>
             {% blocktrans %}Para continuar, por favor{% endblocktrans %}
-            <a class="nav-link"
+            <a class="nav-link login-button"
                 href="{% url 'users:login' %}"
                 hx-get="{% url 'users:login' %}?partial=1"
                 hx-target="#authModal .modal-content"
@@ -48,9 +48,15 @@
                 <div class="item-details">
                     <span class="item-name">{{ item.item.nombre }}</span>
                     <div class="item-controls">
-                        <button class="quantity-btn" data-action="decrease" data-item-id="{{ item.item.id }}">-</button>
+                        <button type="button" class="quantity-btn"
+                                data-action="decrease"
+                                data-item-id="{{ item.item.id }}"
+                                data-url="{% url 'cart:decrementar_cantidad' item.item.id %}">-</button>
                         <span class="quantity" id="quantity-{{ item.item.id }}">{{ item.cantidad }}</span>
-                        <button class="quantity-btn" data-action="increase" data-item-id="{{ item.item.id }}">+</button>
+                        <button type="button" class="quantity-btn"
+                                data-action="increase"
+                                data-item-id="{{ item.item.id }}"
+                                data-url="{% url 'cart:incrementar_cantidad' item.item.id %}">+</button>
                     </div>
                     <!-- Precio unitario (fijo) -->
                     <span class="item-price">
@@ -61,7 +67,9 @@
                         {% blocktrans %}Subtotal:{% endblocktrans %} ${{ item.cantidad|floatformat:0|add:item.item.precio|floatformat:2 }}
                     </span>
                 </div>
-                <button class="remove-btn" data-item-id="{{ item.item.id }}">
+                <button type="button" class="remove-btn"
+                        data-item-id="{{ item.item.id }}"
+                        data-url="{% url 'cart:eliminar' item.item.id %}">
                     <i class="fas fa-trash"></i>
                 </button>
             </div>
@@ -102,11 +110,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const subtotalLabel = "{{ _('Subtotal:')|escapejs }}";
+        const emptyCartMessage = "{{ _('Tu carrito está vacío, sigue explorando')|escapejs }}";
+        const exploreLabel = "{{ _('Explorar')|escapejs }}";
+
         // Incrementar cantidad
         document.querySelectorAll('.quantity-btn[data-action="increase"]').forEach(button => {
             button.addEventListener('click', function () {
                 const itemId = this.getAttribute('data-item-id');
-                fetch(`/carrito/incrementar/${itemId}/`, {
+                const url = this.dataset.url;
+                fetch(url, {
                     method: 'POST',
                     headers: { 'X-CSRFToken': getCookie('csrftoken') },
                 })
@@ -118,7 +131,7 @@
                         // Actualizar cantidad del producto
                         document.getElementById(`quantity-${itemId}`).innerText = data.cantidad;
                         // Actualizar subtotal del producto
-                        document.getElementById(`subtotal-${itemId}`).innerText = `Subtotal: $${data.subtotal_item.toFixed(2)}`;
+                        document.getElementById(`subtotal-${itemId}`).innerText = `${subtotalLabel} $${data.subtotal_item.toFixed(2)}`;
                         // Actualizar resumen de compra
                         document.getElementById('subtotal').innerText = `$${data.total.toFixed(2)}`;
                         document.getElementById('total').innerText = `$${data.total.toFixed(2)}`;
@@ -131,7 +144,8 @@
         document.querySelectorAll('.quantity-btn[data-action="decrease"]').forEach(button => {
             button.addEventListener('click', function () {
                 const itemId = this.getAttribute('data-item-id');
-                fetch(`/carrito/decrementar/${itemId}/`, {
+                const url = this.dataset.url;
+                fetch(url, {
                     method: 'POST',
                     headers: { 'X-CSRFToken': getCookie('csrftoken') },
                 })
@@ -142,7 +156,7 @@
                     } else if (data.cantidad !== undefined) {
                         if (data.cantidad > 0) {
                             document.getElementById(`quantity-${itemId}`).innerText = data.cantidad;
-                            document.getElementById(`subtotal-${itemId}`).innerText = `Subtotal: $${data.subtotal_item.toFixed(2)}`;
+                            document.getElementById(`subtotal-${itemId}`).innerText = `${subtotalLabel} $${data.subtotal_item.toFixed(2)}`;
                         } else {
                             document.getElementById(`cart-item-${itemId}`).remove();
                         }
@@ -156,8 +170,8 @@
                             if (cartLayout) {
                                 cartLayout.innerHTML = `
                                     <div class="empty-cart">
-                                        <p>Tu carrito está vacío, sigue explorando</p>
-                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+                                        <p>${emptyCartMessage}</p>
+                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">${exploreLabel}</a>
                                     </div>
                                 `;
                             }
@@ -171,7 +185,8 @@
         document.querySelectorAll('.remove-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const itemId = this.getAttribute('data-item-id');
-                fetch(`/carrito/eliminar/${itemId}/`, {
+                const url = this.dataset.url;
+                fetch(url, {
                     method: 'POST',
                     headers: { 'X-CSRFToken': getCookie('csrftoken') },
                 })
@@ -191,8 +206,8 @@
                             if (cartLayout) {
                                 cartLayout.innerHTML = `
                                     <div class="empty-cart">
-                                        <p>Tu carrito está vacío, sigue explorando</p>
-                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">Explorar</a>
+                                        <p>${emptyCartMessage}</p>
+                                        <a href="{% url 'catalog:explorar' place='Colombia' categoria='lugar' %}" class="explore-button">${exploreLabel}</a>
                                     </div>
                                 `;
                             }
@@ -205,8 +220,13 @@
         // Mostrar modal de inicio de sesión
         function showLoginRequiredModal(loginUrl) {
             const modal = document.querySelector('.login-required');
-            modal.style.display = 'block';
-            modal.querySelector('.login-button').href = loginUrl;
+            const button = document.querySelector('.login-button');
+            if (modal && button) {
+                modal.style.display = 'block';
+                button.href = loginUrl;
+            } else {
+                window.location.href = loginUrl;
+            }
         }
 
         // Obtener CSRF token

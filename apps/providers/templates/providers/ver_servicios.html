@@ -1,17 +1,16 @@
-
 {% extends "base.html" %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
-{% load static %}
-{% block title %}Mis Servicios — Proveedor{% endblock %}
+{% load static i18n %}
+{% block title %}{% trans "Mis Servicios — Proveedor" %}{% endblock %}
 {% block body_class %}black_navbar_text{% endblock %}
 
 {% block content %}
 {% csrf_token %}
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">Mis Servicios</h1>
+    <h1 class="h3 mb-0">{% trans "Mis Servicios" %}</h1>
     <a href="{% url 'providers:dashboard' %}" class="btn btn-outline-secondary">
-      <i class="bi bi-arrow-left"></i> Volver al Dashboard
+      <i class="bi bi-arrow-left"></i> {% trans "Volver al Dashboard" %}
     </a>
   </div>
 
@@ -32,9 +31,9 @@
               <div class="mb-2">
                 <span class="badge bg-primary">{{ servicio.categoria.get_nombre_display }}</span>
                 {% if servicio.disponibilidad %}
-                  <span class="badge bg-success">Disponible</span>
+                  <span class="badge bg-success">{% trans "Disponible" %}</span>
                 {% else %}
-                  <span class="badge bg-danger">No disponible</span>
+                  <span class="badge bg-danger">{% trans "No disponible" %}</span>
                 {% endif %}
               </div>
               
@@ -53,11 +52,17 @@
                 
                 <div class="d-flex justify-content-between align-items-center">
                   <small class="text-muted">
-                    <i class="bi bi-geo-alt"></i> {{ servicio.ubicacion|default:"Sin ubicación" }}
+                    <i class="bi bi-geo-alt"></i>
+                    {% if servicio.ubicacion %}
+                      {{ servicio.ubicacion }}
+                    {% else %}
+                      {% trans "Sin ubicación" %}
+                    {% endif %}
                   </small>
                   {% if servicio.stock is not None %}
                     <small class="text-muted">
-                      <i class="bi bi-box"></i> Stock: {{ servicio.stock }}
+                      <i class="bi bi-box"></i>
+                      {% blocktrans with stock=servicio.stock %}Stock: {{ stock }}{% endblocktrans %}
                     </small>
                   {% endif %}
                 </div>
@@ -67,10 +72,10 @@
             <div class="card-footer bg-transparent">
               <div class="d-flex gap-2">
                 <a href="{% url 'providers:editar_servicio' servicio.id %}" class="btn btn-outline-primary btn-sm flex-fill">
-                  <i class="bi bi-pencil"></i> Editar
+                  <i class="bi bi-pencil"></i> {% trans "Editar" %}
                 </a>
                 <button class="btn btn-outline-danger btn-sm flex-fill" onclick="eliminarServicio({{ servicio.id }}, '{{ servicio.nombre }}')">
-                  <i class="bi bi-trash"></i> Eliminar
+                  <i class="bi bi-trash"></i> {% trans "Eliminar" %}
                 </button>
               </div>
             </div>
@@ -81,29 +86,29 @@
 
     <!-- Paginación -->
     {% if is_paginated %}
-      <nav aria-label="Paginación de servicios" class="mt-4">
+      <nav aria-label="{% trans 'Paginación de servicios' %}" class="mt-4">
         <ul class="pagination justify-content-center">
           {% if page_obj.has_previous %}
             <li class="page-item">
-              <a class="page-link" href="?page=1">&laquo; Primera</a>
+              <a class="page-link" href="?page=1">&laquo; {% trans "Primera" %}</a>
             </li>
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Anterior" %}</a>
             </li>
           {% endif %}
 
           <li class="page-item active">
             <span class="page-link">
-              Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+              {% blocktrans with current=page_obj.number total=page_obj.paginator.num_pages %}Página {{ current }} de {{ total }}{% endblocktrans %}
             </span>
           </li>
 
           {% if page_obj.has_next %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Siguiente" %}</a>
             </li>
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{% trans "Última" %} &raquo;</a>
             </li>
           {% endif %}
         </ul>
@@ -114,10 +119,10 @@
     <!-- Estado vacío -->
     <div class="text-center py-5">
       <i class="bi bi-box text-muted" style="font-size: 4rem;"></i>
-      <h3 class="mt-3 text-muted">No tienes servicios publicados</h3>
-      <p class="text-muted">Comienza creando tu primer servicio para que los usuarios puedan encontrarlo.</p>
+      <h3 class="mt-3 text-muted">{% trans "No tienes servicios publicados" %}</h3>
+      <p class="text-muted">{% trans "Comienza creando tu primer servicio para que los usuarios puedan encontrarlo." %}</p>
       <a href="{% url 'providers:crear_servicio' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Crear mi primer servicio
+        <i class="bi bi-plus-circle"></i> {% trans "Crear mi primer servicio" %}
       </a>
     </div>
   {% endif %}
@@ -128,18 +133,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Confirmar eliminación</h5>
+        <h5 class="modal-title">{% trans "Confirmar eliminación" %}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>¿Estás seguro de que quieres eliminar el servicio <strong id="nombreServicio"></strong>?</p>
-        <p class="text-muted small">Esta acción no se puede deshacer.</p>
+        <p>{% trans "¿Estás seguro de que quieres eliminar el servicio" %} <strong id="nombreServicio"></strong>?</p>
+        <p class="text-muted small">{% trans "Esta acción no se puede deshacer." %}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancelar" %}</button>
         <button type="button" class="btn btn-danger" id="confirmarEliminar">
           <span class="spinner-border spinner-border-sm d-none" id="eliminarSpinner"></span>
-          <span id="eliminarText">Eliminar</span>
+          <span id="eliminarText">{% trans "Eliminar" %}</span>
         </button>
       </div>
     </div>
@@ -165,7 +170,12 @@ document.getElementById('confirmarEliminar').addEventListener('click', function(
     // Mostrar spinner
     btn.disabled = true;
     spinner.classList.remove('d-none');
-    text.textContent = 'Eliminando...';
+    const deletingText = "{{ _('Eliminando...')|escapejs }}";
+    const deleteError = "{{ _('Error al eliminar el servicio')|escapejs }}";
+    const deleteErrorWithSuffix = "{{ _('Error al eliminar el servicio:')|escapejs }}";
+    const deleteLabel = "{{ _('Eliminar')|escapejs }}";
+
+    text.textContent = deletingText;
     
     // Hacer petición AJAX
     fetch(`{% url 'providers:eliminar_servicio_ajax' 0 %}`.replace('0', servicioIdAEliminar), {
@@ -196,18 +206,18 @@ document.getElementById('confirmarEliminar').addEventListener('click', function(
           window.location.reload();
         }, 1500);
       } else {
-        throw new Error(data.error || 'Error al eliminar el servicio');
+        throw new Error(data.error || deleteError);
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('Error al eliminar el servicio: ' + error.message);
+      alert(`${deleteErrorWithSuffix} ${error.message}`);
     })
     .finally(() => {
       // Restaurar botón
       btn.disabled = false;
       spinner.classList.add('d-none');
-      text.textContent = 'Eliminar';
+      text.textContent = deleteLabel;
     });
   }
 });

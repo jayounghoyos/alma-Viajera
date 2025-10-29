@@ -1,8 +1,7 @@
-
 {% extends "base.html" %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
-{% load static %}
-{% block title %}Editar Servicio — Alma Viajera{% endblock %}
+{% load static i18n %}
+{% block title %}{% trans "Editar Servicio — Alma Viajera" %}{% endblock %}
 {% block body_class %}formulario{% endblock %}
 
 {% block content %}
@@ -10,9 +9,9 @@
 
 <div class="form-container">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Editar Servicio</h2>
+    <h2>{% trans "Editar Servicio" %}</h2>
     <a href="{% url 'providers:ver_servicios' %}" class="btn btn-outline-secondary">
-      <i class="bi bi-arrow-left"></i> Volver a Mis Servicios
+      <i class="bi bi-arrow-left"></i> {% trans "Volver a Mis Servicios" %}
     </a>
   </div>
 
@@ -21,69 +20,69 @@
     {{ form.non_field_errors }}
 
     <div class="form-group">
-      <label for="{{ form.categoria.id_for_label }}">Categoría</label>
+      <label for="{{ form.categoria.id_for_label }}">{% trans "Categoría" %}</label>
       {{ form.categoria }}
       {{ form.categoria.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.nombre.id_for_label }}">Nombre del Producto</label>
+      <label for="{{ form.nombre.id_for_label }}">{% trans "Nombre del Producto" %}</label>
       {{ form.nombre }}
       {{ form.nombre.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+      <label for="{{ form.descripcion.id_for_label }}">{% trans "Descripción" %}</label>
       {{ form.descripcion }}
       {{ form.descripcion.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.precio.id_for_label }}">Precio</label>
+      <label for="{{ form.precio.id_for_label }}">{% trans "Precio" %}</label>
       <div class="input-with-icon"><span>$</span>{{ form.precio }}</div>
       {{ form.precio.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.ubicacion.id_for_label }}">Ubicación</label>
+      <label for="{{ form.ubicacion.id_for_label }}">{% trans "Ubicación" %}</label>
       {{ form.ubicacion }}
       {{ form.ubicacion.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.imagen.id_for_label }}">Imagen del Producto</label>
+      <label for="{{ form.imagen.id_for_label }}">{% trans "Imagen del Producto" %}</label>
       {% if object.imagen %}
         <div class="mb-2">
-          <p class="text-muted small">Imagen actual:</p>
-          <img src="{{ object.imagen.url }}" alt="Imagen actual" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+          <p class="text-muted small">{% trans "Imagen actual:" %}</p>
+          <img src="{{ object.imagen.url }}" alt="{% trans 'Imagen actual' %}" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
         </div>
       {% endif %}
       {{ form.imagen }}
-      <small class="form-text text-muted">Deja vacío para mantener la imagen actual</small>
+      <small class="form-text text-muted">{% trans "Deja vacío para mantener la imagen actual" %}</small>
       {{ form.imagen.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.tiempo.id_for_label }}">Duración (horas)</label>
+      <label for="{{ form.tiempo.id_for_label }}">{% trans "Duración (horas)" %}</label>
       {{ form.tiempo }}
       {{ form.tiempo.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.disponibilidad.id_for_label }}">Disponibilidad</label>
+      <label for="{{ form.disponibilidad.id_for_label }}">{% trans "Disponibilidad" %}</label>
       {{ form.disponibilidad }}
       {{ form.disponibilidad.errors }}
     </div>
 
     <div class="form-group">
-      <label for="{{ form.stock.id_for_label }}">Stock (souvenirs)</label>
+      <label for="{{ form.stock.id_for_label }}">{% trans "Stock (souvenirs)" %}</label>
       {{ form.stock }}
       {{ form.stock.errors }}
     </div>
 
     <div class="d-flex gap-2">
-      <button type="submit" class="btn-register-product flex-fill">Actualizar Servicio</button>
-      <a href="{% url 'providers:ver_servicios' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn-register-product flex-fill">{% trans "Actualizar Servicio" %}</button>
+      <a href="{% url 'providers:ver_servicios' %}" class="btn btn-outline-secondary">{% trans "Cancelar" %}</a>
     </div>
   </form>
 </div>

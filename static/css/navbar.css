@@ -54,3 +54,75 @@ body.formulario .navbar .navbar-brand,
 body.formulario .navbar .nav-link {
     color: black !important; /* Letra negra */
 }
+
+.navbar .language-switcher {
+    position: relative;
+    margin-left: 0.75rem;
+}
+
+.navbar .language-switcher-form {
+    margin: 0;
+}
+
+.navbar .language-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.35rem 2.05rem 0.35rem 0.95rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: inherit;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    min-width: 6.5rem;
+    box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.navbar .language-select:focus,
+.navbar .language-select:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.navbar .language-switcher::after {
+    content: "\25be";
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.85rem;
+    color: currentColor;
+    transition: color 0.2s ease;
+}
+
+.navbar .language-select option {
+    color: #212529;
+}
+
+body.home .navbar .language-select {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+body:not(.home) .navbar .language-select {
+    background: rgba(0, 0, 0, 0.08);
+    color: #212529;
+}
+
+body.home .navbar .language-switcher::after {
+    color: #ffffff;
+}
+
+.navbar.navbar-scrolled .language-select {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.navbar.navbar-scrolled .language-switcher::after {
+    color: #ffffff;
+}

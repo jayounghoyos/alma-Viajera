@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Registrar Producto — Alma Viajera{% endblock %}
+{% load static i18n %}
+{% block title %}{% trans "Registrar Producto — Alma Viajera" %}{% endblock %}
 {% block body_class %}formulario{% endblock %}
 
 {% block content %}
@@ -8,59 +8,59 @@
 {% block extra_css %}{% endblock %}
 
 <div class="form-container">
-    <h2>Registra tu Producto</h2>
+    <h2>{% trans "Registra tu Producto" %}</h2>
     <form action="{% url 'providers:crear_servicio' %}" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="categoria">Categoría</label>
+            <label for="categoria">{% trans "Categoría" %}</label>
             <select id="categoria" name="categoria" required>
-                <option value="" disabled selected>Selecciona una categoría</option>
-                <option value="lugar">Lugar</option>
-                <option value="tour">Tour</option>
-                <option value="comida">Comida</option>
-                <option value="souvenir">Souvenir</option>
-                <option value="actividad">Actividad</option>
+                <option value="" disabled selected>{% trans "Selecciona una categoría" %}</option>
+                <option value="lugar">{% trans "Lugar" %}</option>
+                <option value="tour">{% trans "Tour" %}</option>
+                <option value="comida">{% trans "Comida" %}</option>
+                <option value="souvenir">{% trans "Souvenir" %}</option>
+                <option value="actividad">{% trans "Actividad" %}</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="nombre">Nombre del Producto</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ej: Café especial de la región" required>
+            <label for="nombre">{% trans "Nombre del Producto" %}</label>
+            <input type="text" id="nombre" name="nombre" placeholder="{% trans 'Ej: Café especial de la región' %}" required>
         </div>
 
         <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe tu producto en detalle..." required></textarea>
+            <label for="descripcion">{% trans "Descripción" %}</label>
+            <textarea id="descripcion" name="descripcion" rows="4" placeholder="{% trans 'Describe tu producto en detalle...' %}" required></textarea>
         </div>
 
         <div class="form-group">
-            <label for="precio">Precio</label>
+            <label for="precio">{% trans "Precio" %}</label>
             <div class="input-with-icon">
                 <span>$</span>
-                <input type="number" id="precio" name="precio" placeholder="0.00" step="0.01" required>
+                <input type="number" id="precio" name="precio" placeholder="{% trans '0.00' %}" step="0.01" required>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="ubicacion">Ubicación</label>
-            <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Sabaneta, Antioquia" required>
+            <label for="ubicacion">{% trans "Ubicación" %}</label>
+            <input type="text" id="ubicacion" name="ubicacion" placeholder="{% trans 'Ej: Sabaneta, Antioquia' %}" required>
         </div>
 
         <div class="form-group">
-            <label for="imagen">Imagen del Producto</label>
+            <label for="imagen">{% trans "Imagen del Producto" %}</label>
             <input type="file" id="imagen" name="imagen" accept="image/*" required>
         </div>
 
         <div class="form-group">
-            <label for="disponibilidad">Disponibilidad</label>
+            <label for="disponibilidad">{% trans "Disponibilidad" %}</label>
             <select id="disponibilidad" name="disponibilidad" required>
-                <option value="disponible">Disponible</option>
-                <option value="no-disponible">No Disponible</option>
-                <option value="agotado">Agotado</option>
+                <option value="disponible">{% trans "Disponible" %}</option>
+                <option value="no-disponible">{% trans "No Disponible" %}</option>
+                <option value="agotado">{% trans "Agotado" %}</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-register-product">Registrar Producto</button>
+        <button type="submit" class="btn-register-product">{% trans "Registrar Producto" %}</button>
     </form>
 </div>
 {% endblock %}

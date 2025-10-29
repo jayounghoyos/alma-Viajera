@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
+from django.utils.translation import gettext as _
 
 
 def carrito_view(request):
@@ -61,7 +62,7 @@ def agregar_al_carrito(request, item_id):
     try:
         carrito, created = Carrito.objects.get_or_create(usuario=request.user)
     except ObjectDoesNotExist:
-        return HttpResponseBadRequest("No se encontró un cliente válido.")
+        return HttpResponseBadRequest(_("No se encontró un cliente válido."))
 
     carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, item=item)
     if not created:
@@ -78,18 +79,18 @@ def agregar_al_carrito(request, item_id):
 @csrf_exempt
 def incrementar_cantidad(request, item_id):
     if request.method != 'POST':
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+        return JsonResponse({'error': _('Método no permitido')}, status=405)
 
     if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Debes iniciar sesión', 'login_url': reverse('users:login')}, status=403)
+        return JsonResponse({'error': _('Debes iniciar sesión'), 'login_url': reverse('users:login')}, status=403)
 
     carrito = Carrito.objects.filter(usuario=request.user).first()
     if not carrito:
-        return JsonResponse({'error': 'Carrito no encontrado'}, status=404)
+        return JsonResponse({'error': _('Carrito no encontrado')}, status=404)
 
     carrito_item = CarritoItem.objects.filter(carrito=carrito, item__id=item_id).first()
     if not carrito_item:
-        return JsonResponse({'error': 'Producto no encontrado en el carrito'}, status=404)
+        return JsonResponse({'error': _('Producto no encontrado en el carrito')}, status=404)
 
     carrito_item.cantidad += 1
     carrito_item.save()
@@ -109,18 +110,18 @@ def incrementar_cantidad(request, item_id):
 @csrf_exempt
 def decrementar_cantidad(request, item_id):
     if request.method != 'POST':
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+        return JsonResponse({'error': _('Método no permitido')}, status=405)
 
     if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Debes iniciar sesión', 'login_url': reverse('users:login')}, status=403)
+        return JsonResponse({'error': _('Debes iniciar sesión'), 'login_url': reverse('users:login')}, status=403)
 
     carrito = Carrito.objects.filter(usuario=request.user).first()
     if not carrito:
-        return JsonResponse({'error': 'Carrito no encontrado'}, status=404)
+        return JsonResponse({'error': _('Carrito no encontrado')}, status=404)
 
     carrito_item = CarritoItem.objects.filter(carrito=carrito, item__id=item_id).first()
     if not carrito_item:
-        return JsonResponse({'error': 'Producto no encontrado en el carrito'}, status=404)
+        return JsonResponse({'error': _('Producto no encontrado en el carrito')}, status=404)
 
     if carrito_item.cantidad > 1:
         carrito_item.cantidad -= 1
@@ -148,15 +149,15 @@ def decrementar_cantidad(request, item_id):
 @require_POST
 def eliminar_del_carrito(request, item_id):
     if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Debes iniciar sesión', 'login_url': reverse('users:login')}, status=403)
+        return JsonResponse({'error': _('Debes iniciar sesión'), 'login_url': reverse('users:login')}, status=403)
 
     carrito = Carrito.objects.filter(usuario=request.user).first()
     if not carrito:
-        return JsonResponse({'error': 'Carrito no encontrado'}, status=404)
+        return JsonResponse({'error': _('Carrito no encontrado')}, status=404)
 
     carrito_item = CarritoItem.objects.filter(carrito=carrito, item__id=item_id).first()
     if not carrito_item:
-        return JsonResponse({'error': 'Producto no encontrado en el carrito'}, status=404)
+        return JsonResponse({'error': _('Producto no encontrado en el carrito')}, status=404)
 
     carrito_item.delete()
     carrito.calcular_total()

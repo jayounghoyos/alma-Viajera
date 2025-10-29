@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% comment %} Juan Andrés Young Hoyos {% endcomment %}
-{% load static i18n %}
+{% load static i18n l10n %}
 
 {% block title %}{% trans "Mapa · Alma Viajera" %}{% endblock %}
 
@@ -46,7 +46,8 @@
         </button>
         <div class="countries-list" id="countriesList">
           {% for pais in paises %}
-          <div class="country-item" data-country="{{ pais.codigo }}" data-lat="{{ pais.lat }}" data-lng="{{ pais.lng }}">
+          <div class="country-item" data-country="{{ pais.codigo }}" data-lat="{{ pais.lat|unlocalize }}" data-lng="{{ pais.lng|unlocalize }}"
+               role="button" tabindex="0" aria-label="{% blocktrans trimmed with country=pais.nombre %}Enfocar {{ country }} en el mapa{% endblocktrans %}">
             <div class="country-flag">
               <i class="bi bi-geo-alt-fill"></i>
             </div>
@@ -54,7 +55,8 @@
               <h4>{{ pais.nombre }}</h4>
               <p>{% trans "Explorar destinos" %}</p>
             </div>
-            <div class="country-arrow">
+            <div class="country-arrow" data-country="{{ pais.codigo }}" role="button" tabindex="0"
+                 aria-label="{% blocktrans trimmed with country=pais.nombre %}Ir a {{ country }}{% endblocktrans %}">
               <i class="bi bi-arrow-right"></i>
             </div>
           </div>
@@ -78,12 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
   
-  // Array para almacenar los marcadores
+  // Array y diccionario para almacenar los marcadores
   const markers = [];
+  const markersByCode = {};
   
   // Agregar marcadores para cada país
   {% for pais in paises %}
-  const marker{{ forloop.counter }} = L.marker([{{ pais.lat }}, {{ pais.lng }}])
+  const marker{{ forloop.counter }} = L.marker([{{ pais.lat|unlocalize }}, {{ pais.lng|unlocalize }}])
     .addTo(map)
     .bindPopup(`
       <div class="map-popup">
@@ -96,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `);
   
   markers.push(marker{{ forloop.counter }});
+  markersByCode["{{ pais.codigo }}"] = marker{{ forloop.counter }};
   {% endfor %}
   
   // Ajustar la vista para mostrar todos los marcadores
@@ -108,30 +112,60 @@ document.addEventListener('DOMContentLoaded', function() {
   const countriesList = document.getElementById('countriesList');
   const prevBtn = document.querySelector('.carousel-btn.prev');
   const nextBtn = document.querySelector('.carousel-btn.next');
-  const scrollStep = 260;
+  const desktopQuery = window.matchMedia('(min-width: 992px)');
+  const HORIZONTAL_STEP = 260;
+  const VERTICAL_STEP = 220;
+
+  function isVerticalLayout() {
+    return desktopQuery.matches;
+  }
 
   function updateCarouselButtons() {
     if (!countriesList) return;
-    const maxScrollLeft = countriesList.scrollWidth - countriesList.clientWidth;
-    if (prevBtn) {
-      prevBtn.disabled = countriesList.scrollLeft <= 0;
+
+    if (isVerticalLayout()) {
+      const maxScrollTop = countriesList.scrollHeight - countriesList.clientHeight;
+      if (prevBtn) {
+        prevBtn.disabled = countriesList.scrollTop <= 0;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = countriesList.scrollTop >= (maxScrollTop - 4);
+      }
+    } else {
+      const maxScrollLeft = countriesList.scrollWidth - countriesList.clientWidth;
+      if (prevBtn) {
+        prevBtn.disabled = countriesList.scrollLeft <= 0;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = countriesList.scrollLeft >= (maxScrollLeft - 4);
+      }
     }
-    if (nextBtn) {
-      nextBtn.disabled = countriesList.scrollLeft >= (maxScrollLeft - 4);
+  }
+
+  function scrollCountries(direction) {
+    if (!countriesList) return;
+    const behavior = { behavior: 'smooth' };
+
+    if (isVerticalLayout()) {
+      countriesList.scrollBy({ ...behavior, top: direction * VERTICAL_STEP });
+    } else {
+      countriesList.scrollBy({ ...behavior, left: direction * HORIZONTAL_STEP });
     }
   }
 
   if (countriesList && prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', () => {
-      countriesList.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-
-    nextBtn.addEventListener('click', () => {
-      countriesList.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
+    prevBtn.addEventListener('click', () => scrollCountries(-1));
+    nextBtn.addEventListener('click', () => scrollCountries(1));
 
     countriesList.addEventListener('scroll', updateCarouselButtons, { passive: true });
     window.addEventListener('resize', updateCarouselButtons);
+
+    if (typeof desktopQuery.addEventListener === 'function') {
+      desktopQuery.addEventListener('change', updateCarouselButtons);
+    } else if (typeof desktopQuery.addListener === 'function') {
+      desktopQuery.addListener(updateCarouselButtons);
+    }
+
     updateCarouselButtons();
   }
   
@@ -139,19 +173,52 @@ document.addEventListener('DOMContentLoaded', function() {
   function exploreCountry(countryCode) {
     window.location.href = `{% url 'catalog:explorar' 'PLACEHOLDER' 'lugar' %}`.replace('PLACEHOLDER', countryCode);
   }
+
+  function focusCountry(countryCode, lat, lng, options = {}) {
+    const { openPopup = true, zoomLevel = 6 } = options;
+    if (!lat || !lng) return;
+    const targetLat = parseFloat(lat);
+    const targetLng = parseFloat(lng);
+    if (Number.isNaN(targetLat) || Number.isNaN(targetLng)) return;
+
+    map.setView([targetLat, targetLng], zoomLevel);
+    const marker = markersByCode[countryCode];
+    if (marker && openPopup) {
+      marker.openPopup();
+    }
+  }
   
   // Event listeners para los elementos del país
   document.querySelectorAll('.country-item').forEach(item => {
     item.addEventListener('click', function() {
-      const countryCode = this.dataset.country;
-      exploreCountry(countryCode);
+      focusCountry(this.dataset.country, this.dataset.lat, this.dataset.lng);
     });
     
-    // Efecto hover
+    // Efecto hover para escritorio
     item.addEventListener('mouseenter', function() {
-      const lat = parseFloat(this.dataset.lat);
-      const lng = parseFloat(this.dataset.lng);
-      map.setView([lat, lng], 6);
+      focusCountry(this.dataset.country, this.dataset.lat, this.dataset.lng, { openPopup: false });
+    });
+
+    item.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        focusCountry(this.dataset.country, this.dataset.lat, this.dataset.lng);
+      }
+    });
+  });
+
+  document.querySelectorAll('.country-arrow').forEach(arrow => {
+    arrow.addEventListener('click', function(event) {
+      event.stopPropagation();
+      exploreCountry(this.dataset.country);
+    });
+
+    arrow.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.stopPropagation();
+        exploreCountry(this.dataset.country);
+      }
     });
   });
   

@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.utils.translation import gettext as _
 
 from .forms import ItemCreateForm
 from apps.catalog.models import Item, Categoria
@@ -19,7 +20,7 @@ class ProviderRequiredMixin(UserPassesTestMixin):
         return u.is_authenticated and getattr(u, "es_proveedor", False)
 
     def handle_no_permission(self):
-        messages.error(self.request, "Tu cuenta no es de proveedor.")
+        messages.error(self.request, _("Tu cuenta no es de proveedor."))
         return redirect("core:home")
 
 
@@ -42,7 +43,7 @@ class CrearServicioView(ProviderRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         # Extra guard (mixin already checks, but this keeps it explicit)
         if not getattr(request.user, "es_proveedor", False):
-            messages.error(request, "Tu cuenta no es de proveedor.")
+            messages.error(request, _("Tu cuenta no es de proveedor."))
             return redirect("core:home")
 
         form = ItemCreateForm(request.POST, request.FILES)
@@ -63,7 +64,7 @@ class CrearServicioView(ProviderRequiredMixin, View):
                 item.stock = 0
 
             item.save()
-            messages.success(request, "¡Servicio creado correctamente!")
+            messages.success(request, _("¡Servicio creado correctamente!"))
             return redirect("providers:dashboard")
 
         # Invalid form: re-render with errors
@@ -78,7 +79,7 @@ def crear_servicio(request):
     - Keeps ownership assignment server-side (never exposed in the form).
     """
     if not getattr(request.user, "es_proveedor", False):
-        messages.error(request, "Tu cuenta no es de proveedor.")
+        messages.error(request, _("Tu cuenta no es de proveedor."))
         return redirect("core:home")
 
     if request.method == "POST":
@@ -99,7 +100,7 @@ def crear_servicio(request):
                 item.stock = 0
 
             item.save()
-            messages.success(request, "¡Servicio creado correctamente!")
+            messages.success(request, _("¡Servicio creado correctamente!"))
             return redirect("providers:dashboard")
     else:
         form = ItemCreateForm()
@@ -137,12 +138,12 @@ class EditarServicioView(LoginRequiredMixin, ProviderRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         """Mensaje de éxito al editar."""
-        messages.success(self.request, "¡Servicio actualizado correctamente!")
+        messages.success(self.request, _("¡Servicio actualizado correctamente!"))
         return super().form_valid(form)
 
     def form_invalid(self, form):
         """Mensaje de error si el formulario es inválido."""
-        messages.error(self.request, "Por favor, corrige los errores en el formulario.")
+        messages.error(self.request, _("Por favor, corrige los errores en el formulario."))
         return super().form_invalid(form)
 
 
@@ -162,7 +163,7 @@ class EliminarServicioView(LoginRequiredMixin, ProviderRequiredMixin, DeleteView
 
     def delete(self, request, *args, **kwargs):
         """Mensaje de éxito al eliminar."""
-        messages.success(request, "¡Servicio eliminado correctamente!")
+        messages.success(request, _("¡Servicio eliminado correctamente!"))
         return super().delete(request, *args, **kwargs)
 
 
@@ -170,11 +171,11 @@ class EliminarServicioView(LoginRequiredMixin, ProviderRequiredMixin, DeleteView
 def eliminar_servicio_ajax(request, pk):
     """Vista AJAX para eliminar un servicio."""
     if not getattr(request.user, "es_proveedor", False):
-        return JsonResponse({'error': 'No tienes permisos para realizar esta acción.'}, status=403)
+        return JsonResponse({'error': _('No tienes permisos para realizar esta acción.')}, status=403)
 
     try:
         servicio = get_object_or_404(Item, pk=pk, vendedor=request.user)
         servicio.delete()
-        return JsonResponse({'success': True, 'message': 'Servicio eliminado correctamente.'})
+        return JsonResponse({'success': True, 'message': _('Servicio eliminado correctamente.')})
     except Exception as e:
-        return JsonResponse({'error': 'Error al eliminar el servicio.'}, status=500)
+        return JsonResponse({'error': _('Error al eliminar el servicio.')}, status=500)

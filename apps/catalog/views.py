@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from .models import Item
 from .forms import CalificacionForm
 from django.http import JsonResponse, Http404
@@ -76,11 +77,11 @@ class ItemDetailView(DetailView):
             calificacion.usuario = request.user
             try:
                 calificacion.save()
-                messages.success(request, "¡Gracias por tu calificación!")
+                messages.success(request, _("¡Gracias por tu calificación!"))
             except:
-                messages.error(request, "Ya has calificado este producto.")
+                messages.error(request, _("Ya has calificado este producto."))
         else:
-            messages.error(request, "Hubo un error al enviar tu calificación.")
+            messages.error(request, _("Hubo un error al enviar tu calificación."))
         return redirect('catalog:item_detail', pk=item.pk)
 
 class MapView(TemplateView):
@@ -104,7 +105,7 @@ def item_detail_api(request, id):
     try:
         item = Item.objects.select_related('categoria', 'vendedor').get(id=id)
     except Item.DoesNotExist:
-        raise Http404("Item not found")
+        raise Http404(_("Item not found"))
 
     data = {
         "id": item.id,

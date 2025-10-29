@@ -4,18 +4,19 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
 class BaseSignupForm(forms.ModelForm):
     
-    username   = forms.CharField(label="Usuario")                 
-    first_name = forms.CharField(label="Nombre", required=False)  
-    last_name  = forms.CharField(label="Apellido", required=False)
-    email      = forms.EmailField(label="Email")
+    username   = forms.CharField(label=_("Usuario"))
+    first_name = forms.CharField(label=_("Nombre"), required=False)
+    last_name  = forms.CharField(label=_("Apellido"), required=False)
+    email      = forms.EmailField(label=_("Email"))
 
-    password1 = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
-    password2 = forms.CharField(widget=forms.PasswordInput, label="Confirmar contraseña")
+    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Contraseña"))
+    password2 = forms.CharField(widget=forms.PasswordInput, label=_("Confirmar contraseña"))
 
     class Meta:
         model = User
@@ -26,7 +27,7 @@ class BaseSignupForm(forms.ModelForm):
         cleaned = super().clean()
         p1, p2 = cleaned.get('password1'), cleaned.get('password2')
         if p1 and p2 and p1 != p2:
-            self.add_error('password2', "Las contraseñas no coinciden.")
+            self.add_error('password2', _("Las contraseñas no coinciden."))
         if p1:
             validate_password(p1)
         return cleaned
