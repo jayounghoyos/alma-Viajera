@@ -1,0 +1,32 @@
+<!-- html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Imprimir QR</title>
+  <style>
+    body{font-family: sans-serif; padding:20px;}
+    @media print { .no-print{display:none;} }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Código QR de Reserva</h2>
+    <img src="{{ qr_url }}" alt="QR" style="max-width:250px;">
+    <p><strong>{{ qr_payload }}</strong></p>
+    {% if cart_summary %}
+    <div>
+      <h4>Resumen</h4>
+      <ul>
+        {% for item in cart_summary.items %}
+        <li>{{ item.name }} — {{ item.qty }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+  <div class="no-print" style="margin-top:10px;">
+    <button onclick="window.print()">Imprimir</button>
+  </div>
+</body>
+</html>

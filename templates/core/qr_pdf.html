@@ -1,0 +1,37 @@
+<!-- html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Código QR de Reserva</title>
+  <style>
+    body{font-family: sans-serif; color:#222; padding:20px;}
+    .qr{text-align:center; margin-bottom:20px;}
+    .card{border:1px solid #eee; padding:12px; border-radius:8px;}
+    .small{font-size:0.9rem; color:#666;}
+  </style>
+</head>
+<body>
+  <div class="qr">
+    <h2>Código QR de Reserva</h2>
+    <img src="{{ qr_url }}" alt="QR" style="max-width:250px; background:white; padding:10px; border-radius:8px;">
+  </div>
+
+  <div class="card">
+    <p class="small">Código de Reserva</p>
+    <p><strong>{{ qr_payload }}</strong></p>
+  </div>
+
+  {% if cart_summary %}
+  <div style="margin-top:10px;" class="card">
+    <p class="small">Resumen del carrito</p>
+    <ul>
+      {% for item in cart_summary.items %}
+      <li>{{ item.name }} — {{ item.qty }}</li>
+      {% endfor %}
+    </ul>
+    <p><strong>Total: {{ cart_summary.total }}</strong></p>
+  </div>
+  {% endif %}
+</body>
+</html>
