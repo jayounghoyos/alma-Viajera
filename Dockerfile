@@ -24,6 +24,11 @@ RUN python manage.py collectstatic --noinput
 # Exponer el puerto (Cloud Run usa PORT env variable)
 EXPOSE 8080
 
-#  Iniciar el servidor con gunicorn (usa whitenoise internamente)
-# Cloud Run inyecta PORT automáticamente
-CMD exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8080} --workers 3
+# Crear script de inicio que ejecuta migraciones
+RUN echo '#!/bin/bash\n\
+python manage.py migrate --noinput\n\
+exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8080} --workers 3\n\
+' > /app/start.sh && chmod +x /app/start.sh
+
+#  Iniciar el servidor con el script que ejecuta migraciones primero
+CMD ["/app/start.sh"]
