@@ -18,11 +18,12 @@ COPY . /app/
 # Crear carpetas necesarias
 RUN mkdir -p /app/staticfiles /app/media
 
-# ✅ Recopilar los archivos estáticos
+#  Recopilar los archivos estáticos
 RUN python manage.py collectstatic --noinput
 
-# Exponer el puerto
-EXPOSE 8000
+# Exponer el puerto (Cloud Run usa PORT env variable)
+EXPOSE 8080
 
-# ✅ Iniciar el servidor con gunicorn (usa whitenoise internamente)
-CMD exec gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+#  Iniciar el servidor con gunicorn (usa whitenoise internamente)
+# Cloud Run inyecta PORT automáticamente
+CMD exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8080} --workers 3

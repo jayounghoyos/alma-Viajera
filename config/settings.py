@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-21e+%j(8pok31_siojr&6g^g(kkb!ge&v6ij^$tlfq@+d7qo90'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# SECURITY WARNING
+DEBUG = True
 
 
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',  # django-storages para Google Cloud Storage
     'apps.core',
     'apps.catalog',
     'apps.cart',
@@ -148,8 +149,20 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'     
 
 # --- Media (uploads de usuarios: imágenes, QR, etc) ---
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Configuración para Google Cloud Storage
+USE_GCS = os.environ.get('USE_GCS', 'False') == 'True'
+
+if USE_GCS:
+    # Google Cloud Storage settings
+    GS_BUCKET_NAME = 'alma-viajera-media-2025'
+    GS_CREDENTIALS = os.path.join(BASE_DIR, 'gcs-credentials.json')
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    GS_DEFAULT_ACL = 'publicRead'
+    MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+else:
+    # Local development settings
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
