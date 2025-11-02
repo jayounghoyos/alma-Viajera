@@ -1,0 +1,71 @@
+/* Estilos generales para el cuerpo de la página */
+body.nosotros {
+    background-color: white; /* Un gris muy suave para un fondo limpio */
+    color: #333; /* Un gris oscuro para el texto principal */
+    font-family: 'Poppins', sans-serif; /* Tipografía moderna y legible */
+    line-height: 1.6; /* Espaciado de línea mejorado para la lectura */
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal del contenido */
+.container {
+    max-width: 900px; /* Ancho máximo para el contenido, centrado */
+    margin: 4rem auto; /* Más espacio arriba y abajo para destacar */
+    padding: 0 2rem;
+
+    border-radius: 12px;
+    background-color: white; /* Fondo blanco para el contenedor */
+}
+
+/* Encabezados principales */
+h1 {
+    font-size: 2.5rem; /* Título principal más grande */
+    font-weight: 700;
+    color: black; /* Un azul marino profundo y elegante */
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 20px;
+}
+
+h1:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background-color: #3b82f6; /* Barra lateral azul vibrante */
+    border-radius: 3px;
+}
+
+/* Párrafos */
+p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: #555; /* Un gris más suave para el texto del párrafo */
+}
+
+/* Estilos para el bloque de contenido, si lo necesitas más adelante */
+.content-block {
+    margin-bottom: 3rem;
+}
+
+/* Medios de consulta */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+        margin: 2rem auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+        padding-left: 15px;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
