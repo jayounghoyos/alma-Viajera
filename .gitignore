@@ -41,3 +41,4 @@ ENV/
 # --- Otros ---
 .DS_Store
 Thumbs.db
+config/keys/gcs_credentials.json

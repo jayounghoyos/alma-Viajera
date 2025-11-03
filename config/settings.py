@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'apps.core',
     'apps.catalog',
     'apps.cart',
@@ -147,9 +148,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'     
 
-# --- Media (uploads de usuarios: imágenes, QR, etc) ---
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -166,3 +165,17 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = ['https://*.run.app']
 # WhiteNoise compression
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# === Configuración de Google Cloud Storage ===
+# --- Media (uploads de usuarios: imágenes, QR, etc) ---
+
+if DEBUG:
+    # Modo desarrollo local
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # Producción: Google Cloud Storage
+    DEFAULT_FILE_STORAGE = "config.storage_backends.MediaRootGoogleCloudStorage"
+    GS_BUCKET_NAME = "alma-viajera-media"
+    GS_CREDENTIALS = os.path.join(BASE_DIR, "config/keys/gcs_credentials.json")
+    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
