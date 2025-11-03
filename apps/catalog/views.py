@@ -124,3 +124,87 @@ def item_detail_api(request, id):
     }
 
     return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
+
+def items_list_api(request):
+    """
+    API endpoint to list all items with optional filtering.
+
+    Query parameters:
+    - categoria: Filter by category (lugar, tour, comida, souvenir, actividad)
+    - ubicacion: Filter by country (Colombia, Mexico, Argentina, Peru, Chile)
+    - disponibilidad: Filter by availability (true/false)
+    - search: Search by name (case-insensitive)
+    - ordenar: Sort by precio_asc, precio_desc, tiempo_asc, tiempo_desc
+    - limit: Maximum number of results (default: all)
+    - offset: Starting position for pagination (default: 0)
+    """
+    items = Item.objects.select_related('categoria', 'vendedor').all()
+
+    categoria = request.GET.get('categoria')
+    if categoria:
+        items = items.filter(categoria__nombre=categoria)
+
+    ubicacion = request.GET.get('ubicacion')
+    if ubicacion:
+        items = items.filter(ubicacion=ubicacion)
+
+    disponibilidad = request.GET.get('disponibilidad')
+    if disponibilidad is not None:
+        is_available = disponibilidad.lower() in ('true', '1', 'yes')
+        items = items.filter(disponibilidad=is_available)
+
+    search = request.GET.get('search')
+    if search:
+        items = items.filter(nombre__icontains=search)
+
+    ordenar = request.GET.get('ordenar')
+    if ordenar == 'precio_asc':
+        items = items.order_by('precio')
+    elif ordenar == 'precio_desc':
+        items = items.order_by('-precio')
+    elif ordenar == 'tiempo_asc':
+        items = items.order_by('tiempo')
+    elif ordenar == 'tiempo_desc':
+        items = items.order_by('-tiempo')
+    else:
+        items = items.order_by('-id')
+
+    total_count = items.count()
+
+    try:
+        offset = int(request.GET.get('offset', 0))
+        limit = request.GET.get('limit')
+        if limit:
+            limit = int(limit)
+            items = items[offset:offset + limit]
+        else:
+            items = items[offset:]
+    except (ValueError, TypeError):
+        offset = 0
+
+    items_data = []
+    for item in items:
+        items_data.append({
+            "id": item.id,
+            "nombre": item.nombre,
+            "descripcion": item.descripcion,
+            "precio": str(item.precio),
+            "categoria": item.categoria.nombre,
+            "ubicacion": item.ubicacion,
+            "imagen": item.imagen.url if item.imagen else None,
+            "tiempo": float(item.tiempo) if item.tiempo else None,
+            "disponibilidad": item.disponibilidad,
+            "stock": item.stock,
+            "promedio_calificacion": item.promedio_calificacion(),
+            "estrellas": item.estrellas(),
+            "vendedor": item.vendedor.username,
+        })
+
+    response_data = {
+        "count": total_count,
+        "offset": offset,
+        "limit": limit if limit else total_count,
+        "results": items_data
+    }
+
+    return JsonResponse(response_data, json_dumps_params={'ensure_ascii': False})
