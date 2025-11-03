@@ -1,6 +1,7 @@
 # Alma Viajera
 
 Alma viajera es un e-commerce donde hacemos reservas de servicios turísticos, ayudando no solo a los grandes y clásicos servicios turísticos sino también a los pequeños empredimientos y servicios que de otra manera podrían pasar desapercibidos y que ¡incluso! representan al lugar que estas visitando.
+![WhatsApp Image 2025-11-03 at 4 56 09 PM](https://github.com/user-attachments/assets/18e610f6-b33e-4967-963e-2d43c9ed8859)
 
 ## Características
 
