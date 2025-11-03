@@ -37,8 +37,6 @@ ENV/
 # --- Configuración / secretos ---
 .env
 *.env
-gcs-credentials.json
-*credentials*.json
 
 # --- Otros ---
 .DS_Store
