@@ -155,6 +155,21 @@ msgstr "reviews"
 msgid "Ver"
 msgstr "View"
 
+#: .\apps\catalog\templates\catalog.html:120
+msgid "Productos aliados"
+msgstr "Allied products"
+
+#: .\apps\catalog\templates\catalog.html:123
+#, python-format
+msgid ""
+"Exploremos los productos aliados de %(brand)s"
+msgstr "Let's explore %(brand)s allied products"
+
+#: .\apps\catalog\templates\catalog.html:128
+#, python-format
+msgid "%(brand)s products"
+msgstr "%(brand)s products"
+
 #: .\apps\catalog\templates\catalog\item_detail.html:55
 msgid "COP"
 msgstr "COP"
@@ -472,3 +487,7 @@ msgstr "Cart"
 #: .\templates\partials\_navbar.html:55
 msgid "Cerrar sesión"
 msgstr "Log out"
+#: .\apps\catalog\templates\catalog\productos_aliados.html:33
+msgid "Ver detalle"
+msgstr "View details"
+

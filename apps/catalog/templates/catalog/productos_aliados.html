@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Productos aliados" %} · Alma Viajera{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="display-5 fw-bold mb-1">{% trans "Productos aliados" %}</h1>
+    </div>
+    <a href="{{ api_url }}" class="btn btn-outline-primary d-inline-flex align-items-center" target="_blank" rel="noopener">
+      <i class="bi bi-box-arrow-up-right me-2"></i>
+      API
+    </a>
+  </div>
+
+  {% if error_message %}
+    <div class="alert alert-warning" role="alert">
+      {{ error_message }}
+    </div>
+  {% endif %}
+
+  {% if productos %}
+    <div class="row g-4">
+      {% for producto in productos %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-2">{{ producto.nombre|default:_("Producto sin nombre") }}</h5>
+              <p class="card-text text-muted">
+                {{ producto.descripcion|default:_("Sin descripción disponible.") }}
+              </p>
+              <dl class="row small mb-0">
+                <dt class="col-6 text-muted">{% trans "Precio" %}</dt>
+                <dd class="col-6 fw-semibold text-end">{{ producto.precio|default:"—" }}</dd>
+                <dt class="col-6 text-muted">{% trans "Cantidad disponible" %}</dt>
+                <dd class="col-6 fw-semibold text-end">{{ producto.cantidad_disp|default:"—" }}</dd>
+              </dl>
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0">
+              {% if producto.detalle_url %}
+                <a href="{{ producto.detalle_url }}" class="btn btn-sm btn-primary w-100" target="_blank" rel="noopener">
+                  {% trans "Ver detalle" %}
+                </a>
+              {% else %}
+                <span class="text-muted small">{% trans "Información de detalle no disponible." %}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% elif not error_message %}
+    <p class="text-muted">{% trans "No hay productos disponibles en este momento." %}</p>
+  {% endif %}
+</div>
+{% endblock %}

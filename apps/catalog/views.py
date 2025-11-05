@@ -1,11 +1,46 @@
+import requests
+from requests.exceptions import RequestException
+
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView
 from django.contrib import messages
 from django.utils.translation import gettext as _
+from django.http import JsonResponse, Http404
+
 from .models import Item
 from .forms import CalificacionForm
-from django.http import JsonResponse, Http404
+
+ALLIED_PRODUCTS_API_URL = "http://136.112.74.116/producto/api/productos/"
+ALLIED_PRODUCTS_TIMEOUT = 5
+
+
+def allied_products_view(request):
+    productos = []
+    error_message = None
+
+    try:
+        response = requests.get(ALLIED_PRODUCTS_API_URL, timeout=ALLIED_PRODUCTS_TIMEOUT)
+        response.raise_for_status()
+        payload = response.json()
+        productos = payload.get("productos", [])
+
+        if not isinstance(productos, list):
+            productos = []
+            error_message = _("El servicio aliado respondió en un formato inesperado.")
+    except RequestException:
+        error_message = _("No se pudo conectar con el servicio aliado.")
+    except ValueError:
+        error_message = _("La respuesta del servicio aliado es inválida.")
+
+    context = {
+        "productos": productos,
+        "productos_count": len(productos),
+        "api_url": ALLIED_PRODUCTS_API_URL,
+        "error_message": error_message,
+    }
+    return render(request, "catalog/productos_aliados.html", context)
+
 
 class CatalogView(View):
     template_name = 'catalog.html'

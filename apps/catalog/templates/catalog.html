@@ -114,6 +114,23 @@
     </div>
   </div>
 
+  <!-- Productos aliados -->
+  <section class="container my-5">
+    <div class="text-center p-5 bg-light border rounded-4 shadow-sm">
+      <h2 class="fw-bold mb-3">{% trans "Productos aliados" %}</h2>
+      <p class="text-muted mb-4">
+        {% blocktrans trimmed with brand="BARROVIVO" %}
+        Exploremos los productos aliados de {{ brand }}
+        {% endblocktrans %}
+      </p>
+      <a href="{% url 'catalog:productos_aliados' %}" class="btn btn-primary btn-lg">
+        {% blocktrans trimmed with brand="BARROVIVO" %}
+        {{ brand }} products
+        {% endblocktrans %}
+      </a>
+    </div>
+  </section>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
