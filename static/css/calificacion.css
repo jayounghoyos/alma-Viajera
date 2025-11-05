@@ -20,38 +20,42 @@
 /* Estilo para las estrellas de calificación */
 .rating-stars {
     display: flex;
-    justify-content: flex-start; /* Alineamos las estrellas a la izquierda */
+    flex-direction: row-reverse; /* Orden natural */
+    justify-content: left;
     align-items: center;
+    gap: 5px;
     margin: 1.5rem 0;
-    flex-direction: row; /* Orden natural: izquierda a derecha */
 }
 
+/* Ocultar los radios */
 .rating-stars input[type="radio"] {
     display: none;
 }
 
+/* Estilo base de las estrellas */
 .rating-stars label {
     font-size: 2.5rem;
     color: #e0e0e0;
     cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover: iluminar la estrella actual y las anteriores */
+/* Hover: iluminar la estrella actual y todas las anteriores */
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
     color: #ffc107;
 }
 
 /* Estrella seleccionada y todas las anteriores */
-.rating-stars input[type="radio"]:checked + label,
-.rating-stars input[type="radio"]:checked + label ~ label {
+.rating-stars input[type="radio"]:checked ~ label {
     color: #ffc107;
 }
 
+/* Efecto de escala al pasar el cursor */
 .rating-stars label:hover {
-    transform: scale(1.2); /* Efecto de escala al pasar el cursor */
+    transform: scale(1.2);
 }
+
 
 /* Botón de calificación */
 .product-rating-form button {

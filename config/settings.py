@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from google.oauth2 import service_account
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,6 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-21e+%j(8pok31_siojr&6g^g(kkb!ge&v6ij^$tlfq@+d7qo90'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+
 DEBUG = False
 
 
@@ -170,12 +174,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # --- Media (uploads de usuarios: imágenes, QR, etc) ---
 
 if DEBUG:
-    # Modo desarrollo local
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 else:
-    # Producción: Google Cloud Storage
     DEFAULT_FILE_STORAGE = "config.storage_backends.MediaRootGoogleCloudStorage"
     GS_BUCKET_NAME = "alma-viajera-media"
-    GS_CREDENTIALS = os.path.join(BASE_DIR, "config/keys/gcs_credentials.json")
     MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"

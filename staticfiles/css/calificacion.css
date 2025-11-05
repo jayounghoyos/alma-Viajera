@@ -20,10 +20,10 @@
 /* Estilo para las estrellas de calificación */
 .rating-stars {
     display: flex;
-    justify-content: flex-start; /* Alineamos las estrellas a la izquierda */
+    justify-content: left; /* Alineamos las estrellas a la izquierda */
     align-items: center;
     margin: 1.5rem 0;
-    flex-direction: row; /* Orden natural: izquierda a derecha */
+    flex-direction: row-reverse; /* Orden natural: izquierda a derecha */
 }
 
 .rating-stars input[type="radio"] {
