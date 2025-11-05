@@ -13,6 +13,98 @@ Alma viajera es un e-commerce donde hacemos reservas de servicios turísticos, a
 - **Búsqueda y filtros** avanzados
 - **Diseño responsive** con Bootstrap 5
 
+## API que ofrece el sistema
+El sistema Alma Viajera expone una API REST que permite acceder a los servicios turísticos registrados. Actualmente, ofrece dos endpoints principales: uno para listar ítems y otro para consultar los detalles de un ítem específico.
+
+Índice rápido de endpoints
+
+| Método | Endpoint           | Descripción                                           |
+| ------ | ------------------ | ----------------------------------------------------- |
+| GET    | `/api/items/`      | Listado de ítems (con filtros, búsqueda y paginación) |
+| GET    | `/api/items/<id>/` | Detalle de un ítem específico                         |
+
+
+### 1. Listado de ítems
+Devuelve un listado de servicios turísticos registrados. Soporta filtros, búsqueda, ordenamiento y paginación.
+
+Query parameters (opcionales):
+
+| Parámetro        | Tipo   | Descripción                                                                        | Ejemplo                |
+| ---------------- | ------ | ---------------------------------------------------------------------------------- | ---------------------- |
+| `categoria`      | string | Filtra por categoría (`lugar`, `tour`, `comida`, `souvenir`, `actividad`)          | `?categoria=tour`      |
+| `ubicacion`      | string | Filtra por país o ubicación (`Colombia`, `México`, `Argentina`, `Perú`, `Chile`)   | `?ubicacion=Colombia`  |
+| `disponibilidad` | bool   | Filtra por disponibilidad (`true` o `false`)                                       | `?disponibilidad=true` |
+| `search`         | string | Busca ítems por nombre (no sensible a mayúsculas)                                  | `?search=playa`        |
+| `ordenar`        | string | Ordena los resultados por `precio_asc`, `precio_desc`, `tiempo_asc`, `tiempo_desc` | `?ordenar=precio_desc` |
+| `limit`          | int    | Límite de resultados devueltos                                                     | `?limit=10`            |
+| `offset`         | int    | Posición inicial para la paginación                                                | `?offset=5`            |
+
+Ejemplo de solicitud: 
+
+GET /api/items/?categoria=tour&ubicacion=Colombia&ordenar=precio_desc&limit=5
+
+Ejemplo de respuesta:
+
+{
+  "count": 42,
+  "offset": 0,
+  "limit": 5,
+  "results": [
+    {
+      "id": 1,
+      "nombre": "Tour por el Eje Cafetero",
+      "descripcion": "Explora los paisajes cafeteros de Colombia.",
+      "precio": "250.00",
+      "categoria": "tour",
+      "ubicacion": "Colombia",
+      "imagen": "https://example.com/media/tours/cafetero.jpg",
+      "tiempo": 3.5,
+      "disponibilidad": true,
+      "stock": 12,
+      "promedio_calificacion": 4.8,
+      "estrellas": "★★★★☆",
+      "vendedor": "aventuracol"
+    }
+    /* ... más resultados ... */
+  ]
+}
+
+### 2. Detalle de ítem
+Devuelve la información detallada de un ítem por su id.
+
+| Parámetro | Tipo | Descripción                  |
+| --------- | ---- | ---------------------------- |
+| `id`      | int  | Identificador único del ítem |
+
+Ejemplo de solicitud
+
+GET /api/items/1/
+
+Ejemplo de respuesta
+
+{
+  "id": 1,
+  "nombre": "Tour por el Eje Cafetero",
+  "descripcion": "Explora los paisajes cafeteros de Colombia.",
+  "precio": "250.00",
+  "categoria": "tour",
+  "ubicacion": "Colombia",
+  "imagen": "https://example.com/media/tours/cafetero.jpg",
+  "tiempo": 3.5,
+  "disponibilidad": true,
+  "stock": 12,
+  "promedio_calificacion": 4.8,
+  "estrellas": "★★★★☆",
+  "vendedor": "aventuracol"
+}
+
+Errores posibles
+
+| Código | Respuesta                        | Descripción                                 |
+| ------ | -------------------------------- | ------------------------------------------- |
+| `404`  | `{ "detail": "Item not found" }` | El ítem con el `id` especificado no existe. |
+
+
 ## Requisitos del Sistema
 
 - Python 3.8+
